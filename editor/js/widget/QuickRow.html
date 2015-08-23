@@ -1,0 +1,6 @@
+<td data-bind="mod"><%= row.get('mod') %></td>
+<td data-bind="id"><%= row.get('id') %></td>
+<td data-bind="name"><%= row.get('name') %></td>
+<td class="introduced_at"><version-select version="<%= row.get('introduced_at') %>"></version-select></td>
+<td class="changed_at"><version-select  version="<%= row.get('changed_at') %>"></version-select></td>
+<td><a class="btn btn-info edit-btn" href="<%= location.hash + "/" + row.get('mod') + "/" + row.get('id') %>">Edit</a></td>

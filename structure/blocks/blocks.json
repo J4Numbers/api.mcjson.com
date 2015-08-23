@@ -1,0 +1,25 @@
+{
+	"id":"mod:ingamename",
+	"name":"fancy name",
+	"technical": true,
+	"introduced_at":"1.7.3",
+	"changed_at":"1.8.3",
+	"meta":{
+		"color":{
+			"white":0,
+			"orange":1,
+			"red":2,
+			"green":3
+		},
+		"facing":{
+			"north":0,
+			"south":4,
+			"east":8,
+			"west":12
+		}
+	},
+	"data":{
+		//Optional data entries, check for key
+		"physics":true
+	}
+}
