@@ -20,8 +20,8 @@ fetch("http://minecraft-ids.grahamedgecombe.com/items.json", function(error, met
 			id: entry.text_type,
 			name: entry.name,
 			"technical": false,
-			"introduced_at":"1.8.3",
-			"changed_at":"1.8.3",
+			"introduced_at":"1.9.0",
+			"changed_at":"1.9.0",
 			"meta":{
 				"meta":{}
 			}
@@ -62,8 +62,8 @@ fetch("http://minecraft-ids.grahamedgecombe.com/items.json", function(error, met
 			id: entry.text_type,
 			name: entry.name,
 			"technical": false,
-			"introduced_at":"1.8.3",
-			"changed_at":"1.8.3",
+			"introduced_at":"1.9.0",
+			"changed_at":"1.9.0",
 			"meta":{
 				"meta":{}
 			}
@@ -108,8 +108,8 @@ fetch("http://minecraft-ids.grahamedgecombe.com/entities.tsv", function(error, m
 			id:line[2],
 			name:line[1],
 			mod:"minecraft",
-			introduced_at:"1.0.0",
-			changed_at:"1.0.0"
+			introduced_at:"1.9.0",
+			changed_at:"1.9.0"
 		};
 		if(!entry.id){return;}
 		var entryPath = path.normalize(dataDir + '/entities/minecraft/' + entry.id + '.json');

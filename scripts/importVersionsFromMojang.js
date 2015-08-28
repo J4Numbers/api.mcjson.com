@@ -76,7 +76,7 @@ fetch("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json", funct
 		if(!semver.valid(versionId) && e.type == 'snapshot'){
 			var versionsAbove = _(releasesOnly).map(function(m){return {id:m.id,time:m.time};}).filter(function(f){return f.time > e.time}).sortBy("time").first();
 			versionId = versionsAbove.id + "-" +  versionId;
-			console.log("Fixing broken version.",'->',e.id,versionId);
+			console.log("Fixing broken version.",e.id,'->',versionId);
 		}
 
 		//Construct a new version record
