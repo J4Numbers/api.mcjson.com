@@ -15,7 +15,7 @@ var cors = require('cors');
 var app = express();
 var dataIndex = JSON.parse(fs.readFileSync("data.json"));
 var dev = process.env.NODE_ENV != 'production';
-var editorEnabled = process.env.JSONQRY_EDITOR == 'yes' || true;
+var editorEnabled = process.env.JSONQRY_EDITOR == 'true';
 //Build dirs
 var baseDataDir = path.join(process.cwd(),'data');
 var baseDelDir = path.join(process.cwd(),'_deleted_');

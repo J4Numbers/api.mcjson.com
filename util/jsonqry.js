@@ -1,5 +1,5 @@
 /**
-* Provides express middleware to provide simple querying 
+* Provides connect middleware to provide simple querying 
 * for a directory of json documents.
 * Also provides a method to reload the index dynamically
 */
