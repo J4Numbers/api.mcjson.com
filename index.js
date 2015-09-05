@@ -154,7 +154,7 @@ if(editorEnabled){
     app.use('/v1/',editorAPI);
 }
 
-var server = app.listen(process.env.PORT, function () {
+var server = app.listen(process.argv[2] || process.env.PORT, function () {
   var host = server.address().address;
   var port = server.address().port;
 
