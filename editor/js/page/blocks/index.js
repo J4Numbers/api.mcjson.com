@@ -1,10 +1,8 @@
-define(['backbone','widget/QuickTable','model/Block'],function(Backbone,QuickTable,Block){
+define(['backbone','widget/QuickTable','model/Block','model/EntryCollection'],function(Backbone,QuickTable,Block,EntryCollection){
 		return Backbone.View.extend({
 			initialize: function(){
 				var self = this;
-				var m = new Backbone.Collection();
-				m.model = Block;
-				m.url = '/v1/blocks';
+				var m = new EntryCollection([],{realModel:Block,url:'/v1/blocks'});
 				
 				this.on("page.load", function(f){
 					m.fetch().then(function(){
