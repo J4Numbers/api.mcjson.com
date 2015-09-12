@@ -68,7 +68,6 @@ module.exports = function(dir, struct, baseUrl){
                 keys.forEach(function(key){
                     res[key] = data[key];
                 });
-                console.log("Loaded", res.url);
                 return res;
             }catch(err){
                 console.error("Failed to load", e);

@@ -13,12 +13,20 @@ define([
 			var self = this;
 			this.$el.html(rowTmpl(this.model));
 			this.$el.find(".introduced_at > version-select").change(function(ev){
-				self.model.set('introduced_at', this.getAttribute("version"));
-				self.model.save();
+				var ver = this.getAttribute("version")
+				self.model.getModel()
+				.then(function(m){
+					m.set('introduced_at', ver);
+					m.save();
+				});
 			});
 			this.$el.find(".changed_at > version-select").change(function(ev){
-				self.model.set('changed_at', this.getAttribute("version"));
-				self.model.save();
+				var ver = this.getAttribute("version")
+				self.model.getModel()
+				.then(function(m){
+					m.set('changed_at', ver);
+					m.save();
+				});
 			})
 
 			return this;
