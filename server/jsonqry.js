@@ -19,25 +19,25 @@ module.exports = function(dir, struct, baseUrl){
             if(!req.query[key]) { return; } //Skip if not specified.
             switch(struct[key]){
                 case "eq": //Straight up equality test
-                filtered = filtered.filter(function(e){ return (key in e) && e[key].toLowerCase() == req.query[key].toLowerCase(); });
+                filtered = filtered.filter((e) => { return (key in e) && e[key].toLowerCase() == req.query[key].toLowerCase(); });
                 break;
                 case "str": //anywhere search string
-                filtered = filtered.filter(function(e){ return (key in e) && e[key].toLowerCase().indexOf(req.query[key].toLowerCase()) != -1; });
+                filtered = filtered.filter((e) => { return (key in e) && e[key].toLowerCase().indexOf(req.query[key].toLowerCase()) != -1; });
                 break;
                 case "aeq": //Key in array, must fully exist
-                filtered = filtered.filter(function(e){ 
-                    return (key in e) && e[key].map(function(i){return i.toLowerCase();}).indexOf(req.query[key].toLowerCase()) != -1; });
+                filtered = filtered.filter((e) => { 
+                    return (key in e) && e[key].map((i)=>{return i.toLowerCase();}).indexOf(req.query[key].toLowerCase()) != -1; });
                 break;
                 case "arr": //Key in array, partial match
-                filtered = filtered.filter(function(e){ 
-                    return (key in e) && e[key].map(function(i){return i.toLowerCase().indexOf(req.query[key].toLowerCase()) != -1; }).reduce(function(p,r){return p || r;},false);
+                filtered = filtered.filter((e) => { 
+                    return (key in e) && e[key].map((i)=>{return i.toLowerCase().indexOf(req.query[key].toLowerCase()) != -1; }).reduce((p,r)=>{return p || r;},false);
                 });
                 break;
                 case "pre": //Prefix string check
-                filtered = filtered.filter(function(e){ return (key in e) && e[key].toLowerCase().indexOf(req.query[key].toLowerCase())==0; });
+                filtered = filtered.filter((e) => { return (key in e) && e[key].toLowerCase().indexOf(req.query[key].toLowerCase())==0; });
                 break;
                 case "ver": //Semver check
-                filtered = filtered.filter(function(e){ return (key in e) && semver.satisfies(e[key], req.query[key]); });
+                filtered = filtered.filter((e) => { return (key in e) && semver.satisfies(e[key], req.query[key]); });
                 break;
             }
         })
@@ -62,13 +62,8 @@ module.exports = function(dir, struct, baseUrl){
         index = results.map(function(e){
             try{
                 var data = JSON.parse(fs.readFileSync(e));
-                var res = {
-                    url: baseUrl + e.substr(dir.length)
-                };
-                keys.forEach(function(key){
-                    res[key] = data[key];
-                });
-                return res;
+                data.url = baseUrl + e.substr(dir.length)
+                return data;
             }catch(err){
                 console.error("Failed to load", e);
                 throw err;

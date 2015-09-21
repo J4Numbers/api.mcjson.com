@@ -6,7 +6,7 @@ var mkdirp = require('mkdirp');
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
-var jsonqry = require('./util/jsonqry');
+var jsonqry = require('./server/jsonqry');
 var morgan = require('morgan')
 var responseTime = require('response-time')
 var bodyParser = require('body-parser');
@@ -30,7 +30,7 @@ var baseDelDir = path.join(process.cwd(),'_deleted_');
 });
 
 app.use(cors());
-app.use(require('./util/limitticket')({maxTickets:150}));
+app.use(require('./server/limitticket')({maxTickets:150}));
 
 if(dev){
     app.use(responseTime())
@@ -103,7 +103,9 @@ if(editorEnabled){
                         }else{
                             data = JSON.parse(data);
                             for(x in req.body){
-                                data[x] = req.body[x];
+                                if(x != "url"){
+                                    data[x] = req.body[x];
+                                }
                             }
                             fs.writeFile(file,JSON.stringify(data, null, 2),function(err,written){
                                 if(err) { 
