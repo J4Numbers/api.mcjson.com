@@ -2,14 +2,15 @@ require([
 	'PageRouter',
 	'jquery',
 	'page/TablePage',
-	'page/EntryPage'
+	'page/EntryPage',
+	'page/editors/ItemEditor'
 	],
-function(PageRouter, $, TablePage, EntryPage){
+function(PageRouter, $, TablePage, EntryPage, ItemEditor){
 
 	var router = new PageRouter({region:'#main'});
 
-	router.add('/items/:mod/:id', new EntryPage());
-	router.add('/blocks/:mod/:id', new EntryPage());
+	router.add('/items/:mod/:id', new EntryPage( new ItemEditor() ));
+	router.add('/blocks/:mod/:id', new EntryPage( new ItemEditor() ));
 
 	
 	router.add('/:table', new TablePage());
