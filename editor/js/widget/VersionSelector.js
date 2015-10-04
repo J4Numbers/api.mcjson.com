@@ -9,20 +9,20 @@
 	  this.selector = document.createElement("select");
 	  this.selector.addEventListener("change",function(ev){
 	  	ev.stopPropagation();
-	  	self.setAttribute("version", self.selector.value);
+	  	self.setAttribute("value", self.selector.value);
 	  	self.dispatchEvent(new Event('change'));
 	  })
 	  data.then(function(versions){
 	  	versions.map(function(r){return r.id}).reverse().forEach(function(v){
 	  		self.selector.add(new Option(v));
-	  	})
+	  	});
 	  	self.appendChild(self.selector);
-	  	self.selector.value = self.getAttribute("version");
+	  	self.selector.value = self.getAttribute("value");
 	  });
 	};
 
 	VersionSelectorPrototype.attributeChangedCallback = function(name, old, newValue){
-		if(name === "version"){
+		if(name === "value"){
 			this.selector.value = newValue;
 		}
 	}
