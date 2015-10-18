@@ -73,7 +73,7 @@ if(editorEnabled){
 
         var file = path.join(baseDataDir,require('url').parse(req.url).pathname);
         if(file.indexOf(baseDataDir) != 0){
-            res.send(500).end('BAD BASE DIR');;
+            res.send(500).end('BAD BASE DIR');
         }
         oldFile = path.join(
                 baseDelDir, 
