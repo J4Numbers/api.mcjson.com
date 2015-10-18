@@ -1,4 +1,4 @@
-import * as View from 'View';
+import * as View from 'mvc/View';
 export default class ItemEditor extends View {
 	constructor(){
 		super()

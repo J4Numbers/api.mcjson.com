@@ -1,11 +1,7 @@
-require([
-	'PageRouter',
-	'jquery',
-	'page/TablePage',
-	'page/EntryPage',
-	'page/editors/ItemEditor'
-	],
-function(PageRouter, $, TablePage, EntryPage, ItemEditor){
+import PageRouter from 'mvc/PageRouter';
+import TablePage from 'page/TablePage';
+import EntryPage from 'page/EntryPage';
+import ItemEditor from 'page/editors/ItemEditor';
 
 	var router = new PageRouter({region:'#main'});
 
@@ -15,14 +11,10 @@ function(PageRouter, $, TablePage, EntryPage, ItemEditor){
 	
 	router.add('/:table', new TablePage());
 	
-	
-
-	router.add
 	router.on('route',function(route,params){
-	    $(".navbar-nav>li").removeClass("active");
-	    $("ul.navbar-nav>li>a[href='" + location.hash + "']").closest("li").addClass("active");
+	    [].slice.call(document.querySelectorAll(".navbar-nav>li")).forEach((e)=>e.classList.remove("active"));
+	    var selected = document.querySelector("ul.navbar-nav>li>a[href='" + location.hash + "']");
+	    selected && selected.parentNode.classList.add("active");
 	});
 	router.start(true);
 	console.log("App started.");
-
-})

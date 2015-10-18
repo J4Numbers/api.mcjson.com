@@ -49,22 +49,8 @@
 
   <div class="container" id="main">
   </div>
-  <script src="js/vendor/require.min.js"></script>
-  <script src="js/vendor/jquery.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
   <script src="js/vendor/bootstrap.min.js"></script>
-  <script>
-    require.config({
-      paths: {
-        underscore: 'vendor/lodash.min',
-        text:'vendor/text',
-        json:'vendor/json'
-      },
-      exclude:["jquery"],
-      baseUrl:'/js/'
-    });
-  </script>
-  <script src="es6mvc.js"></script>
-  <script src="app.bundle.js"></script>
-  <script>require(['app']);</script>
+  <script src="assets/bundle.js"></script>
 </body>
 </html>
