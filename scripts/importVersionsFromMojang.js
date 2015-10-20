@@ -82,6 +82,7 @@ fetch("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json", funct
 		//Construct a new version record
 		return {
 			id: versionId,
+			mod: 'minecraft',
 			type: e.type,
 			released: e.time
 		}
