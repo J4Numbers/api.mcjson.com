@@ -10,3 +10,4 @@ git status --porcelain >> ../ver-commit.txt
 git commit -F ../ver-commit.txt
 rm ../ver-commit.txt
 git push
+cd ../
