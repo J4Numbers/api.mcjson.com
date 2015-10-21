@@ -6,7 +6,6 @@ var mkdirp = require('mkdirp');
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
-var jsonqry = require('./server/jsonqry');
 var morgan = require('morgan')
 var responseTime = require('response-time')
 var cors = require('cors');
