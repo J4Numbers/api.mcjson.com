@@ -4,8 +4,11 @@ export default class EntryPage extends View {
 	constructor(subEditor){
 		super({
 			events: {
-				"change *": (ev)=>{
-					this.set(ev.target.getAttribute('name'),ev.target.value);
+				"change #general": (ev)=>{
+					this.model.set({
+						mod: this.qs("#general [name=mod]").value,
+						id: this.qs("#general [name=id]").value
+					});
 				}
 			}
 		});
