@@ -1,11 +1,4 @@
 module.exports = {
-  test: {
-    fn: (d)=>`${d.mod}/${d.id}.json`,
-    struct: {
-      id: "ver",
-      type: "eq"
-    }
-  },
   versions: {
     fn: (d)=>`${d.id}.json`,
     struct: {
