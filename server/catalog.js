@@ -69,21 +69,22 @@ class CatalogEntry {
 }
 
 class Catalog {
-	constructor(dir, deletedDir, filenameGen){
+	constructor(dir, deletedDir, filenameGen, cb){
 		this.dir = dir;
 		this.deletedDir = deletedDir;
 		this.catalog = [];
 		this.fng = filenameGen;
-		this.load();
+		this.load(cb);
 	}
 
-	load(){
+	load(cb){
 		walk(this.dir, (err, list)=>{
 			this.catalog = list.map((file) =>{
 				var ce = new CatalogEntry(file);
 				catalogEntryCatalog.set(ce, this);
 				return ce;
 			});
+            cb && cb();
 		});
 	}
 

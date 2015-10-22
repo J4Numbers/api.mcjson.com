@@ -18,11 +18,11 @@ module.exports = function(db, struct){
                 break;
                 case "aeq": //Key in array, must fully exist
                 filtered = filtered.filter((e) => { 
-                    return (key in e) && e[key].map((i)=>{return i.toLowerCase();}).indexOf(query[key].toLowerCase()) != -1; });
+                    return (key in e) && e[key].map( (i)=>{return i.toLowerCase();} ).indexOf(query[key].toLowerCase()) != -1; });
                 break;
                 case "arr": //Key in array, partial match
                 filtered = filtered.filter((e) => { 
-                    return (key in e) && e[key].map((i)=>{return i.toLowerCase().indexOf(query[key].toLowerCase()) != -1; }).reduce((p,r)=>{return p || r;},false);
+                    return (key in e) && e[key].filter( (i)=>{return i.toLowerCase().indexOf(query[key].toLowerCase()) != -1; } ).length > 0;
                 });
                 break;
                 case "pre": //Prefix string check
