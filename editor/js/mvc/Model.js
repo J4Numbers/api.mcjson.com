@@ -29,7 +29,6 @@ export default class Model extends Syncable {
       value: {}
     });
     this.cid = _.uniqueId('m');
-    this.id = null;
     Object.defineProperty(this, "idAttribute", {
       enumerable: false,
       value: options.idAttribute || 'id'
@@ -68,10 +67,18 @@ export default class Model extends Syncable {
       this.changed[k] = attrs[k];
     }
 
-    this.id = this.get(this.idAttribute);
-    
     this.emit("change",this, options);
 
+  }
+
+  id(newId, rawResp){
+    if(newId){
+      this.set(this.idAttribute, newId);
+    }
+    if(rawResp){
+      this.set(this.idAttribute, rawResp[this.idAttribute]); 
+    }
+    return this.get(this.idAttribute);
   }
 
   get(key){
@@ -79,7 +86,7 @@ export default class Model extends Syncable {
   }
 
   url(){
-    return super.url() + (this.id ? '/' + this.id : '');
+    return super.url() + (this.id() ? '/' + this.id() : '');
   }
 
   validate(attr){
@@ -99,6 +106,10 @@ export default class Model extends Syncable {
   }
 
   save(){
-    return super.save(this.toJSON()).then(() =>{this.changed = {}; return this})
+    return super.save(this.toJSON()).then((resp) =>{
+      this.id(null,resp);
+      this.changed = {}; 
+      return this;
+    })
   }
 }
