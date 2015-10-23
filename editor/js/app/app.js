@@ -2,11 +2,13 @@ import PageRouter from 'mvc/PageRouter';
 import TablePage from 'page/TablePage';
 import EntryPage from 'page/EntryPage';
 import ItemEditor from 'page/editors/ItemEditor';
+import BlockEditor from 'page/editors/ItemEditor';
 
 	var router = new PageRouter({region:'#main'});
 
-	router.add('/items/:mod/:id', new EntryPage( new ItemEditor() ));
-	router.add('/blocks/:mod/:id', new EntryPage( new ItemEditor() ));
+	router.add('/items/:mod/:id', new EntryPage( ItemEditor ));
+	router.add('/blocks/:mod/:id', new EntryPage( BlockEditor ));
+	router.add('/versions/:mod/:id', new EntryPage( VersionEditor ));
 
 	
 	router.add('/:table', new TablePage());
