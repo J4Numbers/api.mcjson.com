@@ -5,7 +5,7 @@ export class MetaCategory {
         this.label = label;
         this.entries = [];
         if(data){
-            for(k in data){
+            for(var k in data){
                 this.entries.push(new MetaEntry(k,data[k]));
             }
         }
@@ -28,20 +28,20 @@ export class MetaEntry {
 }
 
 export default class Item extends Model {
-	constructor(){
-		super({},{
+	constructor(attr){
+		super(attr,{
 			urlRoot: '/v1/items/'
 		});
 	}
 
 	url(){
-		return this.urlRoot + `${this.get('mod')}/${this.get('id')}.json`;
+		return this.urlRoot + `${this.get('mod')}/${this.get('id')}`;
 	}
 
     parse(attr){
         // Convert attr.meta to objects
         var _m = [];
-        for(k in attr.meta){
+        for(var k in attr.meta){
             _m.push(new MetaCategory(k, attr.meta[k]));
         }
         attr.meta = _m;
