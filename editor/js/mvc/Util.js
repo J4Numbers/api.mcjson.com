@@ -19,17 +19,14 @@ export function extend(){
 };
 
 export function clone(obj) {
-    if (obj === null || typeof obj !== 'object') {
-        return obj;
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
     }
- 
-    var temp = obj.constructor(); // give temp the original obj's constructor
-    for (var key in obj) {
-        temp[key] = clone(obj[key]);
-    }
- 
-    return temp;
+    return copy;
 }
+
 export function isEqual(x, y){
    if (x === null || x === undefined || y === null || y === undefined) { return x === y; }
     // after this just checking type of one would be enough

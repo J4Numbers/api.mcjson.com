@@ -9,12 +9,15 @@ export default class EntryPage extends View {
 						mod: this.qs("#general [name=mod]").value,
 						id: this.qs("#general [name=id]").value
 					});
+				},
+				"click #save": (ev)=>{
+					this.model.save();
 				}
 			}
 		});
 		if(!subEditor){throw new Error("No sub editor provided.")}
-		this.subEditor = subEditor;
 		this.model = new Item();
+		this.subEditor = new subEditor(this.model);
 		this.on('load',(ctx, done, next)=>{
 			console.log(ctx);
 			this.model.set({
@@ -37,20 +40,18 @@ export default class EntryPage extends View {
 				<label for="id">Id</label>
 				<input class="form-control" type="text" name="id">
 			</div>
-			<div class="form-group">
-				<label for="technical">Technical</label>
-				<input type="checkbox" name="technical">
-			</div>
 		</div>
 		<hr/>
 		<div id="sub-editor">
-		</div>`;
+		</div>
+		<button id="save"></button>
+		`;
 		this.qs('#sub-editor').appendChild(this.subEditor.el);
 	}
 
 	render(){
 		this.qs('[name=mod]').value = this.model.get('mod');
 		this.qs('[name=id]').value = this.model.get('id');
-		this.qs('[name=technical]').checked = this.model.get('technical');
+		this.subEditor.render();
 	}
 }

@@ -1,9 +1,9 @@
 import BaseMetaModel from './BaseMetaModel';
 
-export default class Item extends BaseMetaModel {
+export default class Block extends BaseMetaModel {
 	constructor(attr){
 		super(attr,{
-			urlRoot: '/v1/items/'
+			urlRoot: '/v1/blocks/'
 		});
 	}
 
