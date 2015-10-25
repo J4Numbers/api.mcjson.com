@@ -1,7 +1,7 @@
 import View from 'mvc/View';
-import Item from '../model/Item';
+
 export default class EntryPage extends View {
-	constructor(subEditor){
+	constructor(model, subEditor){
 		super({
 			events: {
 				"change #general": (ev)=>{
@@ -16,7 +16,7 @@ export default class EntryPage extends View {
 			}
 		});
 		if(!subEditor){throw new Error("No sub editor provided.")}
-		this.model = new Item();
+		this.model = model;
 		this.subEditor = new subEditor(this.model);
 		this.on('load',(ctx, done, next)=>{
 			console.log(ctx);
@@ -34,17 +34,17 @@ export default class EntryPage extends View {
 		<form class="form col-md-4">
 			<div class="form-group">
 				<label for="mod">Mod</label>
-				<input class="form-control" type="text" name="mod">
+				<input class="form-control" type="text" name="mod" readonly="true">
 			</div>
 			<div class="form-group">
 				<label for="id">Id</label>
-				<input class="form-control" type="text" name="id">
+				<input class="form-control" type="text" name="id" readonly="true">
 			</div>
 		</div>
 		<hr/>
 		<div id="sub-editor">
 		</div>
-		<button id="save"></button>
+		<button id="save">Save</button>
 		`;
 		this.qs('#sub-editor').appendChild(this.subEditor.el);
 	}

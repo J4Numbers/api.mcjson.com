@@ -1,19 +1,26 @@
 import * as View from 'mvc/View';
-export default class ItemEditor extends View {
-	constructor(){
+export default class VersionEditor extends View {
+	constructor(model){
 		super({
             events: {
                 "change #type": (ev)=>{
                     this.model.set({ type: this.qs("#type").value});
                 },
                 "change .datetime": (ev)=>{
-                    this.model.set({release: new Date( this.qs(".datetime [type=date]").value + " " + this.qs(".datetime [type=time]").value)})
-                }
+                    this.model.set({
+                        released: new Date(
+                            this.qs(".datetime [type=date]").value + 
+                            " " + 
+                            this.qs(".datetime [type=time]").value
+                        ).toISOString()
+                    });
+                },
                 "click #save": (ev)=>{
                     this.model.save();
                 }
             }
         });
+        this.model = model;
 		this.el.innerHTML = `
         <label for='type'>Type:</label>
         <select id='type'>
@@ -29,4 +36,10 @@ export default class ItemEditor extends View {
         // "type":["release","snapshot"]
         // "released": "2015-08-07T14:08:17.000Z",
 	}
+
+    render(){
+        this.qs('#type').value = this.model.get('type');
+        this.qs('.datetime [type=date]').value = this.model.get('released').substr(0, 10);
+        this.qs('.datetime [type=time]').value = this.model.get('released').substr(11, 5);;
+    }
 }
