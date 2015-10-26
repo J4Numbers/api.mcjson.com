@@ -72,8 +72,10 @@ if(process.env.JSONQRY_EDITOR == 'true'){
 		if(fltrd.length){
 			fltrd[0].data = req.body;
 			fltrd[0].save();
+			res.sendStatus(200);
 		}else{
 			db.add(req.body);
+			res.sendStatus(200);
 		}
 	});
 }
