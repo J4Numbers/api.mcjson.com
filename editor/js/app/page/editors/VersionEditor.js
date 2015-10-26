@@ -14,9 +14,6 @@ export default class VersionEditor extends View {
                             this.qs(".datetime [type=time]").value
                         ).toISOString()
                     });
-                },
-                "click #save": (ev)=>{
-                    this.model.save();
                 }
             }
         });
