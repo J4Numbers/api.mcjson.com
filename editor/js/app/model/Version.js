@@ -1,6 +1,6 @@
-import BaseMetaModel from './BaseMetaModel';
+import BaseModel from './BaseModel';
 
-export default class Version extends BaseMetaModel {
+export default class Version extends BaseModel {
 	constructor(attr){
 		super(attr,{
 			urlRoot: '/v1/versions/'
