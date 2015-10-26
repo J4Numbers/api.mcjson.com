@@ -36,7 +36,7 @@ export default class Syncable extends EventEmitter {
   save(body, headers){
     if(!this.url()){throw new Error('url() returned invalid value');}
     headers = headers || {};
-    headers.contentType="application/json";
+    headers["Content-Type"]="application/json";
     return fetch(this.url(),
       {
         method: this.isNew() ? 'POST' : 'PUT',
