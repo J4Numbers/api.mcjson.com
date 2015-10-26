@@ -107,7 +107,9 @@ export default class Model extends Syncable {
 
   save(){
     return super.save(this.toJSON()).then((resp) =>{
-      this.id(null,resp);
+      if(this.isNew()){
+        this.id(null,resp);
+      }
       this.changed = {}; 
       return this;
     })
