@@ -64,7 +64,7 @@ module.exports = function(db, struct){
 if(process.env.JSONQRY_EDITOR == 'true'){
 	router.put('/:mod/:id', [bodyParser.json()], function(req,res){
 		if(req.body.mod != req.params.mod || req.body.id != req.params.id){
-			res.send(406);
+			res.send(400);
 			return;
 		}
 
@@ -78,6 +78,22 @@ if(process.env.JSONQRY_EDITOR == 'true'){
 			res.sendStatus(200);
 		}
 	});
+
+	router.post('/:mod/:id', [bodyParser.json()], function(req,res){
+		if(req.body.mod != req.params.mod || req.body.id != req.params.id){
+			res.send(400);
+			return;
+		}
+		var fltrd = db.catalog.filter((f)=>f.data.mod == req.params.mod && f.data.id == req.params.id);
+		if(fltrd.length === 0){
+			db.add(req.body);
+			res.sendStatus(200);
+		}else{
+			res.sendStatus(405);
+		}
+	});
+}
+
 }
 
 	return router;
