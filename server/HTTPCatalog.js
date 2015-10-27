@@ -93,8 +93,5 @@ if(process.env.JSONQRY_EDITOR == 'true'){
 		}
 	});
 }
-
-}
-
 	return router;
 };
