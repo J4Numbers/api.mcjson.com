@@ -4,7 +4,6 @@ export default class ItemEditor extends View {
 		super();
 		this.model = model;
 		this.el.innerHTML = `
-
 		<div class="metadata">
 		</div>`;
 	}

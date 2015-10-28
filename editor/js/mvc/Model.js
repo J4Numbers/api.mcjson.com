@@ -21,6 +21,7 @@ export default class Model extends Syncable {
     options = options || {};
     Object.defineProperty(this, "attributes", {
       enumerable: false,
+      writable: true,
       value: {}
     });
     Object.defineProperty(this, "changed", {
@@ -37,6 +38,12 @@ export default class Model extends Syncable {
     if(options.collection){this.collection = options.collection;}
 
     this.set(attr);
+  }
+
+  clear(){
+    this.attributes = {};
+    this.changed = {};
+    return this;
   }
 
   /**
