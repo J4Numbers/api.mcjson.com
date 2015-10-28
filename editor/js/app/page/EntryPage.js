@@ -28,6 +28,17 @@ export default class EntryPage extends View {
 				console.log(this.model.url(),this.model.attributes)
 				this.render();
 				done();
+			}).catch((resp)=>{
+				if(resp.status == 404){
+					//TODO: SHOW 404 OR MAKE IT A NEW PAGE
+					this.model.clear();
+					this.model.set({
+						mod: ctx.params.mod,
+						id: ctx.params.id
+					});
+					this.render();
+					done();
+				}
 			});
 		});
 		this.el.innerHTML = `<div id="general" class="row">
