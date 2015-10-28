@@ -31,6 +31,7 @@ export default class PageRouter extends Router {
       if(this.currentView){
         this.currentView.emit("unload");
         this.region.removeChild(this.currentView.el);
+        this.currentView = null;
       }
       //emit load to the page so it can re-render if needed
       //Passed context, done() (render to DOM), and next() to continue 
