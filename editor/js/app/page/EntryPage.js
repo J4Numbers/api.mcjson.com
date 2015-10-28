@@ -55,7 +55,8 @@ export default class EntryPage extends View {
 		<hr/>
 		<div id="sub-editor">
 		</div>
-		<button id="save">Save</button>
+		<hr/>
+		<button class="btn" id="save">Save</button>
 		`;
 		this.qs('#sub-editor').appendChild(this.subEditor.el);
 	}

@@ -3,17 +3,13 @@ export default class ItemEditor extends View {
 	constructor(model){
 		super();
 		this.model = model;
-		this.el.innerHTML = `
-		<div class="metadata">
-		</div>`;
+		this.el.innerHTML = `<meta-category-list></meta-category-list>`;
+		this.model.on('sync',()=>{
+			this.qs("meta-category-list").setValue(this.model.get('meta'));
+		})
 	}
 
 	render(){
-		this.qs(".metadata").innerHTML = this.model.get('meta').map((meta)=>{
-			return `<div class="meta-category" id="meta-category-${meta.label}">
-			<h3>${meta.label}</h3>` +
-			meta.entries.map((entry)=>`<div><strong>${entry.label}</strong> : ${entry.value}</div>`).join("\n") +
-			`</div>`;
-		}).join("\n");
+
 	}
 }

@@ -109,7 +109,7 @@ export default class Model extends Syncable {
   }
 
   fetch(){
-    return super.fetch().then( (json) =>{console.log("JSON",json);this.set(json);this.changed = {};return this;})
+    return super.fetch().then( (json) =>{this.set(json);this.changed = {};this.emit("sync",this);return this;})
   }
 
   save(){
