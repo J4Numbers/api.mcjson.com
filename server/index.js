@@ -11,7 +11,7 @@ var responseTime = require('response-time')
 var cors = require('cors');
 //Init app and settings
 var app = express();
-var dataIndex = require("./catalog.config.js");
+var dataIndex = require("../catalog.config.js");
 var dev = process.env.NODE_ENV != 'production';
 var editorEnabled = process.env.JSONQRY_EDITOR == 'true';
 //Build dirs
