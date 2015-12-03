@@ -28,7 +28,7 @@ var baseDelDir = path.join(process.cwd(),'_deleted_');
 });
 
 app.use(cors());
-app.use(require('./server/limitticket')({maxTickets:150}));
+app.use(require('./limitticket')({maxTickets:150}));
 
 if(dev){
     app.use(responseTime())
@@ -41,8 +41,8 @@ if(editorEnabled){
     app.use(express.static('editor'));
 }
 
-var Catalog = require('./server/catalog').Catalog;
-var HTTPCatalog = require('./server/HTTPCatalog');
+var Catalog = require('./catalog').Catalog;
+var HTTPCatalog = require('./HTTPCatalog');
 
 var mounted = [];
 fs.readdir(baseDataDir, function(err,mounts){

@@ -1,11 +1,11 @@
 import PageRouter from 'mvc/PageRouter';
 
-import TablePage from 'page/TablePage';
-import EntryPage from 'page/EntryPage';
+import TablePage from './page/TablePage';
+import EntryPage from './page/EntryPage';
 
-import ItemEditor from 'page/editors/ItemEditor';
-import BlockEditor from 'page/editors/BlockEditor';
-import VersionEditor from 'page/editors/VersionEditor';
+import ItemEditor from './page/editors/ItemEditor';
+import BlockEditor from './page/editors/BlockEditor';
+import VersionEditor from './page/editors/VersionEditor';
 
 import Item from './model/Item';
 import Block from './model/Block';

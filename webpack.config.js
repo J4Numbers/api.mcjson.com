@@ -1,17 +1,15 @@
 var path = require('path');
 module.exports = {
 	resolve: {
-		root: ['./js/app'].map((p)=>path.resolve(p)),
-		fallback: ['./js/app'].map((p)=>path.resolve(p)),
+		root: ['./editor/js/app'].map((p)=>path.resolve(p)),
 		alias: {
-			mvc: path.resolve('./js/mvc')
+			'mvc':'es6mvc'
 		}
 	},
 	module: {
 		loaders: [
 			{
 				test: /\.js?$/,
-				exclude: /(node_modules|bower_components)/,
 				loader: 'babel',
 				query:{
 					modules: 'amd',
@@ -22,7 +20,7 @@ module.exports = {
 	},
 	entry: "app.js",
     output: {
-        path: __dirname + "/assets",
+        path: __dirname + "/editor/assets",
         filename: "bundle.js"
     },
     devtool: 'source-map'
