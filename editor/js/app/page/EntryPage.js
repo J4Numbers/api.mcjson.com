@@ -19,7 +19,6 @@ export default class EntryPage extends View {
 		this.model = model;
 		this.subEditor = new subEditor(this.model);
 		this.on('load',(ctx, done, next)=>{
-			console.log(ctx);
 			this.model.set({
 				mod: ctx.params.mod,
 				id: ctx.params.id
