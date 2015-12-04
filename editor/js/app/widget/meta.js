@@ -11,8 +11,8 @@ export class MetaCategoryList extends View {
 			this.delegateEvents({
 				"click #add-cat": ()=>{
 					var cat = new MetaCategory();
-					cat.setValue(e);
 					this.subViews.push(cat);
+					this.qs('.category-list').appendChild(cat.el);
 				}
 			});
 		}
@@ -44,10 +44,13 @@ export class MetaCategory extends View {
 			</div>
 			<button class="btn" id="add-entry">Add Entry</button>`;
 			this.delegateEvents({
-				"click #add-cat": ()=>{
+				"click #add-entry": ()=>{
 					var cat = new MetaEntry();
 					this.subViews.push(cat);
-					this.qs(".category-list").appendChild(cat.el);
+					var div = document.createElement("div");
+					div.innerHTML = `<a href="#" id="remove">&times</a>`;
+					div.insertBefore(cat.el, div.querySelector("a"));
+					this.qs(".entry-list").appendChild(div);
 				}
 			});
 		}
