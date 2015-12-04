@@ -38,6 +38,7 @@ export default class EntryPage extends View {
 					this.render();
 					done();
 				}
+				console.error(resp.stack);
 			});
 		});
 		this.el.innerHTML = `<div id="general" class="row">
