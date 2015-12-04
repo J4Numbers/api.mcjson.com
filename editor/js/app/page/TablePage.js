@@ -22,7 +22,7 @@ export default class TablePage extends View {
     <th>Edit</th>
     </tr>
     </thead>
-    <tbody id="entries"></tbody
+    <tbody id="entries"></tbody>
     </table>`;
     this.delegateEvents({
       "keyup #filter":()=>{
@@ -46,7 +46,7 @@ export default class TablePage extends View {
       <td>${e.id}</td>
       <td><version-select value="${e.introduced_at}"/></td>
       <td><version-select value="${e.changed_at}"/></td>
-      <td><button class="btn btn-primary edit">Edit</button></td>
+      <td><a href="#/${this.table}/${e.mod}/${e.id}" class="btn btn-primary edit">Edit</a></td>
     </tr>`).join('\n');
   }
 
