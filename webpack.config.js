@@ -10,12 +10,19 @@ module.exports = {
 		loaders: [
 			{
 				test: /\.js?$/,
-				loader: 'babel',
+				loader: 'babel-loader',
 				query:{
-					modules: 'amd',
-					optional: ['runtime']
+					presets: ['es2015']
 				}
-			}
+			},
+			{
+	        test: /.jsx?$/,
+	        loader: 'babel-loader',
+	        exclude: /node_modules/,
+	        query: {
+	          presets: ['es2015', 'react']
+	        }
+      }
 		]
 	},
 	entry: "app.js",
