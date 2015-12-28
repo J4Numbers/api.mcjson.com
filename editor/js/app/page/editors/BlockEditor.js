@@ -1,5 +1,5 @@
-import * as View from 'mvc/View';
-import {MetaCategoryList} from '../../widget/meta';
+import View from 'mvc/View';
+import {MetaCategoryList} from '../../widget/meta.jsx';
 export default class BlockEditor extends View {
 	constructor(model){
 		super();

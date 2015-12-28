@@ -1,4 +1,4 @@
-import * as View from 'mvc/View';
+import View from 'mvc/View';
 export default class TablePage extends View {
   constructor(){
     super();

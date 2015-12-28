@@ -1,44 +1,31 @@
-import * as View from 'mvc/View';
-export class MetaCategoryList extends View {
+import React from 'react';
+import View from 'mvc/View';
+export class MetaCategoryList extends React.Component {
 
-		constructor(){
-			super();
-			this.subViews = [];
-			this.el.innerHTML = `<div class='category-list'>
-			</div>
-			<hr/>
-			<button class="btn" id="add-cat">Add Category</button>`;
-			this.delegateEvents({
-				"click #add-cat": ()=>{
-					var cat = new MetaCategory();
-					this.subViews.push(cat);
-					this.qs('.category-list').appendChild(cat.el);
-				}
-			});
-		}
+		render(){
+			var categories = this.props.cat.map((c)=>{return <MetaCategory category={c}></MetaCategory>;})
+			return <div class="category-list">
+				<div class='categories'>
+				{categories}
+				</div>
+				<hr/>
+				<button 
+					class="btn" 
+					id="add-cat"
+					onClick=handleAddCat
+				>Add Category</button>
+				</div>;
+		}	
 
-		getValue(){
-			return this.subViews.map((e)=>e.getValue());
-		}
-
-		setValue(v){
-			this.qs(".category-list").innerHTML = "";
-			this.subViews = [];
-			var catList = this.qs(".category-list");
-			v.forEach((e)=>{
-					var cat = new MetaCategory();
-					cat.setValue(e);
-					this.subViews.push(cat);
-			});
-			this.subViews.map((e)=>this.qs(".category-list").appendChild(e.el));
+		handleAddCat(){
+			var cat = new MetaCategory();
 		}
 	}
 
-export class MetaCategory extends View {
+export class MetaCategory extends React.Component {
 
 		constructor(){
 			super();
-			this.subViews = [];
 			this.el.innerHTML = `<input type="text" placeholder="category name" id="cat-label" />
 			<div class='entry-list'>
 			</div>
@@ -53,6 +40,16 @@ export class MetaCategory extends View {
 					this.qs(".entry-list").appendChild(div);
 				}
 			});
+		}
+
+		render(){
+
+			return <div class="meta-category">
+				<input type="text" placeholder="category name" id="cat-label" />
+				<div class='entry-list'>
+				</div>
+				<button class="btn" id="add-entry">Add Entry</button>
+			</div>;
 		}
 
 		getValue(){
