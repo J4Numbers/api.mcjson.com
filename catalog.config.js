@@ -29,7 +29,9 @@ module.exports = {
     struct: {
       id: filters.str,
       mod: filters.str,
-      name: filters.str
+      name: filters.str,
+      max_level: filters.numeric,
+      introduced_at: filters.ver
     }
   },
   entities: {
@@ -40,17 +42,17 @@ module.exports = {
       introduced_at: filters.ver,
       changed_at: filters.ver
     }
-  },
-  commands: {
-    struct: {
-      mod: filters.str,
-      name: filters.str
-    }
-  },
-  crafting: {
-    struct: {
-      mod: filters.str,
-      name: filters.str
-    }
   }
+//   commands: {
+//     struct: {
+//       mod: filters.str,
+//       name: filters.str
+//     }
+//   },
+//   crafting: {
+//     struct: {
+//       mod: filters.str,
+//       name: filters.str
+//     }
+//   }
 }
