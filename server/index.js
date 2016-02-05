@@ -45,26 +45,24 @@ var Catalog = require('./catalog').Catalog;
 var HTTPCatalog = require('./HTTPCatalog');
 
 var mounted = [];
-fs.readdir(baseDataDir, function(err,mounts){
-    mounts.forEach(function(mount){
-        fs.stat('./data/' + mount,function(err,stats){
-            if(err) { throw err;}
-            if(stats.isDirectory()){
-                var httpCatalog = HTTPCatalog(
-                    new Catalog( 
-                        path.join(baseDataDir, mount), 
-                        path.join(baseDelDir, mount) , 
-                        dataIndex[mount].fn || ((d)=>`${d.mod}/${d.id}.json`)
-                    ),
-                    dataIndex[mount].struct
-                );
-                console.log("mounting", mount)
-                app.use(`/v1/${mount}`, httpCatalog);
-            }
-        });
+Object.keys(dataIndex).forEach(function(mount){
+    fs.stat('./data/' + mount,function(err,stats){
+        if(err) { throw err;}
+        if(stats.isDirectory()){
+            var httpCatalog = HTTPCatalog(
+                new Catalog( 
+                    path.join(baseDataDir, mount), 
+                    path.join(baseDelDir, mount) , 
+                    dataIndex[mount].fn || ((d)=>`${d.mod}/${d.id}.json`)
+                ),
+                dataIndex[mount].struct
+            );
+            console.log("mounting", mount)
+            app.use(`/v1/${mount}`, httpCatalog);
+        }
     });
-    
 });
+    
 
 var server = app.listen(process.argv[2] || process.env.PORT, function () {
   var host = server.address().address;
