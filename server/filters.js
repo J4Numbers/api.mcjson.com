@@ -1,4 +1,6 @@
 var semver = require('semver');
+
+
 module.exports.eq = function(filtered, key, val){ 
 return filtered.filter((e) => { return (key in e) && e[key].toLowerCase() == val.toLowerCase(); });
 };//Straight up equality test
@@ -25,3 +27,19 @@ return filtered.filter((e) => { return (key in e) && e[key].toLowerCase().indexO
 module.exports.ver = function(filtered, key, val){ 
 return filtered.filter((e) => { return (key in e) && semver.satisfies(e[key], val); });
 };//Semver check
+
+module.exports.numeric = function(filtered, key, val){
+    return filtered.filter((e) => {
+        var r = /^(<|\>|\<\=|\>\=)?(\d+)/.exec(val);
+        var op = r[1];
+        var v = parseInt(r[2]); 
+        return (key in e) && 
+        (
+            (op == ">" &&  e[key] > v) ||
+            (op == ">=" &&  e[key] >= v) ||
+            (op == "<" &&  e[key] < v) ||
+            (op == "<=" &&  e[key] <= v) ||
+            (!op && e[key] == v)
+        ) 
+    });
+}
