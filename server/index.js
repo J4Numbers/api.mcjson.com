@@ -28,17 +28,17 @@ var baseDelDir = path.join(process.cwd(),'_deleted_');
 });
 
 app.use(cors());
-app.use(require('./limitticket')({maxTickets:150}));
+//app.use(require('./limitticket')({maxTickets:150}));
 
 if(dev){
     app.use(responseTime())
     app.use(morgan('combined'));
 }
 
-app.use('/v1/',express.static('data',{maxAge:3600000}));
+//app.use('/v1/',express.static('data',{maxAge:3600000}));
 
 if(editorEnabled){
-    app.use(express.static('editor'));
+    app.use('/static/', express.static('editor'));
 }
 
 var Catalog = require('./catalog').Catalog;
@@ -50,7 +50,7 @@ fs.readdir(baseDataDir, function(err,mounts){
         fs.stat('./data/' + mount,function(err,stats){
             if(err) { throw err;}
             if(stats.isDirectory()){
-                var httpCatalog = new HTTPCatalog(
+                var httpCatalog = HTTPCatalog(
                     new Catalog( 
                         path.join(baseDataDir, mount), 
                         path.join(baseDelDir, mount) , 
