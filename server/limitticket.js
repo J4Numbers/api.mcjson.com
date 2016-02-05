@@ -3,7 +3,7 @@ Ticket based rate-limiter, similar to github API
 (infact we borrow their ratelimit headers)
 */
 module.exports = function(_opts){
-    var opts = {
+    var opts = Object.assign({
         cache: null,    // Ratelimit cache name, use to denote 
                         // different rate limiting to clients.
         whitelist:[],   // Allow these IP addresses to bypass limit
@@ -15,8 +15,8 @@ module.exports = function(_opts){
         expiredHandler: function(req, res){
             res.sendStatus(429).end('See X-RateLimit-* headers for better rate-limit handling.');
         } //Connect Handler to invoke on ticket expiry.
-    };
-    for(x in (_opts||{})){opts[x] = _opts[x];}
+    }, _opts||{} );
+    
 
 
     var tickets = {};
