@@ -1,59 +1,56 @@
+var filters = require('./server/filters.js');
 module.exports = {
   versions: {
     fn: (d)=>`${d.id}.json`,
     struct: {
-      id: "ver",
-      type: "eq"
+      id: filters.ver,
+      type: filters.eq
     }
   },
   items: {
     struct: {
-      id: "str",
-      mod: "str",
-      name: "str",
-      introduced_at: "ver",
-      changed_at: "ver",
-      technical: null,
-      meta: null
+      id: filters.str,
+      mod: filters.str,
+      name: filters.str,
+      introduced_at: filters.ver,
+      changed_at: filters.ver
     }
   },
   blocks: {
     struct: {
-      id: "str",
-      mod: "str",
-      name: "str",
-      introduced_at: "ver",
-      changed_at: "ver",
-      technical: null,
-      meta: null
+      id: filters.str,
+      mod: filters.str,
+      name: filters.str,
+      introduced_at: filters.ver,
+      changed_at: filters.ver
     }
   },
   enchantments: {
     struct: {
-      id: "str",
-      mod: "str",
-      name: "str"
+      id: filters.str,
+      mod: filters.str,
+      name: filters.str
     }
   },
   entities: {
     struct: {
-      id: "str",
-      mod: "str",
-      name: "str",
-      introduced_at: "ver",
-      changed_at: "ver"
+      id: filters.str,
+      mod: filters.str,
+      name: filters.str,
+      introduced_at: filters.ver,
+      changed_at: filters.ver
     }
   },
   commands: {
     struct: {
-      mod: "str",
-      name: "str"
+      mod: filters.str,
+      name: filters.str
     }
   },
   crafting: {
     struct: {
-      mod: "str",
-      name: "str"
+      mod: filters.str,
+      name: filters.str
     }
   }
 }

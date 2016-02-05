@@ -9,29 +9,7 @@ module.exports = function(db, struct){
 		var keys = Object.keys(struct);
 		keys.forEach(function(key){
             if(!query[key]) { return; } //Skip if not specified.
-            switch(struct[key]){
-                case "eq": //Straight up equality test
-                filtered = filtered.filter((e) => { return (key in e) && e[key].toLowerCase() == query[key].toLowerCase(); });
-                break;
-                case "str": //anywhere search string
-                filtered = filtered.filter((e) => { return (key in e) && e[key].toLowerCase().indexOf(query[key].toLowerCase()) != -1; });
-                break;
-                case "aeq": //Key in array, must fully exist
-                filtered = filtered.filter((e) => { 
-                    return (key in e) && e[key].map( (i)=>{return i.toLowerCase();} ).indexOf(query[key].toLowerCase()) != -1; });
-                break;
-                case "arr": //Key in array, partial match
-                filtered = filtered.filter((e) => { 
-                    return (key in e) && e[key].filter( (i)=>{return i.toLowerCase().indexOf(query[key].toLowerCase()) != -1; } ).length > 0;
-                });
-                break;
-                case "pre": //Prefix string check
-                filtered = filtered.filter((e) => { return (key in e) && e[key].toLowerCase().indexOf(query[key].toLowerCase())==0; });
-                break;
-                case "ver": //Semver check
-                filtered = filtered.filter((e) => { return (key in e) && semver.satisfies(e[key], query[key]); });
-                break;
-            }
+            filtered = struct[key](filtered, key, query[key]);
         });
 		return filtered;
 	}
