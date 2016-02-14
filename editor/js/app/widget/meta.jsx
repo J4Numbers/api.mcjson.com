@@ -10,9 +10,9 @@ export class MetaCategoryList extends React.Component {
 				</div>
 				<hr/>
 				<button 
-					class="btn" 
+					className="btn" 
 					id="add-cat"
-					onClick=handleAddCat
+					onClick={handleAddCat}
 				>Add Category</button>
 				</div>;
 		}	
