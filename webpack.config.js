@@ -25,7 +25,7 @@ module.exports = {
             }
         ]
     },
-    entry: "app.js",
+    entry: "app.jsx",
     output: {
         path: __dirname + "/editor/assets",
         filename: "bundle.js"
