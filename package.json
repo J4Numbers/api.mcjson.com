@@ -23,12 +23,13 @@
     "es6mvc": "git+https://bitbucket.org/tehbeard/es6mvc.git",
     "express": "^4.13.3",
     "fetch": "^0.3.6",
-    "lodash": "^2.4.2",
+    "lodash": "^4.3.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "morgan": "^1.6.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
+    "redux": "^3.3.1",
     "response-time": "^2.3.1",
     "semver": "^4.3.6"
   }
