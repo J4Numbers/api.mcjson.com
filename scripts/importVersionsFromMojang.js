@@ -3,6 +3,7 @@ var path = require('path');
 var fs = require('fs');
 var dataDir = path.normalize(process.cwd() + '/data/');
 var fetch = require("fetch").fetchUrl;
+var _ = require("lodash");
 
 //Initialize base directory
 try{
@@ -24,9 +25,10 @@ fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json", function(
 
 	//Make a magic future version as a basis for any snapshots.
 	versionData.versions.push({
+
       "id": semver.inc(versionData.latest.release,"minor"),
-      "time": (function(){var now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
-      "releaseTime": (function(){var now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
+      "time": (function(){now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
+      "releaseTime": (function(){now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
       "type": "release",
       "__future_version__": true //DO NOT REMOVE, USED TO HIDE RELEASE FROM BEING OUTPUT
     });
@@ -65,7 +67,8 @@ fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json", function(
 	},{});
 
 	//Dump out all versions to the filesystem
-	filteredData.filter(function(e){ return !e.__future_version__;}) //EXCLUDE OUR VERSION WE MADE FOR SNAPSHOT
+	var versionEntries = filteredData
+	.filter(function(e){ return !e.__future_version__;}) //EXCLUDE OUR VERSION WE MADE FOR SNAPSHOT
 	.map(function(e){
 		//Fix snapshot versions to major.minor.patch-snapshot format.
 		var versionId = e.id;
