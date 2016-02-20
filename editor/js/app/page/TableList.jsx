@@ -45,7 +45,7 @@ export default class TableList extends React.Component {
     </thead>
     <tbody id="entries">
     {this.props.entries
-        .filter((e)=>this.state.filter.test(e.mod) || this.state.filter.test(e.id))
+        .filter((e)=>this.state.filter.test(e.id))
         .concat()
         .sort(this.state.sortFn)
         .map((e)=>
