@@ -7,6 +7,8 @@ import TableList from './page/TableList.jsx';
 import VersionEditor from './page/editors/VersionEditor.jsx';
 import EnchantmentEditor from './page/editors/EnchantmentEditor.jsx';
 
+import MetaEditor from './widget/MetaEditor.jsx';
+
 import {loadVersionData} from './widget/Version.jsx';
 
 	var router = new Router();
@@ -28,6 +30,14 @@ import {loadVersionData} from './widget/Version.jsx';
         .then((resp) => resp.json())
         .then((data) => {
             ReactDOM.render(<EnchantmentEditor data={data}/>, document.querySelector("#main"))
+        });
+    });
+    
+    router.add('/blocks/:mod/:id', function(ctx, next){
+        return fetch(`/v1/blocks/${ctx.params.mod}/${ctx.params.id}`)
+        .then((resp) => resp.json())
+        .then((data) => {
+            ReactDOM.render(<MetaEditor data={data}/>, document.querySelector("#main"))
         });
     });
 	
