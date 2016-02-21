@@ -18,7 +18,7 @@ import {loadVersionData} from './widget/Version.jsx';
 	// router.add('/versions/:mod/:id', new EntryPage( new Version(), VersionEditor ));
 
     router.add('/versions/:version', function(ctx, next){
-        return fetch('/v1/versions/minecraft/' + ctx.params.version)
+        return fetch('/v1/versions/minecraft/' + ctx.params.version,{credentials:'include'})
         .then((resp) => resp.json())
         .then((data) => {
             ReactDOM.render(<VersionEditor data={data}  onUpdate={(e)=>console.log(e)} />, document.querySelector("#main"))
@@ -26,7 +26,7 @@ import {loadVersionData} from './widget/Version.jsx';
     });
     
     router.add('/enchantments/:mod/:id', function(ctx, next){
-        return fetch(`/v1/enchantments/${ctx.params.mod}/${ctx.params.id}`)
+        return fetch(`/v1/enchantments/${ctx.params.mod}/${ctx.params.id}`,{credentials:'include'})
         .then((resp) => resp.json())
         .then((data) => {
             ReactDOM.render(<EnchantmentEditor data={data}/>, document.querySelector("#main"))
@@ -34,7 +34,7 @@ import {loadVersionData} from './widget/Version.jsx';
     });
     
     router.add('/blocks/:mod/:id', function(ctx, next){
-        return fetch(`/v1/blocks/${ctx.params.mod}/${ctx.params.id}`)
+        return fetch(`/v1/blocks/${ctx.params.mod}/${ctx.params.id}`,{credentials:'include'})
         .then((resp) => resp.json())
         .then((data) => {
             ReactDOM.render(<MetaEditor data={data}/>, document.querySelector("#main"))
@@ -42,7 +42,7 @@ import {loadVersionData} from './widget/Version.jsx';
     });
 	
 	router.add('/:table', function(ctx, next){
-        return fetch('/v1/' + ctx.params.table)
+        return fetch('/v1/' + ctx.params.table,{credentials:'include'})
         .then((resp) => resp.json())
         .then((data) => {
             ReactDOM.render(<TableList entries={data} tableName={ctx.params.table}/>, document.querySelector("#main"))

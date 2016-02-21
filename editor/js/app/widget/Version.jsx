@@ -5,7 +5,7 @@ import React from 'react';
 let versionData = [];
 
 export function loadVersionData(){
-    return fetch("/v1/versions").then((resp)=>resp.json()).then((d)=>{versionData = d.map((v)=>v.id)});
+    return fetch("/v1/versions",{credentials:'include'}).then((resp)=>resp.json()).then((d)=>{versionData = d.map((v)=>v.id)});
 }
 
 export class Version extends React.Component {
