@@ -5,6 +5,9 @@ import Router from 'mvc/Router';
 
 import TableList from './page/TableList.jsx';
 import VersionEditor from './page/editors/VersionEditor.jsx';
+import EnchantmentEditor from './page/editors/EnchantmentEditor.jsx';
+
+import {loadVersionData} from './widget/Version.jsx';
 
 	var router = new Router();
 
@@ -17,6 +20,14 @@ import VersionEditor from './page/editors/VersionEditor.jsx';
         .then((resp) => resp.json())
         .then((data) => {
             ReactDOM.render(<VersionEditor data={data}  onUpdate={(e)=>console.log(e)} />, document.querySelector("#main"))
+        });
+    });
+    
+    router.add('/enchantments/:mod/:id', function(ctx, next){
+        return fetch(`/v1/enchantments/${ctx.params.mod}/${ctx.params.id}`)
+        .then((resp) => resp.json())
+        .then((data) => {
+            ReactDOM.render(<EnchantmentEditor data={data}/>, document.querySelector("#main"))
         });
     });
 	
@@ -35,5 +46,9 @@ import VersionEditor from './page/editors/VersionEditor.jsx';
 	    var selected = document.querySelector("ul.navbar-nav>li>a[href='" + location.hash + "']");
 	    selected && selected.parentNode.classList.add("active");
 	});
-	router.start(true);
-	console.log("App started.");
+    
+    console.log("Preloading data");
+    loadVersionData().then(()=>{
+	   router.start(true);
+	   console.log("App started.");
+    })

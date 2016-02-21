@@ -8,7 +8,7 @@ export default class TableList extends React.Component {
     {
         super();
         this.state = {
-            filter: new RegExp(""),
+            filter: new RegExp("","i"),
             sortFn: ()=>0
         };
         this.fltrRel = (a,b)=>compare(b.introduced_at,a.introduced_at);
@@ -29,7 +29,7 @@ export default class TableList extends React.Component {
         this.setState(
             update(
                 this.state,
-                {filter: {$set: new RegExp(ev.target.value)} }
+                {filter: {$set: new RegExp(ev.target.value,"i")} }
             )
         );
         }}/>
