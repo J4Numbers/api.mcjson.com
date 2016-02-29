@@ -26,7 +26,7 @@ fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json", function(
 	//Make a magic future version as a basis for any snapshots.
 	versionData.versions.push({
 
-      "id": semver.inc(versionData.latest.release,"minor"),
+      "id": "99.99.99",//semver.inc(versionData.latest.release,"minor"),
       "time": (function(){now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
       "releaseTime": (function(){now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
       "type": "release",
@@ -38,6 +38,7 @@ fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json", function(
 	.filter(function(e){ return ['release','snapshot'].indexOf(e.type) !== -1})
 	.map(function(e){
 		//Patch bad version numbers to semver major.minor.patch format
+                console.log(e);
 		if(e.id.split(".").length == 2){
 			console.log("patching",e.id);
 			e.id = e.id + '.0';
