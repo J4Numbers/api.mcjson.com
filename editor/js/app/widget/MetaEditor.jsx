@@ -11,11 +11,10 @@ export default class MetaEditor extends React.Component {
         return <div>
             <BaseEditor data={this.props.data} onUpdate={this.props.onUpdate}/>
             <div className="meta-group">
-            {this.props.data.meta ? Object.keys(this.props.data.meta).map((key)=>{
-                var metadata = this.props.data.meta[key];
-                return <div className="panel panel-default" key={key}>
+            {this.props.data.meta ? this.props.data.meta.map((meta)=>{
+                return <div className="panel panel-default" key={meta.key}>
                         <div className="panel-heading">
-                            <h3 className="panel-title">{key}</h3>
+                            <h3 className="panel-title">{meta.key}</h3>
                         </div>
                         <div className="panel-body">
                         <table className="table table-striped">
@@ -27,16 +26,16 @@ export default class MetaEditor extends React.Component {
                             </tr>
                             </thead>
                             <tbody>
-                        {Object.keys(metadata).map((name)=>{
-                            return <tr key={name}>
-                            <td>{name}</td>
-                            <td>{metadata[name]}</td>
+                                {meta.values.map((kv)=>{
+                            return <tr key={kv.value}>
+                            <td>{kv.value}</td>
+                            <td>{kv.mask}</td>
                             <td><button className="btn btn-danger">Delete</button></td>
                             </tr>
                         })}
                         </tbody>
                         </table>
-                            <pre>{JSON.stringify(metadata,null,2)}</pre>
+                            <pre>{JSON.stringify(meta,null,2)}</pre>
                         </div>
                         </div>
 

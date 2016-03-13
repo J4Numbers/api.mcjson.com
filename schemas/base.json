@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "mod": {
+            "description": "Mod id",
+            "type": "string"
+        },
+        "id": {
+            "description": "id",
+            "type": "string"
+        },
+        "name": {
+            "description": "Human name",
+            "type": "string"
+        },
+        "introduced_at": {
+            "description": "Version introduced to game",
+            "$ref": "util/version.json"
+        },
+        "changed_at": {
+            "description": "Version last updated",
+            "$ref": "util/version.json"
+        }
+    },
+    "required":["mod","id","name","introduced_at","changed_at"]
+}

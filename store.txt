@@ -1,9 +1,0 @@
-{
-    ui:{
-        //Any UI state here
-    },
-    url:"", //Url to save back to
-    data:{
-        //Specific object data
-    }
-}

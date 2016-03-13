@@ -40,6 +40,13 @@ import {loadVersionData} from './widget/Version.jsx';
             ReactDOM.render(<MetaEditor data={data}/>, document.querySelector("#main"))
         });
     });
+    router.add('/items/:mod/:id', function(ctx, next){
+        return fetch(`/v1/items/${ctx.params.mod}/${ctx.params.id}`,{credentials:'include'})
+        .then((resp) => resp.json())
+        .then((data) => {
+            ReactDOM.render(<MetaEditor data={data}/>, document.querySelector("#main"))
+        });
+    });
 	
 	router.add('/:table', function(ctx, next){
         return fetch('/v1/' + ctx.params.table,{credentials:'include'})

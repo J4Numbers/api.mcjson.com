@@ -1,0 +1,55 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Block",
+    "description": "Defines a block entry in the mcjson database",
+    "type": "object",
+    "allOf": [
+        { "$ref" : "base.json"},
+        {
+            "type": "object",
+            "properties": {
+                "meta": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "util/meta.json"
+                    }
+                },
+                "flags": {
+                    "type": "object",
+                    "properties": {
+                        "physics": {
+                            "description": "Does this block obey physics naturaly",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "no-piston": {
+                            "description": "Does this block prevent piston movement",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "transparent": {
+                            "description": "Is this block transparent (no suffocate damage)",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "light-emit":{
+                            "description": "Amount of light emitted by block",
+                            "type":"integer",
+                            "default": 0,
+                            "minimum": 0,
+                            "maximum": 15
+                        },
+                        "light-decay":{
+                            "description": "Amount of light that is dropped as it passes through this block",
+                            "type":"integer",
+                            "default": 15,
+                            "minimum": 0,
+                            "maximum": 15
+                        }
+                    }                    
+                }
+            }
+        }
+    ],
+    "additionalItems": false
+}
