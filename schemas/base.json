@@ -3,22 +3,27 @@
     "type": "object",
     "properties": {
         "mod": {
+            "title":"Mod",
             "description": "Mod id",
             "type": "string"
         },
         "id": {
+            "title":"id",
             "description": "id",
             "type": "string"
         },
         "name": {
+            "title":"Name",
             "description": "Human name",
             "type": "string"
         },
         "introduced_at": {
+            "title":"Introduced at",
             "description": "Version introduced to game",
             "$ref": "util/version.json"
         },
         "changed_at": {
+            "title":"Changed at",
             "description": "Version last updated",
             "$ref": "util/version.json"
         }

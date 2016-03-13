@@ -8,12 +8,7 @@
         {
             "type": "object",
             "properties": {
-                "meta": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "util/meta.json"
-                    }
-                },
+                "meta": {"$ref": "util/meta.json"},
                 "flags": {
                     "type": "object",
                     "properties": {
