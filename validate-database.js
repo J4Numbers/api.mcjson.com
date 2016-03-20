@@ -72,14 +72,6 @@ getValidator('/block.json', function(err, schema, v) {
                     console.log(`${err.property} ${err.message}`);
                 });
                 
-                json.meta = Object.keys(json.meta).map((key)=>{
-                    return {
-                        key: key,
-                        values: Object.keys(json.meta[key]).map((value)=>{ return {value:value, mask: json.meta[key][value]}; })
-                    };
-                })
-                yield saveJSON(files[x], json);
-                
                 console.log();
             } else {
                 valid++;
