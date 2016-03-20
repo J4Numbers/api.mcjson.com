@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Item",
+    "description": "Defines a item entry in the mcjson database",
+    "type": "object",
+    "allOf": [
+        { "$ref" : "base.json"},
+        {
+            "type": "object",
+            "properties": {
+                "meta": {"$ref": "util/meta.json"},
+                "flags": {
+                    "type": "object",
+                    "properties": {
+                        "food": {
+                            "description": "Food properties",
+                            "type": "object"
+                        }
+                    }                    
+                }
+            }
+        }
+    ],
+    "additionalItems": false
+}

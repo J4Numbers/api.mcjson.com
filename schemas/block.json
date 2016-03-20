@@ -17,6 +17,11 @@
                             "type": "boolean",
                             "default": false
                         },
+                        "hardness": {
+                            "description": "Resistance to explosions",
+                            "type": "integer",
+                            "minimum": 0
+                        },
                         "no-piston": {
                             "description": "Does this block prevent piston movement",
                             "type": "boolean",
