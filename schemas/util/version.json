@@ -1,5 +1,5 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "string",
-    "pattern": "^\\d{1,}\\.\\d{1,}\\.\\d{1,}\\.*$"
+    "pattern": "^\\d{1,}\\.\\d{1,}\\.\\d{1,}.*$"
 }
