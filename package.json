@@ -23,6 +23,7 @@
     "es6mvc": "git+https://bitbucket.org/tehbeard/es6mvc.git",
     "express": "^4.13.3",
     "fetch": "^0.3.6",
+    "gen-run": "^0.1.2",
     "jsonschema": "^1.1.0",
     "lodash": "^4.3.0",
     "minimist": "^1.2.0",
