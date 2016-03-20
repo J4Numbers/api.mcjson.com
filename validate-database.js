@@ -70,21 +70,26 @@ function* validateTable(tablePath, schemaFile){
             res.errors.forEach((err) => {
                 console.log(`${err.property} ${err.message}`);
             });
-            if(!Array.isArray(json.meta)){
-                console.log("Patching JSON");
-                json.meta = Object.keys(json.meta).map((k)=>{
-                    return {
-                        key: k,
-                        values: Object.keys(json.meta[k]).map((value)=>{
-                            return {
-                                value: value,
-                                mask: json.meta[k][value]
-                            }
-                        })
-                    }
-                });
-                saveJSON(files[x], json);
-            }
+            
+            // PATCH: Convert meta: { <key>:{ <value>:<mask>... } } format to meta: [{ <key>, values:[{<value>,<mask>}]}] format
+            // if(!Array.isArray(json.meta)){
+            //     console.log("Patching JSON");
+            //     json.meta = Object.keys(json.meta).map((k)=>{
+            //         return {
+            //             key: k,
+            //             values: Object.keys(json.meta[k]).map((value)=>{
+            //                 return {
+            //                     value: value,
+            //                     mask: json.meta[k][value]
+            //                 }
+            //             })
+            //         }
+            //     });
+            //     if(json.meta.length == 0){
+            //         delete json.meta;
+            //     }
+            //     yield saveJSON(files[x], json);
+            // }
             console.log();
         } else {
             valid++;
