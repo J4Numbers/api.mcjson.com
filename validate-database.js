@@ -29,7 +29,8 @@ function saveJSON(filename,data, cb) {
 }
 
 function getValidator(initialSchema, cb) {
-
+    if (!cb) { return getValidator.bind(this, initialSchema); }
+    
     var Validator = require('jsonschema').Validator;
     var v = new Validator();
 
@@ -40,7 +41,7 @@ function getValidator(initialSchema, cb) {
         v.addSchema(schema, initialSchema);
         function importNextSchema() {
             var nextSchema = v.unresolvedRefs.shift();
-            if (!nextSchema) { cb(null, initialSchema, v); return; }
+            if (!nextSchema) { cb(null, v); return; }
             console.log("RESOLVING", nextSchema);
             loadJSON(path.join('./schemas', nextSchema), function(err, schema) {
                 if (err) {
@@ -55,30 +56,50 @@ function getValidator(initialSchema, cb) {
     })
 }
 var run = require('gen-run');
-
-getValidator('/block.json', function(err, schema, v) {
-    console.log(err);
-    run(function* () {
-        var valid = 0, invalid = 0;
-        var files = yield fs.readdir.bind(fs, 'data/blocks/minecraft/');
-        files = files.map((e) => `./data/blocks/minecraft/${e}`);
-        for (x in files) {
-            json = yield loadJSON(files[x]);
-            res = v.validate(json, '/block.json');
-            if (!res.valid) {
-                invalid++;
-                console.log(files[x]);
-                res.errors.forEach((err) => {
-                    console.log(`${err.property} ${err.message}`);
+function* validateTable(tablePath, schemaFile){
+    var v = yield getValidator(schemaFile)
+    var valid = 0, invalid = 0;
+    var files = yield fs.readdir.bind(fs, tablePath);
+    files = files.map((e) => path.join(tablePath, e));
+    for (x in files) {
+        json = yield loadJSON(files[x]);
+        res = v.validate(json, schemaFile);
+        if (!res.valid) {
+            invalid++;
+            console.log(files[x]);
+            res.errors.forEach((err) => {
+                console.log(`${err.property} ${err.message}`);
+            });
+            if(!Array.isArray(json.meta)){
+                console.log("Patching JSON");
+                json.meta = Object.keys(json.meta).map((k)=>{
+                    return {
+                        key: k,
+                        values: Object.keys(json.meta[k]).map((value)=>{
+                            return {
+                                value: value,
+                                mask: json.meta[k][value]
+                            }
+                        })
+                    }
                 });
-                
-                console.log();
-            } else {
-                valid++;
-                //console.log(files[x],"VALID");
+                saveJSON(files[x], json);
             }
+            console.log();
+        } else {
+            valid++;
+            //console.log(files[x],"VALID");
         }
-        console.error("Valid", valid, valid + invalid);
-        console.error("Invalid", invalid, valid + invalid);
-    })
+    }
+    console.error("Valid", valid, valid + invalid);
+    console.error("Invalid", invalid, valid + invalid);
+}
+
+run(function* () {
+    console.log("Validating blocks");
+    yield* validateTable('./data/blocks/minecraft','/block.json');
+    
+    console.log("Validating items");
+    yield* validateTable('./data/items/minecraft','/item.json');
 })
+
