@@ -4,7 +4,8 @@
   "description": "REST/JSON server providing minecraft data in a consumable format.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "update:graham": "node scripts/importFromGraham.js"
   },
   "author": "Tehbeard",
   "license": "MIT",
