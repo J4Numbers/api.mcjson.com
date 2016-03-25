@@ -4,10 +4,13 @@ import React from 'react';
 import {compare} from 'semver'; 
 
 export default class TableList extends React.Component {
-    constructor()
+    constructor(props)
     {
-        super();
+        super(props);
+        console.log("TBLPROPS", props);
         this.state = {
+            entries: [],
+            tableName: props.tableName,
             filter: new RegExp("","i"),
             sortFn: ()=>0
         };
@@ -21,11 +24,22 @@ export default class TableList extends React.Component {
             }
             return 0;
         }
+        this.fetchList(props.params.tableName);
+    }
+    fetchList(tableName){
+        fetch(`/v1/${tableName}`)
+        .then((resp)=>resp.json())
+        .then((data)=>{
+            this.setState({entries: data, tableName: tableName});
+        });
+    }
+    componentWillReceiveProps(newProps){
+        this.fetchList(newProps.params.tableName);
     }
     render(){
         return <div>
-        <input type="text" id="filter" onKeyUp={(ev)=>{
-            console.log(ev.target.value);
+        <h3>{this.state.tableName}</h3>
+        <input type="text" id="filter" placeholder="Filter data..." onKeyUp={(ev)=>{
         this.setState(
             update(
                 this.state,
@@ -44,17 +58,17 @@ export default class TableList extends React.Component {
     </tr>
     </thead>
     <tbody id="entries">
-    {this.props.entries
+    {this.state.entries
         .filter((e)=>this.state.filter.test(e.id))
         .concat()
         .sort(this.state.sortFn)
         .map((e)=>
-            <tr key={`${this.props.tableName}-${e.mod}-${e.id}`}>
+            <tr key={`${this.state.tableName}-${e.mod}-${e.id}`}>
                 <td>{e.mod}</td>
                 <td>{e.id}</td>
                 <td>{e.introduced_at}</td>
                 <td>{e.changed_at}</td>
-                <td><a href={"#/" + this.props.tableName + "/" + e.mod + "/" + e.id} className="btn btn-primary edit">Edit</a></td>
+                <td><a href={"#/" + this.state.tableName + "/" + e.mod + "/" + e.id} className="btn btn-primary edit">Edit</a></td>
             </tr>)
     }
     </tbody>

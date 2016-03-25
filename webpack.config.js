@@ -2,9 +2,6 @@ var path = require('path');
 module.exports = {
     resolve: {
         root: ['./editor/js/app'].map((p) => path.resolve(p)),
-        alias: {
-            'mvc': 'es6mvc'
-        }
     },
     module: {
         loaders: [
@@ -25,7 +22,7 @@ module.exports = {
             }
         ]
     },
-    entry: "app.jsx",
+    entry: "index.jsx",
     output: {
         path: __dirname + "/editor/assets",
         filename: "bundle.js"

@@ -1,71 +1,33 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
-import Router from 'mvc/Router';
-
-import TableList from './page/TableList.jsx';
-import VersionEditor from './page/editors/VersionEditor.jsx';
-import EnchantmentEditor from './page/editors/EnchantmentEditor.jsx';
-
-import MetaEditor from './widget/MetaEditor.jsx';
-
-import {loadVersionData} from './widget/Version.jsx';
-
-	var router = new Router();
-
-	// router.add('/items/:mod/:id', new EntryPage( new Item(), ItemEditor ));
-	// router.add('/blocks/:mod/:id', new EntryPage( new Block(), BlockEditor ));
-	// router.add('/versions/:mod/:id', new EntryPage( new Version(), VersionEditor ));
-
-    router.add('/versions/:version', function(ctx, next){
-        return fetch('/v1/versions/minecraft/' + ctx.params.version,{credentials:'include'})
-        .then((resp) => resp.json())
-        .then((data) => {
-            ReactDOM.render(<VersionEditor data={data}  onUpdate={(e)=>console.log(e)} />, document.querySelector("#main"))
-        });
-    });
+import {Link} from 'react-router';
+import {Nav, Navbar, NavItem} from 'react-bootstrap';
+export default class App extends React.Component{
     
-    router.add('/enchantments/:mod/:id', function(ctx, next){
-        return fetch(`/v1/enchantments/${ctx.params.mod}/${ctx.params.id}`,{credentials:'include'})
-        .then((resp) => resp.json())
-        .then((data) => {
-            ReactDOM.render(<EnchantmentEditor data={data}/>, document.querySelector("#main"))
-        });
-    });
-    
-    router.add('/blocks/:mod/:id', function(ctx, next){
-        return fetch(`/v1/blocks/${ctx.params.mod}/${ctx.params.id}`,{credentials:'include'})
-        .then((resp) => resp.json())
-        .then((data) => {
-            ReactDOM.render(<MetaEditor data={data}/>, document.querySelector("#main"))
-        });
-    });
-    router.add('/items/:mod/:id', function(ctx, next){
-        return fetch(`/v1/items/${ctx.params.mod}/${ctx.params.id}`,{credentials:'include'})
-        .then((resp) => resp.json())
-        .then((data) => {
-            ReactDOM.render(<MetaEditor data={data}/>, document.querySelector("#main"))
-        });
-    });
-	
-	router.add('/:table', function(ctx, next){
-        return fetch('/v1/' + ctx.params.table,{credentials:'include'})
-        .then((resp) => resp.json())
-        .then((data) => {
-            ReactDOM.render(<TableList entries={data} tableName={ctx.params.table}/>, document.querySelector("#main"))
-        });
-    });
-    
-
-	
-	router.on('route',function(route,params){
-	    [].slice.call(document.querySelectorAll(".navbar-nav>li")).forEach((e)=>e.classList.remove("active"));
-	    var selected = document.querySelector("ul.navbar-nav>li>a[href='" + location.hash + "']");
-	    selected && selected.parentNode.classList.add("active");
-	});
-    
-    console.log("Preloading data");
-    loadVersionData().then(()=>{
-	   router.start(true);
-	   console.log("App started.");
-    })
+    render(){
+        return <div>
+            <Navbar inverse>
+                <Navbar.Header>
+                <Navbar.Brand>
+                    <a href="#">MCJson API editor</a>
+                </Navbar.Brand>
+                <Navbar.Toggle />
+                </Navbar.Header>
+                <Navbar.Collapse>
+                <Nav>
+                    <NavItem eventKey={1} href="#/items">Items</NavItem>
+                    <NavItem eventKey={2} href="#/blocks">Blocks</NavItem>
+                    <NavItem eventKey={3} href="#/entities">Entities</NavItem>
+                    <NavItem eventKey={4} href="#/enchantments">Enchantments</NavItem>
+                    <NavItem eventKey={5} href="#/crafting">Crafting</NavItem>
+                    <NavItem eventKey={6} href="#/about">About</NavItem>
+                </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            <div className="container">
+            <div className="main">
+            {this.props.children}
+            </div>
+            </div>
+        </div>
+    }
+}

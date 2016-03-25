@@ -3,24 +3,33 @@ import update from 'react-addons-update';
 import React from 'react';
 import {BaseEditor} from '../../widget/BaseEditor.jsx';
 export default class EnchantmentEditor extends React.Component {
-    constructor()
+    constructor(props)
     {
-        super();
+        super(props);
         this._refs = {};
         this.state = {
             isDirty: false,
             data: {}
         }
+        this.fetch(props.params.mod, props.params.id);
+        
     }
-    componentWillMount(){
-        this.setState(
-            update(this.state, {
-                data: {$set: this.props.data}
-            })
-        )
+    fetch(mod,id){
+        fetch(`/v1/enchantments/${mod}/${id}`)
+        .then((resp)=>{
+            if(resp.status !== 200){
+                throw new Error("Invalid file");
+            }
+            return resp.json();
+        })
+        .then((data)=>{
+            this.setState({ data });
+        })
+    }
+    componentWillReceiveProps(newProps){
+        this.fetch(newProps.params.mod,newProps.params.id);
     }
     render(){
-        console.log("RNDR", this.state.data);
         return <div>
         <a href="#/enchantments/">Back to enchantments</a>
         <BaseEditor data={this.state.data} onUpdate={this.onUpdate.bind(this)}/>
@@ -35,7 +44,7 @@ export default class EnchantmentEditor extends React.Component {
                 )
             }} >
               {["I","II","III","IV","V"].map((e,i)=>{
-                  return <option value={i+1}>{e}</option>
+                  return <option key={i} value={i+1}>{e}</option>
               })}
             </select>
         </div>
