@@ -3,7 +3,18 @@ var path = require('path');
 var fs = require('fs');
 var dataDir = path.normalize(process.cwd() + '/data/');
 var fetch = require("fetch").fetchUrl;
-var _ = require("lodash");
+
+function _objValues(obj){
+    return Object.keys(obj).map((k)=>obj[k]);
+}
+
+function padVersion(ver){
+    var parts = ver.split(".");
+    while(parts.length < 3){
+        parts.push("0");
+    }
+    return parts.join(".");
+}
 
 //Initialize base directory
 try{
@@ -26,7 +37,7 @@ fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json", function(
 	//Make a magic future version as a basis for any snapshots.
 	versionData.versions.push({
 
-      "id": "99.99.99",//semver.inc(versionData.latest.release,"minor"),
+      "id": semver.inc(padVersion(versionData.latest.release),"minor"),
       "time": (function(){now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
       "releaseTime": (function(){now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
       "type": "release",
@@ -41,7 +52,7 @@ fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json", function(
                 console.log(e);
 		if(e.id.split(".").length == 2){
 			console.log("patching",e.id);
-			e.id = e.id + '.0';
+			e.id = padVersion(e.id);
 		}
 		//Convert release time for sorting.
 		e.time = new Date(e.releaseTime);
@@ -74,7 +85,23 @@ fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json", function(
 		//Fix snapshot versions to major.minor.patch-snapshot format.
 		var versionId = e.id;
 		if(!semver.valid(versionId) && e.type == 'snapshot'){
-			var versionsAbove = _(releasesOnly).map(function(m){return {id:m.id,time:m.time};}).filter(function(f){return f.time > e.time}).sortBy("time").first();
+			var versionsAbove = _objValues(releasesOnly)
+                                    .map(function(m){
+                                        return {id:m.id,time:m.time};
+                                    })
+                                    .filter(function(f){
+                                        return f.time > e.time
+                                    })
+                                    .sort(function(a,b){
+                                        if(a.time < b.time){
+                                            return -1;
+                                        }else if(a.time < b.time){
+                                            return 1;
+                                        }else{
+                                            return 0;
+                                        }
+                                    })
+                                    [0]
 			versionId = versionsAbove.id + "-" +  versionId;
 			console.log("Fixing broken version.",e.id,'->',versionId);
 		}
