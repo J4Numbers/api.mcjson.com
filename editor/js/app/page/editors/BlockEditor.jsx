@@ -25,10 +25,23 @@ export default class BlockEditor extends React.Component {
     componentWillReceiveProps(newProps){
         this.fetch(newProps.params.mod,newProps.params.id);
     }
+    onSave(){
+        console.log(this.state.data);
+        fetch('/v1/blocks/',{
+            method:'PUT',
+            headers:{
+                "content-type":"application/json"
+            },
+            body: JSON.stringify(this.state.data)
+        }).then(()=>{
+            this.setState({isDirty: false});
+        })
+       
+    }
     render(){
         return <div>
             <MetaEditor data={this.state.data} onUpdate={(n)=>{this.setState({isDirty:true, data:n})}}/>
-            <button className="btn btn-primary" disabled={!this.state.isDirty} >Save</button>
+            <button className="btn btn-primary" disabled={!this.state.isDirty} onClick={this.onSave.bind(this)} >Save</button>
         </div>
     }
 }

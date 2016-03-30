@@ -26,9 +26,22 @@ export default class MetaEditor extends React.Component {
         }
     }
     
+    toggleTechnicalBlock(){
+        this.props.onUpdate(
+                update(this.props.data,{
+                    technical: {$set: !this.props.data.technical}
+                })
+            );
+    }
+    
     render(){
         return <div>
             <BaseEditor data={this.props.data} onUpdate={this.props.onUpdate}/>
+            <div className="checkbox">
+                <label>
+                <input type="checkbox" checked={this.props.data.technical} onChange={this.toggleTechnicalBlock.bind(this)} /> Technical item/block
+                </label>
+            </div>
             <div className="meta-group">
             {this.props.data.meta ? this.props.data.meta.map((meta, gId)=>{
                 return <div className="panel panel-default" key={gId}>
