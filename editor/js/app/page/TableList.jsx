@@ -47,6 +47,14 @@ export default class TableList extends React.Component {
             )
         );
         }}/>
+        {this.state.tableName ?
+        (
+            <a href={`#/${this.state.tableName}/_new`} className="btn btn-info">New {this.state.tableName.substr(0,this.state.tableName.length - 1)}</a>
+        )    
+            :
+            null 
+        }
+         
     <table className="table">
     <thead>
     <tr>

@@ -12,12 +12,15 @@ import {loadVersionData} from './widget/Version.jsx';
 import App from './app.jsx';
 
 console.log("Preloading data");
-
+function ReactDebug(props){
+    return <pre>{JSON.stringify(props,null,2)}</pre>
+}
 loadVersionData().then(() => {
     console.log("App started.");
     ReactDOM.render(<Router history={hashHistory}>
         <Route path="/" component={App} >
             <Route path="/versions/:version" component={VersionEditor} />
+            <Route name="item.new" path="/:type/_new" component={ReactDebug} />
             <Route path="/enchantments/:mod/:id" component={EnchantmentEditor} />
             <Route path="/blocks/:mod/:id" component={BlockEditor} />
             <Route path="/items/:mod/:id" component={ItemEditor} />
