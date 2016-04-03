@@ -54,6 +54,17 @@ export default class MetaEditor extends React.Component {
         }
     }
     
+    setMetaTechnical(gId){
+        return (ev)=>{ 
+            var newValue = ev.target.checked;
+            this.props.onUpdate(
+                update(this.props.data,{
+                    meta: { [gId] : {technical: { $set: newValue } } }
+                })
+            );
+        }
+    }
+    
     addNewMetaCategory(){
         this.props.onUpdate(
             update(this.props.data,{
@@ -91,6 +102,11 @@ export default class MetaEditor extends React.Component {
                             <button className="btn btn-danger pull-right" onClick={this.deleteMetaCategory(gId)}>Remove</button>
                         </div>
                         <div className="panel-body">
+                        <div className="checkbox">
+                            <label>
+                            <input type="checkbox" checked={meta.technical} onChange={this.setMetaTechnical(gId)} /> Technical meta (orientation etc)
+                            </label>
+                        </div>
                         <table className="table table-striped">
                         <thead>
                         <tr>
