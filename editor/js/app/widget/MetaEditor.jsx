@@ -4,6 +4,15 @@ import React from 'react';
 import {BaseEditor} from './BaseEditor.jsx';
 export default class MetaEditor extends React.Component {
     
+    addMetaKey(gId){
+        return ()=>{ 
+            this.props.onUpdate(
+                update(this.props.data,{
+                    meta: { [gId] : {values: { $push: [{value:"",mask:0}] } } }
+                })
+            );
+        }
+    }
     updateMetaKey(gId, vId, key){
         return (ev)=>{ 
             var newValue = ev.target.value;
@@ -34,7 +43,38 @@ export default class MetaEditor extends React.Component {
             );
     }
     
+    setMetaName(gId){
+         return (ev)=>{ 
+            var newValue = ev.target.value;
+            this.props.onUpdate(
+                update(this.props.data,{
+                    meta: { [gId] : {key: {$set:newValue} } }
+                })
+            );
+        }
+    }
+    
+    addNewMetaCategory(){
+        this.props.onUpdate(
+            update(this.props.data,{
+                meta: { $push : [{key:"",values:[]}] } 
+            })
+        );
+    }
+    
+    deleteMetaCategory(gId){
+        return ()=>{
+            this.props.onUpdate(
+            update(this.props.data,{
+                meta: { $splice : [[gId,1]] } 
+            })
+        );
+        }
+    }
+    
     render(){
+       
+        
         return <div>
             <BaseEditor data={this.props.data} onUpdate={this.props.onUpdate}/>
             <div className="checkbox">
@@ -43,10 +83,12 @@ export default class MetaEditor extends React.Component {
                 </label>
             </div>
             <div className="meta-group">
+            <h3>Metadata</h3>
             {this.props.data.meta ? this.props.data.meta.map((meta, gId)=>{
                 return <div className="panel panel-default" key={gId}>
                         <div className="panel-heading">
-                            <h3 className="panel-title">{meta.key}</h3>
+                            <input value={meta.key} onChange={this.setMetaName(gId)}/>
+                            <button className="btn btn-danger pull-right" onClick={this.deleteMetaCategory(gId)}>Remove</button>
                         </div>
                         <div className="panel-body">
                         <table className="table table-striped">
@@ -67,11 +109,15 @@ export default class MetaEditor extends React.Component {
                         })}
                         </tbody>
                         </table>
-                            <pre>{JSON.stringify(meta,null,2)}</pre>
+                        <button className="btn btn-primary" onClick={this.addMetaKey(gId)}>Add new key</button>
                         </div>
                         </div>
 
             }): []}
+            <button className="btn btn-primary" onClick={this.addNewMetaCategory.bind(this)}>Add meta</button>
+            <pre>
+            {JSON.stringify(this.props.data,null,2)}
+            </pre>
             </div>
         </div> 
     }
