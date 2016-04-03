@@ -6,6 +6,7 @@ import TableList from './page/TableList.jsx';
 import VersionEditor from './page/editors/VersionEditor.jsx';
 import EnchantmentEditor from './page/editors/EnchantmentEditor.jsx';
 import BlockEditor from './page/editors/BlockEditor.jsx';
+import ItemEditor from './page/editors/ItemEditor.jsx'
 import {loadVersionData} from './widget/Version.jsx';
 
 import App from './app.jsx';
@@ -19,7 +20,7 @@ loadVersionData().then(() => {
             <Route path="/versions/:version" component={VersionEditor} />
             <Route path="/enchantments/:mod/:id" component={EnchantmentEditor} />
             <Route path="/blocks/:mod/:id" component={BlockEditor} />
-            <Route path="/items/:mod/:id" component={BlockEditor} />
+            <Route path="/items/:mod/:id" component={ItemEditor} />
             <Route path="/about" component={null} />
             <Route path="/:tableName" component={TableList} />
         </Route>
