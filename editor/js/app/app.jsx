@@ -18,8 +18,7 @@ export default class App extends React.Component{
                     <NavItem eventKey={2} href="#/blocks">Blocks</NavItem>
                     <NavItem eventKey={3} href="#/entities">Entities</NavItem>
                     <NavItem eventKey={4} href="#/enchantments">Enchantments</NavItem>
-                    <NavItem eventKey={5} href="#/crafting">Crafting</NavItem>
-                    <NavItem eventKey={6} href="#/about">About</NavItem>
+                    {/*<NavItem eventKey={5} href="#/crafting">Crafting</NavItem> */}
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
