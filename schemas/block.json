@@ -13,7 +13,7 @@
                     "type": "object",
                     "properties": {
                         "physics": {
-                            "description": "Does this block obey physics naturaly",
+                            "description": "Does this block obey physics (sand/gravel/anvil)",
                             "type": "boolean",
                             "default": false
                         },

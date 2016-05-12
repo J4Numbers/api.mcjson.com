@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nf start",
-    "update:graham": "node scripts/importFromGraham.js"
-  },
+    "watch": "webpack --watch"
+    },
   "author": "Tehbeard",
   "license": "MIT",
   "devDependencies": {

@@ -1,5 +1,6 @@
 #!/bin/bash
 cd data
+git checkout master
 git pull
 cd ../
 node scripts/importVersionsFromMojang.js
