@@ -86,10 +86,16 @@ module.exports = function (opts) {
 					fs.unlink(path.resolve(baseDir, oldFilename));
 				}
 			}
+			//Write to file system
 			mkdirp.sync(path.dirname(path.resolve(baseDir, newFilename)));
 			fs.writeFileSync(path.resolve(baseDir, newFilename), JSON.stringify(newData, null, 2));
-			entries.splice(entries.findIndex(findByModId), 1);
-			entries.push(newData);
+			//overwrite existing entry or add new one
+			var idx = entries.findIndex(findByModId);
+			if(idx !== -1){
+				entries[idx] = newData;
+			}else{
+				entries.push(newData);
+			}
 			res.sendStatus(200);
 
 		});
