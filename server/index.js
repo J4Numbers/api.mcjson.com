@@ -42,8 +42,7 @@ var HTTPCatalog = require('./HTTPCatalog');
 
 var mounted = [];
 Object.keys(dataIndex).forEach(function (mount) {
-    fs.stat('./data/' + mount, function (err, stats) {
-        if (err) { throw err; }
+    var stats = fs.statSync('./data/' + mount);
         if (stats.isDirectory()) {
             var httpCatalog = HTTPCatalog({
                 dir: path.join(baseDataDir, mount), //Directory to search in
@@ -56,9 +55,11 @@ Object.keys(dataIndex).forEach(function (mount) {
             console.log("mounting", mount)
             app.use(`/v1/${mount}`, httpCatalog);
         }
-    });
 });
 
+app.use((req,res)=>{
+    res.status(404).send({error:"no path"});
+})
 
 var server = app.listen(process.argv[2] || process.env.PORT, function () {
     var host = server.address().address;
