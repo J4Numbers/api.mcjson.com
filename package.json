@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nf start",
     "watch": "webpack --watch"
-    },
+  },
   "author": "Tehbeard",
   "license": "MIT",
   "devDependencies": {
@@ -35,6 +35,7 @@
     "react-dom": "^0.14.3",
     "react-router": "^2.0.1",
     "react-select": "^1.0.0-beta11",
+    "readdir-plus": "^0.4.1",
     "redux": "^3.3.1",
     "response-time": "^2.3.1",
     "semver": "^5.1.0"

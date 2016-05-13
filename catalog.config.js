@@ -1,6 +1,7 @@
 var filters = require('./server/filters.js');
 module.exports = {
   versions: {
+    noModId: true,
     fn: (d)=>`${d.id}.json`,
     struct: {
       id: filters.ver,
