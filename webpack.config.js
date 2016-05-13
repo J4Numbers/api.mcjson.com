@@ -1,7 +1,7 @@
 var path = require('path');
 module.exports = {
     resolve: {
-        root: ['./editor/js/app'].map((p) => path.resolve(p)),
+        root: ['./editor/'].map((p) => path.resolve(p)),
     },
     module: {
         loaders: [
@@ -24,7 +24,7 @@ module.exports = {
     },
     entry: "index.jsx",
     output: {
-        path: __dirname + "/editor/assets",
+        path: __dirname + "/public/assets",
         filename: "bundle.js"
     },
     devtool: 'source-map'
