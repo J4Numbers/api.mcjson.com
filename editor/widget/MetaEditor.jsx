@@ -68,7 +68,7 @@ export default class MetaEditor extends React.Component {
     addNewMetaCategory(){
         this.props.onUpdate(
             update(this.props.data,{
-                meta: { $push : [{key:"",values:[]}] } 
+                meta: { [Array.isArray(this.props.data.meta) ? "$push" : "$set"]  : [{key:"",values:[]}] } 
             })
         );
     }
