@@ -1,46 +1,27 @@
 import React from 'react';
 import MetaEditor from '../../widget/MetaEditor.jsx';
+import {loadData, saveData, setData, store } from './store.js';
+
+let itemStore = store();
+
 export default class ItemEditor extends React.Component {
     
     constructor(props){
         super(props);
-        this.state = {
-            isDirty: false,
-            data: {}
-        };
-        this.fetch(props.params.mod,props.params.id);
-    }
-    fetch(mod, id){
-        fetch(`/v1/items/${mod}/${id}`)
-        .then((resp)=>{
-            if(resp.status !== 200){
-                throw new Error("Invalid file");
-            }
-            return resp.json();
+        this.state = itemStore.getState();itemStore.subscribe(()=>{
+            this.setState(itemStore.getState());
         })
-        .then((data)=>{
-            this.setState({ data });
-        })
+        itemStore.dispatch(loadData(`/v1/items/${props.params.mod}/${props.params.id}`))
     }
     componentWillReceiveProps(newProps){
-        this.fetch(newProps.params.mod,newProps.params.id);
+        itemStore.dispatch(loadData(`/v1/items/${props.params.mod}/${props.params.id}`))
     }
     onSave(){
-        console.log(this.state.data);
-        fetch('/v1/items/',{
-            method:'PUT',
-            headers:{
-                "content-type":"application/json"
-            },
-            body: JSON.stringify(this.state.data)
-        }).then(()=>{
-            this.setState({isDirty: false});
-        })
-       
+        itemStore.dispatch(saveData());
     }
     render(){
         return <div>
-            <MetaEditor data={this.state.data} onUpdate={(n)=>{this.setState({isDirty:true, data:n})}}/>
+            <MetaEditor data={this.state.data} onUpdate={(data)=>{ itemStore.dispatch(setData(data))}}/>
             <button className="btn btn-primary" disabled={!this.state.isDirty} onClick={this.onSave.bind(this)} >Save</button>
         </div>
     }

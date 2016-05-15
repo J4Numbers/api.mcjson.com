@@ -11,10 +11,7 @@ export default class BlockEditor extends React.Component {
     constructor(props){
         super(props);
         console.log("BLOCK EDITOR CREATED");
-        this.state = {
-            isDirty: false,
-            data: {}
-        };
+        this.state = blockStore.getState();
         blockStore.subscribe(()=>{
             this.setState(blockStore.getState());
         })
