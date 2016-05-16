@@ -2,19 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router'
 
-import TableList from './page/TableList.jsx';
-import VersionEditor from './page/editor/VersionEditor.jsx';
-import EnchantmentEditor from './page/editor/EnchantmentEditor.jsx';
-import BlockEditor from './page/editor/BlockEditor.jsx';
-import ItemEditor from './page/editor/ItemEditor.jsx'
+import TableList from './TableList.jsx';
+import VersionEditor from './editors/VersionEditor.jsx';
+import EnchantmentEditor from './editors/EnchantmentEditor.jsx';
+import BlockEditor from './editors/BlockEditor.jsx';
+import ItemEditor from './editors/ItemEditor.jsx'
 import {loadVersionData} from './widget/Version.jsx';
 
 import App from './app.jsx';
 
 console.log("Preloading data");
-function ReactDebug(props){
-    return <pre>{JSON.stringify(props,null,2)}</pre>
-}
 loadVersionData().then(() => {
     console.log("App started.");
     ReactDOM.render(<Router history={hashHistory}>
