@@ -1,4 +1,5 @@
 import React from 'react';
+import update from 'react-addons-update';
 import MetaEditor from '../../widget/MetaEditor.jsx';
 
 import {loadData, saveData, setData, store } from './store.js';
@@ -26,6 +27,19 @@ export default class BlockEditor extends React.Component {
     render(){
         return <div>
             <MetaEditor data={this.state.data} onUpdate={(data)=>{ blockStore.dispatch(setData(data))}}/>
+            <div className="checkbox">
+                <label>
+                <input 
+                    type="checkbox" 
+                    checked={this.state.data.flags.physics} 
+                    onChange={ ()=>{ 
+                        blockStore.dispatch(setData(update(
+                            this.state.data,
+                            { flags: {physics: {$set: !this.state.data.flags.physics }} }
+                        )))
+                    } } /> Physics
+                </label>
+            </div>
             <button className="btn btn-primary" disabled={!this.state.isDirty} onClick={this.onSave.bind(this)} >Save</button>
         </div>
     }
