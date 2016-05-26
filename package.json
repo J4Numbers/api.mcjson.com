@@ -4,7 +4,7 @@
   "description": "REST/JSON server providing minecraft data in a consumable format.",
   "main": "index.js",
   "scripts": {
-    "start": "nf start",
+    "start": "pm2 start process.json",
     "watch": "webpack --watch"
   },
   "author": "Tehbeard",
