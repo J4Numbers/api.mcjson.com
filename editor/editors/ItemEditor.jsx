@@ -1,5 +1,5 @@
 import React from 'react';
-import MetaEditor from '../../widget/MetaEditor.jsx';
+import MetaEditor from '../widget/MetaEditor.jsx';
 import {loadData, saveData, setData, store } from './store.js';
 
 let itemStore = store();

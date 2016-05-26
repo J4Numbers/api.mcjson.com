@@ -1,6 +1,6 @@
 import React from 'react';
 import update from 'react-addons-update';
-import MetaEditor from '../../widget/MetaEditor.jsx';
+import MetaEditor from '../widget/MetaEditor.jsx';
 
 import {loadData, saveData, setData, store } from './store.js';
 
