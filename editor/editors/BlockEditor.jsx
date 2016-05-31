@@ -31,7 +31,7 @@ export default class BlockEditor extends React.Component {
                 <label>
                 <input 
                     type="checkbox" 
-                    checked={this.state.data.flags.physics} 
+                    checked={this.state.data.flags && this.state.data.flags.physics} 
                     onChange={ ()=>{ 
                         blockStore.dispatch(setData(update(
                             this.state.data,
