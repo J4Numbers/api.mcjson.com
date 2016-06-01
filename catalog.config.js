@@ -14,7 +14,8 @@ module.exports = {
       mod: filters.str,
       name: filters.str,
       introduced_at: filters.ver,
-      changed_at: filters.ver
+      changed_at: filters.ver,
+      technical: filters.bool
     }
   },
   blocks: {
@@ -23,7 +24,8 @@ module.exports = {
       mod: filters.str,
       name: filters.str,
       introduced_at: filters.ver,
-      changed_at: filters.ver
+      changed_at: filters.ver,
+      technical: filters.bool
     }
   },
   enchantments: {
