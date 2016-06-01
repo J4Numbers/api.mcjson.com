@@ -1,5 +1,5 @@
 var semver = require('semver');
-
+var boolean = require('boolean');
 
 module.exports.eq = function(filtered, key, val){ 
 return filtered.filter((e) => { return (key in e) && e[key].toLowerCase() == val.toLowerCase(); });
@@ -42,4 +42,11 @@ module.exports.numeric = function(filtered, key, val){
             (!op && e[key] == v)
         ) 
     });
+}
+
+module.exports.bool = function(filtered, key, val){
+    var b = boolean(val);
+    console.log("BOOLKEY", key,val, b);
+    return filtered.filter((e) => e[key] == b );
+    
 }
