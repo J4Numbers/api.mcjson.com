@@ -46,7 +46,7 @@ class FlagEditor extends React.Component {
                 <span className="input-group-addon">
                     <input type="checkbox" onChange={(ev) => {
                         this.props.onChange(Object.assign({}, this.getFlags(), { durability: ev.target.checked ? 0 : undefined }));
-                    } } value={ !(this.getFlags().durability == undefined) }/>
+                    } } checked={ !(this.getFlags().durability == undefined) }/>
                 </span>
                 <input className="form-control" readOnly={ (this.getFlags().durability == undefined) } type="number" min="0" step="1" value={this.getFlags().durability} onChange={(ev) => {
                     this.props.onChange(
@@ -67,7 +67,7 @@ class FlagEditor extends React.Component {
                 <span className="input-group-addon">
                     <input type="checkbox" onChange={(ev) => {
                             this.props.onChange(Object.assign({}, this.getFlags(), { container: ev.target.checked ? 0 : undefined }));
-                    } } value={ !(this.getFlags().container == undefined) }/>
+                    } } checked={ !(this.getFlags().container == undefined) }/>
                 </span>
                 <input className="form-control" readOnly={ (this.getFlags().container == undefined) } type="number" min="0" step="1" value={this.getFlags().container} onChange={(ev) => {
                     this.props.onChange(
