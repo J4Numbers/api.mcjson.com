@@ -131,9 +131,6 @@ export default class MetaEditor extends React.Component {
 
             }): []}
             <button className="btn btn-primary" onClick={this.addNewMetaCategory.bind(this)}>Add meta</button>
-            <pre>
-            {JSON.stringify(this.props.data,null,2)}
-            </pre>
             </div>
         </div> 
     }
