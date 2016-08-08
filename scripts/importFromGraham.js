@@ -24,8 +24,8 @@ fetch("http://minecraft-ids.grahamedgecombe.com/items.json", function(error, met
                         id: entry.text_type,
                         name: entry.name,
                         "technical": false,
-                        "introduced_at": "1.9.0",
-                        "changed_at": "1.9.0",
+                        "introduced_at": "1.10.0",
+                        "changed_at": "1.10.0",
                         "meta": [{
                             key: "meta",
                             values: []
