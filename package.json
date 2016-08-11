@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "pm2 start process.json --env production",
+    "editor": "pm2 start process.json --env development",
     "watch": "webpack --watch"
   },
   "author": "Tehbeard",
