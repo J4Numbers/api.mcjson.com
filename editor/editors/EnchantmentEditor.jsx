@@ -6,7 +6,6 @@ export default class EnchantmentEditor extends React.Component {
     constructor(props)
     {
         super(props);
-        this._refs = {};
         this.state = {
             isDirty: false,
             data: {}
@@ -34,12 +33,23 @@ export default class EnchantmentEditor extends React.Component {
         <a href="#/enchantments/">Back to enchantments</a>
         <BaseEditor data={this.state.data} onUpdate={this.onUpdate.bind(this)}/>
         <div className="form-group">
-            <label>Level</label>
-            <select className="form-control col-sm-2" ref={(c)=>this._refs.mod = c} selected={this.state.data.level} onChange={(ev)=>{
+            <label>numeric id</label>
+            <input className="form-control col-sm-2" type="number" min="0" step="1" value={ this.state.data.num_id || 0 } onChange={(ev)=>{
                 this.setState(
                     update(this.state,{
                         isDirty: {$set: true},
-                        data: { level: {$set: ev.target.value} }
+                        data: { num_id: {$set: parseInt(ev.target.value) } }
+                    })
+                )
+            }} />
+        </div>
+        <div className="form-group">
+            <label>Level</label>
+            <select className="form-control col-sm-2" selected={this.state.data.level} onChange={(ev)=>{
+                this.setState(
+                    update(this.state,{
+                        isDirty: {$set: true},
+                        data: { level: {$set: parseInt(ev.target.value) } }
                     })
                 )
             }} >
