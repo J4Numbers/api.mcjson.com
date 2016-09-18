@@ -40,7 +40,7 @@ if (editorEnabled) {
 }
 var HTTPCatalog = require('./HTTPCatalog');
 
-var mounted = [];
+var mounted = {};
 Object.keys(dataIndex).forEach(function (mount) {
     var stats = fs.statSync('./data/' + mount);
         if (stats.isDirectory()) {
@@ -54,8 +54,11 @@ Object.keys(dataIndex).forEach(function (mount) {
             });
             console.log("mounting", mount)
             app.use(`/v1/${mount}`, httpCatalog);
+            mounted[mount] = httpCatalog;
         }
 });
+
+app.use ('/graphql', require("./graph.js"));
 
 app.use((req,res)=>{
     res.status(404).send({error:"no path"});
