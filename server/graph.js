@@ -7,6 +7,15 @@ var readdir = require("readdir-plus");
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
 
+  type Block {
+      mod: String,
+      id: String,
+      name: String,
+      introduced_at: String,
+      changed_at: String,
+      meta: [Meta]
+  }
+
   type Item {
       mod: String,
       id: String,
@@ -14,7 +23,6 @@ var schema = buildSchema(`
       introduced_at: String,
       changed_at: String,
       meta: [Meta]
-
   }
   
   type Meta {
@@ -27,23 +35,28 @@ var schema = buildSchema(`
   }
 
   type Query {
-    items(id: String): [Item]
+    items(id: String): [Item!]
+    blocks(id: String): [Block!]
   }
 `);
 
 // The root provides a resolver function for each API endpoint
 let Database = require("./db.js");
-let itemDB = new Database(path.resolve("./data/items"));
 
+let itemDB = new Database(path.resolve("./data/items"));
+let blockDB = new Database(path.resolve("./data/blocks"));
 
 var root = {
     items: (args) => {
         return itemDB.entries.then(items => items.map(e => e.data()).filter(e => args.id == null || e.id == args.id))
     },
+    blocks: (args) => {
+        return blockDB.entries.then(items => items.map(e => e.data()).filter(e => args.id == null || e.id == args.id))
+    }
 };
 
 module.exports = graphqlHTTP({
-    schema: schema,
+    schema: require("./schema"),
     rootValue: root,
     graphiql: true,
 });
