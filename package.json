@@ -6,6 +6,7 @@
   "scripts": {
     "start": "pm2 start process.json --env production",
     "editor": "pm2 start process.json --env development",
+    "stop": "pm2 stop process.json",
     "watch": "webpack --watch"
   },
   "author": "Tehbeard",
