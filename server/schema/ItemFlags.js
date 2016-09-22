@@ -14,6 +14,10 @@ module.exports = new graphql.GraphQLObjectType({
         repairable: {
             description: "Can be smashed in an anvil to fix it.",
             type: graphql.GraphQLBoolean
+        },
+        enchantments: {
+            description: "valid enchantments for this item", 
+            type: new graphql.GraphQLList( graphql.GraphQLString) 
         }
     }
 });
