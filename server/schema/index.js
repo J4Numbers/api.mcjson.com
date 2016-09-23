@@ -8,8 +8,8 @@ let itemDB = new Database(path.resolve("./data/items"));
 let blockDB = new Database(path.resolve("./data/blocks"));
 let enchantmentDB = new Database(path.resolve("./data/enchantments"));
 
-let Block = require("./Block.js");
-let Item = require("./Item.js");
+let Block = require("./block");
+let Item = require("./item");
 let Enchantment = require("./Enchantment");
 
 module.exports = new graphql.GraphQLSchema({

@@ -17,7 +17,7 @@ module.exports = new graphql.GraphQLObjectType({
         },
         enchantments: {
             description: "valid enchantments for this item", 
-            type: new graphql.GraphQLList( require("./Enchantment")) 
+            type: new graphql.GraphQLList( require("../Enchantment")) 
         }
     }
 });
