@@ -29,7 +29,11 @@ module.exports = new graphql.GraphQLSchema({
         fields: {
             addItem: {args:{oldId: {type:graphql.GraphQLString}, newData: {type: graphql.GraphQLInt} }, type: Item, resolve:(_,args)=>{
                 console.log("ADDITEM",args)
-                //
+                //TODO:
+                //Overwrite record
+                //Save
+                //Rename if oldId != newId
+
             }}
         }
     })
