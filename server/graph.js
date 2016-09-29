@@ -4,42 +4,6 @@ var path = require('path');
 var fs = require('fs');
 var readdir = require("readdir-plus");
 
-// Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
-
-  type Block {
-      mod: String,
-      id: String,
-      name: String,
-      introduced_at: String,
-      changed_at: String,
-      meta: [Meta]
-  }
-
-  type Item {
-      mod: String,
-      id: String,
-      name: String,
-      introduced_at: String,
-      changed_at: String,
-      meta: [Meta]
-  }
-  
-  type Meta {
-      key: String,
-      values: [MetaEntry]
-  }
-  type MetaEntry {
-      value: String,
-      mask: Int
-  }
-
-  type Query {
-    items(id: String): [Item!]
-    blocks(id: String): [Block!]
-  }
-`);
-
 // The root provides a resolver function for each API endpoint
 let Database = require("./db.js");
 
