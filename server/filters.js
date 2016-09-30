@@ -1,52 +1,43 @@
 var semver = require('semver');
 var boolean = require('boolean');
 
-module.exports.eq = function(filtered, key, val){ 
-return filtered.filter((e) => { return (key in e) && e[key].toLowerCase() == val.toLowerCase(); });
-};//Straight up equality test
+module.exports = {
+    eq: (key, val) => {
+        return (e) => ((key in e) && e[key].toLowerCase() == val.toLowerCase());
+    },//Straight up equality test
 
-module.exports.str = function(filtered, key, val){ 
-return filtered.filter((e) => { return (key in e) && e[key].toLowerCase().indexOf(val.toLowerCase()) != -1; });
-};//anywhere search string
+    str: (key, val) => {
+        return (e) => ((key in e) && e[key].toLowerCase().indexOf(val.toLowerCase()) != -1);
+    },//anywhere search string
 
-module.exports.aeq = function(filtered, key, val){ 
-return filtered.filter((e) => { 
-return (key in e) && e[key].map( (i)=>{return i.toLowerCase();} ).indexOf(val.toLowerCase()) != -1; });
-};//Key in array, must fully exist
+    aeq: (key, val) => {
+        return (e) => ((key in e) && e[key].map((i) => i.toLowerCase()).indexOf(val.toLowerCase()) != -1);
+    },//Key in array, must fully exist
 
-module.exports.arr = function(filtered, key, val){ 
-return filtered.filter((e) => { 
-return (key in e) && e[key].filter( (i)=>{return i.toLowerCase().indexOf(val.toLowerCase()) != -1; } ).length > 0;
-});
+    arr: (key, val) => {
+        return (e) => { return (key in e) && e[key].filter((i) => i.toLowerCase().indexOf(val.toLowerCase()) != -1).length > 0; };
 
-};//Key in array, partial match
-module.exports.pre = function(filtered, key, val){ 
-return filtered.filter((e) => { return (key in e) && e[key].toLowerCase().indexOf(val.toLowerCase())==0; });
+    },//Key in array, partial match
+    pre: (key, val) => { return (e) => ((key in e) && e[key].toLowerCase().indexOf(val.toLowerCase()) == 0); },//Prefix string check
+    ver: (key, val) => { return (e) => ((key in e) && semver.satisfies(e[key], val)) },//Semver check
+    numeric: (key, val) => {
+        return (e) => {
+            var r = /^(<|\>|\<\=|\>\=)?(\d+)/.exec(val);
+            var op = r[1];
+            var v = parseInt(r[2]);
+            return (key in e) &&
+                (
+                    (op == ">" && e[key] > v) ||
+                    (op == ">=" && e[key] >= v) ||
+                    (op == "<" && e[key] < v) ||
+                    (op == "<=" && e[key] <= v) ||
+                    (!op && e[key] == v)
+                )
+        };
+    },
+    bool: (key, val) => {
+        var b = boolean(val);
+        return (e) => e[key] == b;
 
-};//Prefix string check
-module.exports.ver = function(filtered, key, val){ 
-return filtered.filter((e) => { return (key in e) && semver.satisfies(e[key], val); });
-};//Semver check
-
-module.exports.numeric = function(filtered, key, val){
-    return filtered.filter((e) => {
-        var r = /^(<|\>|\<\=|\>\=)?(\d+)/.exec(val);
-        var op = r[1];
-        var v = parseInt(r[2]); 
-        return (key in e) && 
-        (
-            (op == ">" &&  e[key] > v) ||
-            (op == ">=" &&  e[key] >= v) ||
-            (op == "<" &&  e[key] < v) ||
-            (op == "<=" &&  e[key] <= v) ||
-            (!op && e[key] == v)
-        ) 
-    });
-}
-
-module.exports.bool = function(filtered, key, val){
-    var b = boolean(val);
-    console.log("BOOLKEY", key,val, b);
-    return filtered.filter((e) => e[key] == b );
-    
+    }
 }

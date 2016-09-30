@@ -13,7 +13,7 @@ module.exports = function(_opts){
         maxStrikes: 15, // Max times an IP can hit the endpoint after
                         // using all tickets before being blacklisted
         expiredHandler: function(req, res){
-            res.sendStatus(429).end('See X-RateLimit-* headers for better rate-limit handling.');
+            res.sendStatus(429).end('See X-RateLimit-* headers for rate-limits.');
         } //Connect Handler to invoke on ticket expiry.
     }, _opts||{} );
     

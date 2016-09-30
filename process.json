@@ -9,10 +9,7 @@
                "PORT":5000
            },
            "env_production":{
-               "NODE_ENV": "production",
-           },
-           "env_development":{
-               "JSONQRY_EDITOR":"true"
+               "NODE_ENV": "production"
            }
         }
     ]
