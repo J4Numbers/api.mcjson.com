@@ -7,6 +7,7 @@ var fs = require('fs');
 let databases = require("./databases.js");
 
 module.exports = graphqlHTTP({
-    schema: require("./schema"),
+    schema: require("./graphql/schema.js"),
+    rootValue: require("./graphql/root.js"),
     graphiql: true,
 });

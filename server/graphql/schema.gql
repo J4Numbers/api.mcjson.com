@@ -1,0 +1,185 @@
+schema {
+  query: query
+  mutation: mutation
+}
+
+type Block {
+  # Metadata settings
+  meta: [Meta]
+  flags: BlockFlags
+
+  # Mod this object comes from
+  mod: String
+
+  # Id of this object, combined with mod in format mod:id
+  id(
+    # Prefix with the mod field value in format mod:id
+    prefixMod: Boolean = false
+  ): String
+
+  # English name of object
+  name: String
+
+  # Version this object first appeared in
+  introduced_at: String
+
+  # Last Version this object was edited
+  changed_at: String
+}
+
+type BlockFlags {
+  # Does this block obey physics (sand/gravel/anvil)
+  physics: Boolean
+
+  # Resistance to explosions
+  hardness: Int
+
+  # Does this block prevent piston movement
+  unpushable: Boolean
+
+  # Is this block transparent (no suffocate damage)
+  transparent: Boolean
+  light: BlockFlagsLight
+}
+
+type BlockFlagsLight {
+  # Amount of light emitted by block
+  emit: Int
+
+  # Amount of light that is dropped as it passes through this block
+  decay: Int
+}
+
+type Enchantment {
+  # Numeric id
+  num_id: Int
+
+  # Max level
+  level: Int
+
+  # Mod this object comes from
+  mod: String
+
+  # Id of this object, combined with mod in format mod:id
+  id(
+    # Prefix with the mod field value in format mod:id
+    prefixMod: Boolean = false
+  ): String
+
+  # English name of object
+  name: String
+
+  # Version this object first appeared in
+  introduced_at: String
+
+  # Last Version this object was edited
+  changed_at: String
+}
+
+type Entity {
+  # Mod this object comes from
+  mod: String
+
+  # Id of this object, combined with mod in format mod:id
+  id(
+    # Prefix with the mod field value in format mod:id
+    prefixMod: Boolean = false
+  ): String
+
+  # English name of object
+  name: String
+
+  # Version this object first appeared in
+  introduced_at: String
+
+  # Last Version this object was edited
+  changed_at: String
+}
+
+type Item {
+  # Metadata settings
+  meta: [Meta]
+  flags: ItemFlags
+
+  # Mod this object comes from
+  mod: String
+
+  # Id of this object, combined with mod in format mod:id
+  id(
+    # Prefix with the mod field value in format mod:id
+    prefixMod: Boolean = false
+  ): String
+
+  # English name of object
+  name: String
+
+  # Version this object first appeared in
+  introduced_at: String
+
+  # Last Version this object was edited
+  changed_at: String
+}
+
+input ItemInput {
+  # Metadata settings
+  #meta: [Meta]
+  #flags: ItemFlags
+
+  # Mod this object comes from
+  mod: String
+
+  # Id of this object, combined with mod in format mod:id
+  id: String
+
+  # English name of object
+  name: String
+
+  # Version this object first appeared in
+  introduced_at: String
+
+  # Last Version this object was edited
+  changed_at: String
+}
+
+type ItemFlags {
+  # Amount of damage
+  durability: Int
+
+  # Item can be coloured
+  dyeable: Boolean
+
+  # Can be smashed in an anvil to fix it.
+  repairable: Boolean
+
+  # valid enchantments for this item
+  enchantments: [Enchantment]
+}
+
+type Meta {
+  key: String
+  values: [MetaEntry]
+}
+
+type MetaEntry {
+  value: String
+  mask: Int
+}
+
+type mutation {
+  addItem(oldId: String, newData: ItemInput): Item
+}
+
+type query {
+  items(id: String): [Item!]
+  blocks(id: String): [Block!]
+  entities(id: String): [Entity!]
+  enchantments(id: String): [Enchantment!]
+  versions(id: String, type: String): [Version!]
+}
+
+type Version {
+  id: String
+  mod: String
+  type: String
+  released: String
+}

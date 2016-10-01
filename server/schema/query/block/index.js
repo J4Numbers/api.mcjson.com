@@ -1,5 +1,5 @@
 var graphql = require('graphql');
-var mkObj = require("../mkObj");
+var mkObj = require("../../mkObj");
 module.exports = mkObj([{
     name: "Block",
     fields: {
