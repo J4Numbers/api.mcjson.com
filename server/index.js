@@ -25,14 +25,28 @@ if (process.env.NODE_ENV != 'production') {
 }
 
 if (process.env.NODE_ENV != 'production') {
-    app.use('/editor/', express.static('public'));
+    var webpack = require("webpack");
+    var webpackDevMiddleware = require('webpack-dev-middleware');
+    var webpackHotMiddleware = require('webpack-hot-middleware');
+    var config = require('../webpack.config.js');
+    var compiler =  webpack(config);
+    app.use(webpackDevMiddleware(
+        compiler,
+        {
+            publicPath: config.output.publicPath,
+            stats:{colors:true}
+        }
+    ));
+    app.use(webpackHotMiddleware(compiler, {
+        log: console.log
+    }))
 }
 
 app.use ('/graphql', require("./graph.js"));
 
-app.use((req,res)=>{
-    res.status(404).send({error:"no path"});
-})
+// app.use((req,res)=>{
+//     res.status(404).send({error:"no path"});
+// })
 
 var server = app.listen(process.argv[2] || process.env.PORT, function () {
     var host = server.address().address;

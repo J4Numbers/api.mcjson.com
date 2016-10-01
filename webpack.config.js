@@ -27,8 +27,9 @@ module.exports = {
     entry: "index.jsx",
     output: {
         path: __dirname + "/public",
+        publicPath:"/editor/",
         filename: "bundle.js"
     },
     devtool: 'source-map',
-    plugins: [new HtmlWebpackPlugin()]
+    plugins: [new HtmlWebpackPlugin({title:"api.mcjson.com Editor",template:"./editor/index.html"})]
 }

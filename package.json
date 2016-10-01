@@ -18,7 +18,8 @@
     "babel-preset-react": "^6.3.13",
     "html-webpack-plugin": "^2.22.0",
     "webpack": "^1.12.9",
-    "webpack-dev-middleware": "^1.8.3"
+    "webpack-dev-middleware": "^1.8.3",
+    "webpack-hot-middleware": "^2.12.2"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
