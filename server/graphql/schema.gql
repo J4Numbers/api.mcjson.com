@@ -1,8 +1,3 @@
-schema {
-  query: query
-  mutation: mutation
-}
-
 type Block {
   # Metadata settings
   meta: [Meta]
@@ -126,19 +121,19 @@ input ItemInput {
   #flags: ItemFlags
 
   # Mod this object comes from
-  mod: String
+  mod: String!
 
   # Id of this object, combined with mod in format mod:id
-  id: String
+  id: String!
 
   # English name of object
-  name: String
+  name: String!
 
   # Version this object first appeared in
-  introduced_at: String
+  introduced_at: String!
 
   # Last Version this object was edited
-  changed_at: String
+  changed_at: String!
 }
 
 type ItemFlags {

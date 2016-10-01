@@ -21,7 +21,7 @@ if(process.env.NODE_ENV == 'production'){
 
 if (process.env.NODE_ENV != 'production') {
     app.use(responseTime())
-    app.use(morgan('combined'));
+    app.use(morgan('common'));
 }
 
 if (process.env.NODE_ENV != 'production') {
