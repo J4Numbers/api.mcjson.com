@@ -1,4 +1,6 @@
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
     resolve: {
         root: ['./editor/'].map((p) => path.resolve(p)),
@@ -24,8 +26,9 @@ module.exports = {
     },
     entry: "index.jsx",
     output: {
-        path: __dirname + "/public/assets",
+        path: __dirname + "/public",
         filename: "bundle.js"
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    plugins: [new HtmlWebpackPlugin()]
 }
