@@ -7,4 +7,6 @@ module.exports = gql.buildSchema([
   query: query
   ${process.env.NODE_ENV != 'production' ? 'mutation: mutation' : ''}
 }`,
-fs.readFileSync(path.resolve(__dirname,"./schema.gql"),"ascii")].join("\n"));
+fs.readFileSync(path.resolve(__dirname,"./schema.gql"),"ascii"),
+process.env.NODE_ENV != 'production' ? fs.readFileSync(path.resolve(__dirname,"./editor.gql"),"ascii") : "",
+].join("\n"));

@@ -1,6 +1,7 @@
 var path = require('path');
 var fs = require('fs');
 var readdir = require("readdir-plus");
+var mkdirp = require("mkdirp");
 
 class FileEntry {
     constructor(file, content) {
@@ -12,7 +13,12 @@ class FileEntry {
         return this.content;
     }
     save() {
+        mkdirp.sync(path.dirname(this.file));
         fs.writeFile(this.file, JSON.stringify(this.content, null, 2));
+    }
+    rename(newName){
+        fs.renameSync(this.file, newName);
+        return newName;
     }
     delete() {
         fs.unlink(this.file);
@@ -39,5 +45,7 @@ class Database {
         })
     }
 }
+
+Database.FileEntry = FileEntry;
 
 module.exports = Database;
