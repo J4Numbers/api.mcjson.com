@@ -8,7 +8,7 @@ let entityDB = databases.entitiesDB;
 let enchantmentDB = databases.enchantmentsDB;
 let versionsDB = databases.versionsDB;
 let dm = (...mixins) => (obj) => { 
-    var o = Object.assign({},mixins.reduce(deepmerge,{}));
+    var o = Object.assign({},obj,mixins.reduce(deepmerge,{}));
     o._ = obj;
     return o;
 }; 

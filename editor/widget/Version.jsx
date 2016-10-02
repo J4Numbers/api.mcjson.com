@@ -1,12 +1,12 @@
 import React from 'react';
-import {GQL} from '../gql.js';
+import getVersions from '../gql/getVersionsWidget.gql';
 /**
 */
 
 let versionData = [];
 
 export function loadVersionData(){
-    return GQL(`query{ versions{id} }`)().then((d)=>{versionData = d.data.versions.map((v)=>v.id)});
+    return getVersions().then(({versions})=>{versionData = versions.map((v)=>v.id)});
 }
 
 export class Version extends React.Component {

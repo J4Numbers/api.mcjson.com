@@ -11,3 +11,12 @@ api.mcjson.com
 3. npm start
 
 _TODO:Detail Configuration options here_
+
+Rebuild editor to use GQL function.
+
+Swap to passing GQL query functions .
+````
+<ItemsTable>
+  <TableList gqlQuery={gql(`items {mod id name introduced_at changed_at } `) } />
+</ItemsTable>
+````
