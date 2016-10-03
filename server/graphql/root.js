@@ -27,9 +27,7 @@ function mutationUpdate(fn, db){
         var file = path.resolve(db.dbPath, fn(oldId));
         var newFile = path.resolve(db.dbPath, fn(newData));
         return db.entries.then( entries =>{
-            var f = entries.find(e=>{
-                e.file == file
-            }) || new FileEntry(file, {});
+            var f = entries.find(e=> (e.file == file) ) || new FileEntry(file, {});
             f.content = deepmerge(f.content,newData);
             f.save();
             if(file != newFile){
@@ -44,9 +42,7 @@ function mutationAdd(fn, db){
     return ({newData})=>{
         var file = path.resolve(db.dbPath, fn(oldItem || newData));
         return db.entries.then( entries =>{
-            if(entries.find(e=>{
-                e.file == file
-            }) != null){
+            if(entries.find(e=> (e.file == file) ) != null){
                 throw new Error("Object already exists in database!");
             }else{
                 f = new FileEntry(file)
@@ -61,16 +57,17 @@ function mutationAdd(fn, db){
 
 function mutationDelete(fn, db){
     return ({oldId})=>{
-        var file = path.resolve(db.dbPath, fn(oldId));
+        var file = path.join(db.dbPath, fn(oldId));
         return db.entries.then( entries =>{
-            var f = entries.find(e=>{
-                e.file == file
-            })
+            var f = entries.find(e=> (e.file == file))
             if(f){
                 f.delete();
                 entries.splice(entries.indexOf(f),1);
+                return f.content;
             }
-
+            else{
+                throw new Error("Cannot find entry with file path of " + file);
+            }
         })
     } 
 }
@@ -91,15 +88,14 @@ module.exports = Object.assign({
         return enchantmentDB.entries.then(items => items.map(e => e.data()).filter(e => id == null || e.id == id).map( ItemModel ));
     },
     versions({id, type}) {
-        console.log(type);
         return versionsDB.entries.then(items => items.map(e => e.data()).filter(e => id == null || e.id == id).filter(e => type == null || e.type == type))
     }    
 },
 process.env.NODE_ENV != 'production' ? {
     
-    addItem: mutationAdd( data =>`${data.mod}/${data.id}.json` , itemDB),
-    updateItem: mutationUpdate( data =>`${data.mod}/${data.id}.json` , itemDB),
-    deleteItem: mutationDelete( data =>`${data.mod}/${data.id}.json` , itemDB),
+    addItem: mutationAdd( data =>(`${data.mod}/${data.id}.json`) , itemDB),
+    updateItem: mutationUpdate( data =>(`${data.mod}/${data.id}.json`) , itemDB),
+    deleteItem: mutationDelete( data =>(`${data.mod}/${data.id}.json`) , itemDB),
 
 
 }:{});
