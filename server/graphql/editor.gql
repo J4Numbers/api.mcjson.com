@@ -25,5 +25,7 @@ input ItemInput {
   changed_at: String!
 }
 type mutation {
-  addItem(oldId: OldId, newData: ItemInput): Item
+  addItem(newData: ItemInput!): Item
+  updateItem(oldId: OldId!, newData: ItemInput!): Item
+  deleteItem(oldId: OldId!): Item
 }

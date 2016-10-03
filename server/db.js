@@ -17,6 +17,7 @@ class FileEntry {
         fs.writeFile(this.file, JSON.stringify(this.content, null, 2));
     }
     rename(newName){
+        mkdirp.sync(path.dirname(newName));
         fs.renameSync(this.file, newName);
         return newName;
     }
