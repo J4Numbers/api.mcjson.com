@@ -1,2 +1,2 @@
 #!/bin/bash
-git clone https://tehbeard@bitbucket.org/beardtec/mcjson.data.git data
+git clone https://github.com/tehbeard/api.mcjson.com-data.git data
