@@ -4,16 +4,19 @@ import React from 'react';
 import {compare} from 'semver';
 import getItems from './gql/table/items.gql';
 import getBlocks from './gql/table/blocks.gql';
+import getEntities from './gql/table/entities.gql';
+import getEnchantments from './gql/table/enchantments.gql';
 
 const handlers = {
     items: getItems,
-    blocks: getBlocks
+    blocks: getBlocks,
+    entities: getEntities,
+    enchantments: getEnchantments
 }
 
 export default class TableList extends React.Component {
     constructor(props) {
         super(props);
-        console.log("TBLPROPS", props);
         this.state = {
             entries: [],
             tableName: props.tableName,
@@ -91,9 +94,6 @@ export default class TableList extends React.Component {
     filterHandler(hnd) {
         return () => {
             let flip = this.state.sortFn === hnd;
-            console.log("CLUNK", flip ? "NORMAL" : "INVERT")
-            console.log("CURRENT", this.state.sortFn);
-            console.log("replacement", hnd);
             this.setState(
                 update(this.state,
                     { sortFn: { $set: (flip ? function (a, b) { return 0 - hnd(a, b); } : hnd) } }
