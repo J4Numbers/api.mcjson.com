@@ -2,7 +2,13 @@
 import update from 'react-addons-update';
 import React from 'react';
 import {compare} from 'semver';
-import getItems from './gql/getItems.gql';
+import getItems from './gql/table/items.gql';
+import getBlocks from './gql/table/blocks.gql';
+
+const handlers = {
+    items: getItems,
+    blocks: getBlocks
+}
 
 export default class TableList extends React.Component {
     constructor(props) {
@@ -27,9 +33,8 @@ export default class TableList extends React.Component {
         this.fetchList(props.params.tableName);
     }
     fetchList(tableName) {
-        getItems().then(({items}) => {
-                console.log(items);
-                this.setState({ entries: items, tableName: tableName });
+        handlers[tableName]().then((data) => {
+                this.setState({ entries: data[tableName], tableName: tableName });
             });
     }
     componentWillReceiveProps(newProps) {
