@@ -9,5 +9,5 @@ let databases = require("./databases.js");
 module.exports = graphqlHTTP({
     schema: require("./graphql/schema.js"),
     rootValue: require("./graphql/root.js"),
-    graphiql: true,
+    graphiql: (process.env.NODE_ENV != 'production'),
 });
