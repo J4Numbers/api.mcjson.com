@@ -28,7 +28,7 @@ function mutationUpdate(fn, db){
         var newFile = path.resolve(db.dbPath, fn(newData));
         return db.entries.then( entries =>{
             var f = entries.find(e=> (e.file == file) ) || new FileEntry(file, {});
-            f.content = deepmerge(f.content,newData);
+            f.content = newData;//deepmerge(f.content,newData);
             f.save();
             if(file != newFile){
                 f.rename(newFile);
