@@ -1,0 +1,17 @@
+query($id :String!) {
+  blocks(id:$id) {
+    mod
+    id
+    name
+    changed_at
+    introduced_at
+    meta{
+      key
+      values{
+        value
+        mask
+      }
+    }
+    
+  }
+}

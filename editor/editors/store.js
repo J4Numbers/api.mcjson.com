@@ -8,12 +8,11 @@ const CLEAR_DIRTY = 'CLEAR_DIRTY';
 /**
  * Load data from a URL into this store (async)
  */
-export function loadData(url, cb) {
+export function loadData(gql, vars, cb) {
     return (dispatch, getState) => {
-        fetch(url)
-            .then(resp => resp.json())
+        gql(vars)
             .then(data => {
-                dispatch(setData(data, url));
+                dispatch(setData(data));
                 cb && cb();
             })
     }
@@ -22,16 +21,10 @@ export function loadData(url, cb) {
 /**
  * Save data from this store to the provided URL
  */
-export function saveData(cb) {
+export function saveData(gql, cb) {
     return (dispatch, getState) => {
 
-        fetch(getState().url, {
-            method: 'PUT',
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(getState().data)
-        })
+        gql({ data: getState().data})
             .then(resp => {
                 return Promise.all([
                     Promise.resolve(resp.status),
@@ -52,11 +45,10 @@ export function saveData(cb) {
 /**
  * Set data 
  */
-export function setData(data, url) {
+export function setData(data) {
     return {
         type: SET_DATA,
-        data: data,
-        url: url
+        data: data
     }
 }
 
