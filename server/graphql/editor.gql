@@ -44,6 +44,44 @@ input BlockInput {
 
   # Last Version this object was edited
   changed_at: String!
+
+  meta: [InputMeta]
+  flags: InputBlockFlags
+
+}
+
+input InputMeta {
+  key: String
+  values: [InputMetaEntry]
+  technical: Boolean
+}
+
+input InputMetaEntry {
+  value: String
+  mask: Int
+}
+
+input InputBlockFlags {
+  # Does this block obey physics (sand/gravel/anvil)
+  physics: Boolean
+
+  # Resistance to explosions
+  hardness: Int
+
+  # Does this block prevent piston movement
+  unpushable: Boolean
+
+  # Is this block transparent (no suffocate damage)
+  transparent: Boolean
+  light: InputBlockFlagsLight
+}
+
+input InputBlockFlagsLight {
+  # Amount of light emitted by block
+  emit: Int
+
+  # Amount of light that is dropped as it passes through this block
+  decay: Int
 }
 
 type mutation {
