@@ -2,38 +2,47 @@ import React from 'react';
 import update from 'react-addons-update';
 import MetaEditor from '../widget/MetaEditor.jsx';
 
+import getBlock from '../gql/database/getBlock.gql';
+import setBlock from '../gql/database/setBlock.gql';
+
 export default class BlockEditor extends React.Component {
-    
-    constructor(props){
+
+    constructor(props) {
         super(props);
         console.log("BLOCK EDITOR CREATED");
         this.state = {
-            data: {}
+            data: {},
+            isDirty: false
         }
-        //TODO: GQL to fetch block
+        getBlock({ mod: props.params.mod, id: props.params.id }).then((data) => {
+            this.setState({ data: data.blocks[0] });
+        })
     }
-    componentWillReceiveProps(newProps){
-        blockStore.dispatch(loadData(`/v1/blocks/${newProps.params.mod}/${newProps.params.id}`))
-        //TODO: GQL to fetch block
+    componentWillReceiveProps(newProps) {
+        getBlock({ mod: newProps.params.mod, id: newProps.params.id }).then((data) => {
+            this.setState({ data: data.blocks[0] });
+        });
     }
-    onSave(){
-        //TODO: GQL to save block
+    onSave() {
+        setBlock({mod: this.props.params.mod, id: this.props.params.id, data: this.state.data});
     }
-    render(){
+    render() {
         return <div>
-            <MetaEditor data={this.state.data} onUpdate={(data)=> {/* TODO UPDATE STATE */} }/>
+            <MetaEditor data={this.state.data} onUpdate={(data) => this.setState({ data: data, isDirty: true })} />
             <div className="checkbox">
                 <label>
-                <input 
-                    type="checkbox" 
-                    checked={this.state.data.flags && this.state.data.flags.physics} 
-                    onChange={ ()=>{ 
-                        /* TODO UPDATE STATE */
-                        blockStore.dispatch(setData(update(
-                            this.state.data,
-                            { flags: {physics: {$set: !this.state.data.flags.physics }} }
-                        )))
-                    } } /> Physics
+                    <input
+                        type="checkbox"
+                        checked={this.state.data.flags && this.state.data.flags.physics}
+                        onChange={() => {
+                            this.setState({
+                                data: update(
+                                    this.state.data,
+                                    { flags: { physics: { $set: !this.state.data.flags.physics } } }
+                                ),
+                                isDirty: true
+                            })
+                        } } /> Physics
                 </label>
             </div>
             <button className="btn btn-primary" disabled={!this.state.isDirty} onClick={this.onSave.bind(this)} >Save</button>
