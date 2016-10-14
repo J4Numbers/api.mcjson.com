@@ -33,7 +33,7 @@ function mutationUpdate(fn, db){
             if(file != newFile){
                 f.rename(newFile);
             }
-
+            return newData;
         })
     }
 }
