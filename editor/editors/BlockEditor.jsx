@@ -2,37 +2,33 @@ import React from 'react';
 import update from 'react-addons-update';
 import MetaEditor from '../widget/MetaEditor.jsx';
 
-import {loadData, saveData, setData, store } from './store.js';
-
-let blockStore = store();
-
-
 export default class BlockEditor extends React.Component {
     
     constructor(props){
         super(props);
         console.log("BLOCK EDITOR CREATED");
-        this.state = blockStore.getState();
-        blockStore.subscribe(()=>{
-            this.setState(blockStore.getState());
-        })
-        blockStore.dispatch(loadData(`/v1/blocks/${props.params.mod}/${props.params.id}`))
+        this.state = {
+            data: {}
+        }
+        //TODO: GQL to fetch block
     }
     componentWillReceiveProps(newProps){
         blockStore.dispatch(loadData(`/v1/blocks/${newProps.params.mod}/${newProps.params.id}`))
+        //TODO: GQL to fetch block
     }
     onSave(){
-        blockStore.dispatch(saveData());
+        //TODO: GQL to save block
     }
     render(){
         return <div>
-            <MetaEditor data={this.state.data} onUpdate={(data)=>{ blockStore.dispatch(setData(data))}}/>
+            <MetaEditor data={this.state.data} onUpdate={(data)=> {/* TODO UPDATE STATE */} }/>
             <div className="checkbox">
                 <label>
                 <input 
                     type="checkbox" 
                     checked={this.state.data.flags && this.state.data.flags.physics} 
                     onChange={ ()=>{ 
+                        /* TODO UPDATE STATE */
                         blockStore.dispatch(setData(update(
                             this.state.data,
                             { flags: {physics: {$set: !this.state.data.flags.physics }} }

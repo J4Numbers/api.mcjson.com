@@ -1,28 +1,24 @@
 import React from 'react';
 import MetaEditor from '../widget/MetaEditor.jsx';
-import {loadData, saveData, setData, store } from './store.js';
-
-let itemStore = store();
 
 export default class ItemEditor extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = itemStore.getState(); itemStore.subscribe(() => {
-            this.setState(itemStore.getState());
-        })
-        itemStore.dispatch(loadData(`/v1/items/${props.params.mod}/${props.params.id}`))
+        this.state = {
+            data: {}
+        }
     }
     componentWillReceiveProps(newProps) {
-        itemStore.dispatch(loadData(`/v1/items/${props.params.mod}/${props.params.id}`))
+        /* TODO UPDATE STATE */
     }
     onSave() {
-        itemStore.dispatch(saveData());
+        /* TODO UPDATE STATE */
     }
     render() {
         return <div>
-            <MetaEditor data={this.state.data} onUpdate={(data) => { itemStore.dispatch(setData(data)) } }/>
-            <FlagEditor data={this.state.data.flags} onChange={ data => itemStore.dispatch(setData(Object.assign({}, this.state.data, { flags: data }))) }/>
+            <MetaEditor data={this.state.data} onUpdate={(data) => { /* TODO UPDATE STATE */ } }/>
+            <FlagEditor data={this.state.data.flags} onChange={ data => {/* TODO UPDATE STATE */} }/>
             <button className="btn btn-primary" disabled={!this.state.isDirty} onClick={this.onSave.bind(this) } >Save</button>
             <pre>
                 {JSON.stringify(this.state.data, null, 2) }
