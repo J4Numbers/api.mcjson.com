@@ -1,7 +1,7 @@
 var path = require("path");
 let deepmerge = require("deepmerge");
 let databases = require("../databases.js");
-let FileEntry = require("../db.js").FileEntry;
+let FileEntry = require("../jsonFileDB.js").FileEntry;
 let itemDB = databases.itemDB;
 let blockDB = databases.blockDB;
 let entityDB = databases.entitiesDB;
@@ -79,13 +79,13 @@ module.exports = Object.assign({
         );
     },
     blocks({mod,id}) {
-        return blockDB.entries.then(items => items.map(e => e.data()).filter(e => id == null || e.id == id).map( ItemModel ));
+        return blockDB.entries.then(items => items.map(e => e.data()).filter(e => mod == null || e.mod == mod).filter(e => id == null || e.id == id).map( ItemModel ));
     },
     entities({mod,id}) {
-        return entityDB.entries.then(items => items.map(e => e.data()).filter(e => id == null || e.id == id).map( ItemModel ));
+        return entityDB.entries.then(items => items.map(e => e.data()).filter(e => mod == null || e.mod == mod).filter(e => id == null || e.id == id).map( ItemModel ));
     },
     enchantments({mod,id}) {
-        return enchantmentDB.entries.then(items => items.map(e => e.data()).filter(e => id == null || e.id == id).map( ItemModel ));
+        return enchantmentDB.entries.then(items => items.map(e => e.data()).filter(e => mod == null || e.mod == mod).filter(e => id == null || e.id == id).map( ItemModel ));
     },
     versions({id, type}) {
         return versionsDB.entries.then(items => items.map(e => e.data()).filter(e => id == null || e.id == id).filter(e => type == null || e.type == type))
@@ -96,6 +96,11 @@ process.env.NODE_ENV != 'production' ? {
     addItem: mutationAdd( data =>(`${data.mod}/${data.id}.json`) , itemDB),
     updateItem: mutationUpdate( data =>(`${data.mod}/${data.id}.json`) , itemDB),
     deleteItem: mutationDelete( data =>(`${data.mod}/${data.id}.json`) , itemDB),
+
+    addBlock: mutationAdd( data =>(`${data.mod}/${data.id}.json`) , blockDB),
+    updateBlock: mutationUpdate( data =>(`${data.mod}/${data.id}.json`) , blockDB),
+    deleteBlock: mutationDelete( data =>(`${data.mod}/${data.id}.json`) , blockDB),
+
 
 
 }:{});

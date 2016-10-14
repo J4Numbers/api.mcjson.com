@@ -1,17 +1,6 @@
-query($mod :String!, $id :String!) {
-  blocks(mod: $mod, id:$id) {
+mutation($oldId :OldId!, $newData :BlockInput!) {
+  updateBlock(oldId: $oldId, newData:$newData) {
     mod
     id
-    name
-    changed_at
-    introduced_at
-    meta{
-      key
-      values{
-        value
-        mask
-      }
-    }
-    
   }
 }

@@ -2,8 +2,8 @@ import React from 'react';
 import update from 'react-addons-update';
 import MetaEditor from '../widget/MetaEditor.jsx';
 
-import getBlock from '../gql/database/getBlock.gql';
-import setBlock from '../gql/database/setBlock.gql';
+import getBlock from '../gql/editors/getBlock.gql';
+import setBlock from '../gql/editors/setBlock.gql';
 
 export default class BlockEditor extends React.Component {
 
@@ -24,7 +24,7 @@ export default class BlockEditor extends React.Component {
         });
     }
     onSave() {
-        setBlock({mod: this.props.params.mod, id: this.props.params.id, data: this.state.data});
+        setBlock({oldId:{mod: this.props.params.mod, id: this.props.params.id}, newData: this.state.data});
     }
     render() {
         return <div>

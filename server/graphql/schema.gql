@@ -140,10 +140,10 @@ type MetaEntry {
 }
 
 type query {
-  items(id: String): [Item!]
-  blocks(id: String): [Block!]
-  entities(id: String): [Entity!]
-  enchantments(id: String): [Enchantment!]
+  items(mod: String, id: String): [Item!]
+  blocks(mod: String, id: String): [Block!]
+  entities(mod: String, id: String): [Entity!]
+  enchantments(mod: String, id: String): [Enchantment!]
   versions(id: String, type: VersionType): [Version!]
 }
 

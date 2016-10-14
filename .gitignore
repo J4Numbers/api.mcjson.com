@@ -1,6 +1,6 @@
 _deleted_
 node_modules
 *.7z
-public/assets
+public
 .env
 data

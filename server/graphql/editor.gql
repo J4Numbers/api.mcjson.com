@@ -24,8 +24,34 @@ input ItemInput {
   # Last Version this object was edited
   changed_at: String!
 }
+
+input BlockInput {
+  # Metadata settings
+  #meta: [Meta]
+  #flags: ItemFlags
+
+  # Mod this object comes from
+  mod: String!
+
+  # Id of this object, combined with mod in format mod:id
+  id: String!
+
+  # English name of object
+  name: String!
+
+  # Version this object first appeared in
+  introduced_at: String!
+
+  # Last Version this object was edited
+  changed_at: String!
+}
+
 type mutation {
   addItem(newData: ItemInput!): Item
   updateItem(oldId: OldId!, newData: ItemInput!): Item
   deleteItem(oldId: OldId!): Item
+
+  addBlock(newData: BlockInput!): Block
+  updateBlock(oldId: OldId!, newData: BlockInput!): Block
+  deleteBlock(oldId: OldId!): Block
 }
