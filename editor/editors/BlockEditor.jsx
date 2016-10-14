@@ -24,7 +24,13 @@ export default class BlockEditor extends React.Component {
         });
     }
     onSave() {
-        setBlock({oldId:{mod: this.props.params.mod, id: this.props.params.id}, newData: this.state.data}).then(()=>this.setState({isDirty:false}));
+        setBlock({oldId:{mod: this.props.params.mod, id: this.props.params.id}, newData: this.state.data}).then((data)=>{
+            this.setState({isDirty:false});
+            if(location.hash!= `/blocks/${data.updateBlock.mod}/${data.updateBlock.id}`){ 
+                location.hash = `/blocks/${data.updateBlock.mod}/${data.updateBlock.id}`;
+            }
+
+        });
     }
     render() {
         return <div>
