@@ -25,7 +25,6 @@ export class VersionData extends React.Component {
     
     onChange(key){
         return (ev)=>{
-            console.log(ev)
             this.props.onChange(
                 Object.assign(
                     {},

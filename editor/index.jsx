@@ -11,9 +11,7 @@ import {loadVersionData} from './views/widget/Version.jsx';
 
 import App from './app.jsx';
 
-console.log("Preloading data");
 loadVersionData().then(() => {
-    console.log("App started.");
     ReactDOM.render(<Router history={hashHistory}>
         <Route path="/" component={App} >
             <Route path="/versions/:version" component={VersionEditor} />

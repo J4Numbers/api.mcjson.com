@@ -6,6 +6,7 @@ export default class EnchantmentEditor extends React.Component {
     constructor(props)
     {
         super(props);
+        alert("TODO: BORKED.");
         this.state = {
             isDirty: false,
             data: {}
@@ -77,7 +78,6 @@ export default class EnchantmentEditor extends React.Component {
             headers:{"content-type":"application/json"},
             body: JSON.stringify(Object.assign({introduced_at:"1.0.0",changed_at:"1.0.0"},this.state.data))
         }).then((e)=>{
-            console.log(e);
             this.setState(
             update(this.state,{
                 isDirty: {$set: false}

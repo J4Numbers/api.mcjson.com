@@ -63,7 +63,6 @@ export class MetaCategory extends React.Component {
 			this.qs("#cat-label").value = v.label;
 			this.qs(".entry-list").innerHTML = "";
 			var entryList = this.qs(".entry-list");
-			console.log(v.entries);
 			v.entries.forEach((e)=>{
 				var cat = new MetaEntry();
 					cat.setValue(e);

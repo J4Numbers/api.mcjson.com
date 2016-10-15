@@ -10,7 +10,6 @@ export default class BlockEditor extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("BLOCK EDITOR CREATED", props.route.isNew);
         this.state = {
             data: {},
             isDirty: false,

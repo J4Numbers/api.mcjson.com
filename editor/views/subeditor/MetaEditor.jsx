@@ -16,7 +16,6 @@ export default class MetaEditor extends React.Component {
     updateMetaKey(gId, vId, key){
         return (ev)=>{ 
             var newValue = ev.target.value;
-            console.log(gId, vId, key, newValue);
             this.props.onChange(
                 update(this.props.data,{
                     meta: { [gId] : {values: { [vId]: { [key] : {$set: newValue} } } } }
