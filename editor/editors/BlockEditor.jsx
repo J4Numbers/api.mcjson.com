@@ -3,9 +3,9 @@ import update from 'react-addons-update';
 import MetaEditor from '../widget/MetaEditor.jsx';
 import BlockFlagEditor from '../widget/BlockFlagEditor.jsx';
 
-import getBlock from '../gql/editors/getBlock.gql';
-import setBlock from '../gql/editors/setBlock.gql';
-import addBlock from '../gql/editors/addBlock.gql';
+import getBlock from '../gql/editors/block/getBlock.gql';
+import setBlock from '../gql/editors/block/setBlock.gql';
+import addBlock from '../gql/editors/block/addBlock.gql';
 
 export default class BlockEditor extends React.Component {
 
