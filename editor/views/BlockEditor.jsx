@@ -1,6 +1,6 @@
 import React from 'react';
 import MetaEditor from './subeditor/MetaEditor.jsx';
-import BlockFlagEditor from './subeditor/BlockFlagEditor.jsx';
+import {BlockFlagEditor} from './subeditor/FlagEditor.jsx';
 
 import getBlock from '../gql/block/get.gql';
 import setBlock from '../gql/block/set.gql';
