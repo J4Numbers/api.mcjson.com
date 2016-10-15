@@ -1,4 +1,4 @@
-mutation($oldId :OldId!, $newData :BlockInput!) {
+mutation($oldId :OldId!, $newData :InputBlock!) {
   block: updateBlock(oldId: $oldId, newData:$newData) {
     mod
     id

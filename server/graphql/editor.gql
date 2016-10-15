@@ -4,7 +4,7 @@ input OldId{
   id:String!
 }
 
-input ItemInput {
+input InputItem {
   # Metadata settings
   #meta: [Meta]
   #flags: ItemFlags
@@ -25,7 +25,7 @@ input ItemInput {
   changed_at: String!
 }
 
-input BlockInput {
+input InputBlock {
   # Metadata settings
   #meta: [Meta]
   #flags: ItemFlags
@@ -89,11 +89,11 @@ input InputBlockFlagsLight {
 }
 
 type mutation {
-  addItem(newData: ItemInput!): Item
-  updateItem(oldId: OldId!, newData: ItemInput!): Item
+  addItem(newData: InputItem!): Item
+  updateItem(oldId: OldId!, newData: InputItem!): Item
   deleteItem(oldId: OldId!): Item
 
-  addBlock(newData: BlockInput!): Block
-  updateBlock(oldId: OldId!, newData: BlockInput!): Block
+  addBlock(newData: InputBlock!): Block
+  updateBlock(oldId: OldId!, newData: InputBlock!): Block
   deleteBlock(oldId: OldId!): Block
 }
