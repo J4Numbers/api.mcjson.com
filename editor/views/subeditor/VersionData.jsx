@@ -14,19 +14,19 @@ export class VersionData extends React.Component {
         return <div className="datetime">
         <div className="form-group">
         <label>Introduced at</label>
-        <Version value={this.props.data.introduced_at} onChange={this.onUpdate('introduced_at')}/>
+        <Version value={this.props.data.introduced_at} onChange={this.onChange('introduced_at')}/>
         </div>
         <div className="form-group">
         <label>Changed at</label>
-        <Version value={this.props.data.changed_at}  onChange={this.onUpdate('changed_at')}/>
+        <Version value={this.props.data.changed_at}  onChange={this.onChange('changed_at')}/>
         </div>
         </div>
     }
     
-    onUpdate(key){
+    onChange(key){
         return (ev)=>{
             console.log(ev)
-            this.props.onUpdate(
+            this.props.onChange(
                 Object.assign(
                     {},
                     this.props.data,

@@ -6,7 +6,7 @@ export default class MetaEditor extends React.Component {
     
     addMetaKey(gId){
         return ()=>{ 
-            this.props.onUpdate(
+            this.props.onChange(
                 update(this.props.data,{
                     meta: { [gId] : {values: { $push: [{value:"",mask:0}] } } }
                 })
@@ -17,7 +17,7 @@ export default class MetaEditor extends React.Component {
         return (ev)=>{ 
             var newValue = ev.target.value;
             console.log(gId, vId, key, newValue);
-            this.props.onUpdate(
+            this.props.onChange(
                 update(this.props.data,{
                     meta: { [gId] : {values: { [vId]: { [key] : {$set: newValue} } } } }
                 })
@@ -27,7 +27,7 @@ export default class MetaEditor extends React.Component {
     deleteMetaKey(gId, vId){
         return (ev)=>{ 
             var newValue = ev.target.value;
-            this.props.onUpdate(
+            this.props.onChange(
                 update(this.props.data,{
                     meta: { [gId] : {values: { $splice:[[vId, 1]] } } }
                 })
@@ -36,7 +36,7 @@ export default class MetaEditor extends React.Component {
     }
     
     toggleTechnicalBlock(){
-        this.props.onUpdate(
+        this.props.onChange(
                 update(this.props.data,{
                     technical: {$set: !this.props.data.technical}
                 })
@@ -46,7 +46,7 @@ export default class MetaEditor extends React.Component {
     setMetaName(gId){
          return (ev)=>{ 
             var newValue = ev.target.value;
-            this.props.onUpdate(
+            this.props.onChange(
                 update(this.props.data,{
                     meta: { [gId] : {key: {$set:newValue} } }
                 })
@@ -57,7 +57,7 @@ export default class MetaEditor extends React.Component {
     setMetaTechnical(gId){
         return (ev)=>{ 
             var newValue = ev.target.checked;
-            this.props.onUpdate(
+            this.props.onChange(
                 update(this.props.data,{
                     meta: { [gId] : {technical: { $set: newValue } } }
                 })
@@ -66,7 +66,7 @@ export default class MetaEditor extends React.Component {
     }
     
     addNewMetaCategory(){
-        this.props.onUpdate(
+        this.props.onChange(
             update(this.props.data,{
                 meta: { [Array.isArray(this.props.data.meta) ? "$push" : "$set"]  : [{key:"",values:[]}] } 
             })
@@ -75,7 +75,7 @@ export default class MetaEditor extends React.Component {
     
     deleteMetaCategory(gId){
         return ()=>{
-            this.props.onUpdate(
+            this.props.onChange(
             update(this.props.data,{
                 meta: { $splice : [[gId,1]] } 
             })
@@ -87,7 +87,7 @@ export default class MetaEditor extends React.Component {
        
         
         return <div>
-            <BaseEditor data={this.props.data} onUpdate={this.props.onUpdate}/>
+            <BaseEditor data={this.props.data} onChange={this.props.onChange}/>
             <div className="checkbox">
                 <label>
                 <input type="checkbox" checked={this.props.data.technical} onChange={this.toggleTechnicalBlock.bind(this)} /> Technical item/block

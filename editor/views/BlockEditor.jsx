@@ -1,5 +1,4 @@
 import React from 'react';
-import update from 'react-addons-update';
 import MetaEditor from './subeditor/MetaEditor.jsx';
 import BlockFlagEditor from './subeditor/BlockFlagEditor.jsx';
 
@@ -39,8 +38,8 @@ export default class BlockEditor extends React.Component {
     }
     render() {
         return <div>
-            <MetaEditor data={this.state.data} onUpdate={(data) => this.setState({ data: data, isDirty: true })} />
-            <BlockFlagEditor data={ this.state.data.flags || {} } onUpdate={ (newFlags)=>{ this.setState({isDirty: true, data: Object.assign({},this.state.data, {flags:newFlags } ) }) }  }/>
+            <MetaEditor data={this.state.data} onChange={(data) => this.setState({ data: data, isDirty: true })} />
+            <BlockFlagEditor data={ this.state.data.flags || {} } onChange={ (newFlags)=>{ this.setState({isDirty: true, data: Object.assign({},this.state.data, {flags:newFlags } ) }) }  }/>
             <button className="btn btn-primary" disabled={!this.state.isDirty} onClick={this.onSave.bind(this)} >Save</button>
             <pre>{JSON.stringify(this.state.data, null,2)}</pre>
         </div>

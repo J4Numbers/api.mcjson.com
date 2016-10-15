@@ -14,17 +14,17 @@ export class CommonData extends React.Component {
         return <div className="common-data">
         <div className="form-group">
             <label htmlFor="common-mod">mod</label>
-            <input type="text" className="form-control" id="common-mod" ref={(c)=>this._refs.mod = c} value={this.props.data.mod} onChange={this.onUpdate.bind(this)} />
+            <input type="text" className="form-control" id="common-mod" ref={(c)=>this._refs.mod = c} value={this.props.data.mod} onChange={this.onChange.bind(this)} />
         </div>
         <div className="form-group">
             <label htmlFor="common-id">id</label>
-            <input type="text" className="form-control" id="common-id" ref={(c)=>this._refs.id = c} value={this.props.data.id} onChange={this.onUpdate.bind(this)} />
+            <input type="text" className="form-control" id="common-id" ref={(c)=>this._refs.id = c} value={this.props.data.id} onChange={this.onChange.bind(this)} />
         </div>
         </div> 
     }
     
-    onUpdate(){
-        this.props.onUpdate(
+    onChange(){
+        this.props.onChange(
             Object.assign({},
             this.props.data,
             {

@@ -31,7 +31,7 @@ export default class EnchantmentEditor extends React.Component {
     render(){
         return <div>
         <a href="#/enchantments/">Back to enchantments</a>
-        <BaseEditor data={this.state.data} onUpdate={this.onUpdate.bind(this)}/>
+        <BaseEditor data={this.state.data} onChange={this.onChange.bind(this)}/>
         <div className="form-group">
             <label>numeric id</label>
             <input className="form-control col-sm-2" type="number" min="0" step="1" value={ this.state.data.num_id || 0 } onChange={(ev)=>{
@@ -62,7 +62,7 @@ export default class EnchantmentEditor extends React.Component {
         </div> 
     }
     
-    onUpdate(data){
+    onChange(data){
         this.setState(
             update(this.state,{
                 isDirty: {$set: true},
