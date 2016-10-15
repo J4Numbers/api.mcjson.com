@@ -17,6 +17,7 @@ export class Version extends React.Component {
     }
     render(){
         return <select value={this.props.value} className="form-control" onChange={this.props.onChange}>
+        <option key="N/A" value={null}></option>
           {versionData.map((v)=><option key={v} value={v}>{v}</option>)}
         </select>
     }
