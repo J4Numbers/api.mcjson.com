@@ -1,0 +1,9 @@
+
+type query {
+  items(mod: String, id: String): [Item!]
+  blocks(mod: String, id: String): [Block!]
+  entities(mod: String, id: String): [Entity!]
+  enchantments(mod: String, id: String): [Enchantment!]
+  versions(id: String, type: VersionType): [Version!]
+}
+

@@ -1,0 +1,42 @@
+
+
+type Item {
+  # Metadata settings
+  meta: [Meta]
+  flags: ItemFlags
+
+  # Mod this object comes from
+  mod: String
+
+  # Id of this object, combined with mod in format mod:id
+  id(
+    # Prefix with the mod field value in format mod:id
+    prefixMod: Boolean = false
+  ): String
+
+  # English name of object
+  name: String
+
+  # Version this object first appeared in
+  introduced_at: String
+
+  # Last Version this object was edited
+  changed_at: String
+}
+
+type ItemFlags {
+  # Amount of damage
+  durability: Int
+
+  # Item can be coloured
+  dyeable: Boolean
+
+  # Can be smashed in an anvil to fix it.
+  repairable: Boolean
+
+  # valid enchantments for this item
+  enchantments: [Enchantment!]
+
+  # Editors to use for this objects NBT data.
+  editors: [NBTEditors!]
+}

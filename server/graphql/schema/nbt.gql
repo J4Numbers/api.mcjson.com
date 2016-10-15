@@ -1,0 +1,18 @@
+enum NBTEditors {
+    #This object accepts potion data
+    POTION,
+    #This object accepts book data
+    BOOK,
+    #This object accepts Author data
+    AUTHOR,
+    #This object accepts Banner decals
+    BANNER,
+    #This object accepts firwork star data
+    FIREWORK,
+    #This object accepts shulker box colour
+    SHULKER_BOX,
+    #Beacon data
+    BEACON,
+    #Sign data
+    SIGN
+}

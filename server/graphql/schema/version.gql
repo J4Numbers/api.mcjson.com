@@ -1,0 +1,12 @@
+type Version {
+  id: String
+  
+  #mod: String
+  
+  type: VersionType
+  released: String
+}
+enum VersionType{
+  SNAPSHOT,
+  RELEASE
+}

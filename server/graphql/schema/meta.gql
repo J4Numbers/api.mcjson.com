@@ -1,0 +1,10 @@
+type Meta {
+  key: String
+  values: [MetaEntry]
+  technical: Boolean
+}
+
+type MetaEntry {
+  value: String
+  mask: Int
+}
