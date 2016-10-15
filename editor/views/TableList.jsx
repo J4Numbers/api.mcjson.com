@@ -2,11 +2,11 @@
 import update from 'react-addons-update';
 import React from 'react';
 import {compare} from 'semver';
-import getItems from 'gql/table/items.gql';
-import getBlocks from 'gql/table/blocks.gql';
-import deleteBlock from 'gql/editors/block/delete.gql';
-import getEntities from 'gql/table/entities.gql';
-import getEnchantments from 'gql/table/enchantments.gql';
+import getItems from 'gql/item/all.gql';
+import getBlocks from 'gql/block/all.gql';
+import deleteBlock from 'gql/block/delete.gql';
+import getEntities from 'gql/entity/all.gql';
+import getEnchantments from 'gql/enchantment/all.gql';
 
 const handlers = {
     items: getItems,

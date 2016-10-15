@@ -1,5 +1,5 @@
 import React from 'react';
-import getVersions from 'gql/getVersionsWidget.gql';
+import getVersions from 'gql/version/all.gql';
 /**
 */
 
