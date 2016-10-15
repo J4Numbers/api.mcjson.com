@@ -13,6 +13,10 @@ query($mod :String!, $id :String!) {
         mask
       }
     }
+    flags{
+      physics
+      inventory_slots
+    }
     
   }
 }
