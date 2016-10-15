@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Version} from './Version.jsx';
+import {Version} from '../widget/Version.jsx';
 /**
 Add generic time fields for most records
 */

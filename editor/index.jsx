@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router'
 
-import TableList from './TableList.jsx';
-import VersionEditor from './editors/VersionEditor.jsx';
-import EnchantmentEditor from './editors/EnchantmentEditor.jsx';
-import BlockEditor from './editors/BlockEditor.jsx';
-import ItemEditor from './editors/ItemEditor.jsx'
-import {loadVersionData} from './widget/Version.jsx';
+import TableList from './views/TableList.jsx';
+import VersionEditor from './views/VersionEditor.jsx';
+import EnchantmentEditor from './views/EnchantmentEditor.jsx';
+import BlockEditor from './views/BlockEditor.jsx';
+import ItemEditor from './views/ItemEditor.jsx'
+import {loadVersionData} from './views/widget/Version.jsx';
 
 import App from './app.jsx';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import update from 'react-addons-update';
-import MetaEditor from '../widget/MetaEditor.jsx';
-import BlockFlagEditor from '../widget/BlockFlagEditor.jsx';
+import MetaEditor from './subeditor/MetaEditor.jsx';
+import BlockFlagEditor from './subeditor/BlockFlagEditor.jsx';
 
 import getBlock from '../gql/editors/block/get.gql';
 import setBlock from '../gql/editors/block/set.gql';

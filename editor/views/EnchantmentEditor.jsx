@@ -1,7 +1,7 @@
 "use strict";
 import update from 'react-addons-update'; 
 import React from 'react';
-import {BaseEditor} from '../widget/BaseEditor.jsx';
+import {BaseEditor} from './subeditor/BaseEditor.jsx';
 export default class EnchantmentEditor extends React.Component {
     constructor(props)
     {

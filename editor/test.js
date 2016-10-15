@@ -1,1 +1,0 @@
-var vsrc =  require('./call.gql');

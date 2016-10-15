@@ -1,5 +1,5 @@
 import React from 'react';
-import MetaEditor from '../widget/MetaEditor.jsx';
+import MetaEditor from './subeditor/MetaEditor.jsx';
 
 export default class ItemEditor extends React.Component {
 
