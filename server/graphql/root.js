@@ -28,7 +28,7 @@ function mutationUpdate(fn, db){
         var newFile = path.resolve(db.dbPath, fn(newData));
         return db.entries.then( entries =>{
             var f = entries.find(e=> (e.file == file) ) || new FileEntry(file, {});
-            f.content = newData;//deepmerge(f.content,newData);
+            f.content = newData;
             f.save();
             if(file != newFile){
                 f.rename(newFile);
@@ -72,6 +72,10 @@ function mutationDelete(fn, db){
     } 
 }
 
+function filterBy(values){
+    return (entry) => Object.keys(values).map( e=> [e,values[e]]).filter( e=> e[1]!=undefined).map( e=> entry[e[0]] == e[1] ).reduce( (a,b)=> a&&b , true);
+}
+
 module.exports = Object.assign({
     items({mod,id}) {
         return itemDB.entries.then(
@@ -79,16 +83,16 @@ module.exports = Object.assign({
         );
     },
     blocks({mod,id}) {
-        return blockDB.entries.then(items => items.map(e => e.data()).filter(e => mod == null || e.mod == mod).filter(e => id == null || e.id == id).map( ItemModel ));
+        return blockDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})).map( ItemModel ));
     },
     entities({mod,id}) {
-        return entityDB.entries.then(items => items.map(e => e.data()).filter(e => mod == null || e.mod == mod).filter(e => id == null || e.id == id).map( ItemModel ));
+        return entityDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})).map( ItemModel ));
     },
     enchantments({mod,id}) {
-        return enchantmentDB.entries.then(items => items.map(e => e.data()).filter(e => mod == null || e.mod == mod).filter(e => id == null || e.id == id).map( ItemModel ));
+        return enchantmentDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})).map( ItemModel ));
     },
     versions({id, type}) {
-        return versionsDB.entries.then(items => items.map(e => e.data()).filter(e => id == null || e.id == id).filter(e => type == null || e.type == type))
+        return versionsDB.entries.then(items => items.map(e => e.data()).filter(filterBy({type, id})));
     }    
 },
 process.env.NODE_ENV != 'production' ? {
