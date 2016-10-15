@@ -73,7 +73,11 @@ input InputBlockFlags {
 
   # Is this block transparent (no suffocate damage)
   transparent: Boolean
+  # Light values for this block 
   light: InputBlockFlagsLight
+
+  #Number of inventory slots this block can hold
+  inventory_slots: Int
 }
 
 input InputBlockFlagsLight {

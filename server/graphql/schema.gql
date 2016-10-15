@@ -34,7 +34,11 @@ type BlockFlags {
 
   # Is this block transparent (no suffocate damage)
   transparent: Boolean
+  # Light data
   light: BlockFlagsLight
+
+  #Number of slots
+  inventory_slots: Int
 }
 
 type BlockFlagsLight {
