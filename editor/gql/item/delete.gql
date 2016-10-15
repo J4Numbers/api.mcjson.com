@@ -1,0 +1,6 @@
+mutation($oldId :OldId!) {
+  item: deleteItem(oldId: $oldId) {
+    mod
+    id
+  }
+}

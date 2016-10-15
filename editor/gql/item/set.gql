@@ -1,0 +1,6 @@
+mutation($oldId :OldId!, $newData :InputItem!) {
+  item: updateItem(oldId: $oldId, newData:$newData) {
+    mod
+    id
+  }
+}

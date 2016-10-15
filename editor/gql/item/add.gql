@@ -1,0 +1,6 @@
+mutation($newData :InputItem!) {
+  item: addItem(newData:$newData) {
+    mod
+    id
+  }
+}

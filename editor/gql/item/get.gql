@@ -1,0 +1,19 @@
+query($mod :String!, $id :String!) {
+  items(mod: $mod, id:$id) {
+    mod
+    id
+    name
+    changed_at
+    introduced_at
+    meta{
+      key
+      technical
+      values{
+        value
+        mask
+      }
+    }
+
+    
+  }
+}
