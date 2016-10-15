@@ -33,6 +33,14 @@ export default class TableList extends React.Component {
             }
             return 0;
         };
+        this.fltrMod = (a, b) => {
+            if (a.mod > b.mod) {
+                return 1
+            } else if (a.mod < b.mod) {
+                return -1;
+            }
+            return 0;
+        };
         this.fetchList(props.params.tableName);
     }
     fetchList(tableName) {
@@ -65,7 +73,7 @@ export default class TableList extends React.Component {
             <table className="table">
                 <thead>
                     <tr>
-                        <th>Mod</th>
+                        <th onClick={this.filterHandler(this.fltrMod) } >Mod</th>
                         <th onClick={this.filterHandler(this.fltrId) }>Id</th>
                         <th onClick={this.filterHandler(this.fltrRel) }>Released</th>
                         <th onClick={this.filterHandler(this.fltrChanged) }>Updated</th>

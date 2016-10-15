@@ -4,19 +4,23 @@ import MetaEditor from '../widget/MetaEditor.jsx';
 
 import getBlock from '../gql/editors/getBlock.gql';
 import setBlock from '../gql/editors/setBlock.gql';
+import addBlock from '../gql/editors/addBlock.gql';
 
 export default class BlockEditor extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("BLOCK EDITOR CREATED");
+        console.log("BLOCK EDITOR CREATED", props.route.isNew);
         this.state = {
             data: {},
-            isDirty: false
+            isDirty: false,
+            isNew: props.route.isNew
         }
-        getBlock({ mod: props.params.mod, id: props.params.id }).then((data) => {
-            this.setState({ data: data.blocks[0] });
-        })
+        if(!this.state.isNew){
+            getBlock({ mod: props.params.mod, id: props.params.id }).then((data) => {
+                this.setState({ data: data.blocks[0] });
+            })
+        }
     }
     componentWillReceiveProps(newProps) {
         getBlock({ mod: newProps.params.mod, id: newProps.params.id }).then((data) => {
@@ -24,10 +28,10 @@ export default class BlockEditor extends React.Component {
         });
     }
     onSave() {
-        setBlock({oldId:{mod: this.props.params.mod, id: this.props.params.id}, newData: this.state.data}).then((data)=>{
-            this.setState({isDirty:false});
-            if(location.hash!= `/blocks/${data.updateBlock.mod}/${data.updateBlock.id}`){ 
-                location.hash = `/blocks/${data.updateBlock.mod}/${data.updateBlock.id}`;
+        (this.state.isNew ? addBlock({newData: this.state.data}) : setBlock({oldId:{mod: this.props.params.mod, id: this.props.params.id}, newData: this.state.data})).then((data)=>{
+            this.setState({isDirty:false,isNew:false});
+            if(location.hash!= `/blocks/${data.block.mod}/${data.block.id}`){ 
+                location.hash = `/blocks/${data.block.mod}/${data.block.id}`;
             }
 
         });

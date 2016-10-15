@@ -19,6 +19,7 @@ loadVersionData().then(() => {
             <Route path="/versions/:version" component={VersionEditor} />
             <Route path="/enchantments/:mod/:id" component={EnchantmentEditor} />
             <Route path="/blocks/:mod/:id" component={BlockEditor} />
+            <Route path="/blocks/_new" isNew={true} component={BlockEditor} />
             <Route path="/items/:mod/:id" component={ItemEditor} />
             <Route path="/:tableName" component={TableList} />
         </Route>

@@ -40,7 +40,7 @@ function mutationUpdate(fn, db){
 
 function mutationAdd(fn, db){
     return ({newData})=>{
-        var file = path.resolve(db.dbPath, fn(oldItem || newData));
+        var file = path.resolve(db.dbPath, fn(newData));
         return db.entries.then( entries =>{
             if(entries.find(e=> (e.file == file) ) != null){
                 throw new Error("Object already exists in database!");
