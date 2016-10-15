@@ -16,10 +16,10 @@ const handlers = {
 }
 
 const deleteHandlers = {
-    items: getItems,
+    items: null,
     blocks: deleteBlock,
-    entities: getEntities,
-    enchantments: getEnchantments
+    entities: null,
+    enchantments: null
 }
 
 export default class TableList extends React.Component {
