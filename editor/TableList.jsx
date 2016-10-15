@@ -4,12 +4,20 @@ import React from 'react';
 import {compare} from 'semver';
 import getItems from './gql/table/items.gql';
 import getBlocks from './gql/table/blocks.gql';
+import deleteBlock from './gql/editors/deleteBlock.gql';
 import getEntities from './gql/table/entities.gql';
 import getEnchantments from './gql/table/enchantments.gql';
 
 const handlers = {
     items: getItems,
     blocks: getBlocks,
+    entities: getEntities,
+    enchantments: getEnchantments
+}
+
+const deleteHandlers = {
+    items: getItems,
+    blocks: deleteBlock,
     entities: getEntities,
     enchantments: getEnchantments
 }
@@ -78,6 +86,7 @@ export default class TableList extends React.Component {
                         <th onClick={this.filterHandler(this.fltrRel) }>Released</th>
                         <th onClick={this.filterHandler(this.fltrChanged) }>Updated</th>
                         <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody id="entries">
@@ -92,6 +101,7 @@ export default class TableList extends React.Component {
                                 <td>{e.introduced_at}</td>
                                 <td>{e.changed_at}</td>
                                 <td><a href={"#/" + this.state.tableName + "/" + e.mod + "/" + e.id} className="btn btn-primary edit">Edit</a></td>
+                                <td><a hred="#" onClick={()=> {deleteHandlers[this.state.tableName]({oldId: {mod: e.mod, id: e.id} }).then(()=> {this.fetchList(this.state.tableName) } ) } } className="btn btn-danger delete">Delete</a></td>
                             </tr>)
                     }
                 </tbody>

@@ -1,0 +1,6 @@
+mutation($oldId :OldId!) {
+  block: deleteBlock(oldId: $oldId) {
+    mod
+    id
+  }
+}
