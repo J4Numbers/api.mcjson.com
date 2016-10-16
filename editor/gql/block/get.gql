@@ -16,6 +16,7 @@ query($mod :String!, $id :String!) {
     flags{
       physics
       inventory_slots
+      editors
     }
     
   }

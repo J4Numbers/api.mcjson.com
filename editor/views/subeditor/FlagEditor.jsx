@@ -25,6 +25,16 @@ export function FlagInt(props) {
     </div>
 }
 
+function toggleArray(arr, val){
+    if(arr.indexOf(val) !== -1){
+        let a = arr.slice();
+        a.splice(arr.indexOf(val),1);
+        return a;
+    }else{
+        return arr.concat([val]);
+    }
+}
+
 export function BlockFlagEditor(props) {
     const update = (data)=>{
         props.onChange(Object.assign({}, props.data, data));
@@ -33,7 +43,7 @@ export function BlockFlagEditor(props) {
         <FlagInt label="Inventory slots" value={props.data ? props.data.inventory_slots : 0} onChange={ slots => update({ inventory_slots: slots }) } />
         <fieldset>
         <legend>NBT data editors</legend>
-        <FlagCheckbox label="Shulker Colour picker" value={props.data && props.data.nbt_shulker_box} onChange={(v) => update( { nbt_shulker_box: v } ) } />
+        <FlagCheckbox label="Shulker Colour picker" value={props.data && props.data.editors && props.data.editors.indexOf("SHULKER_BOX")!==-1} onChange={(v) => update( { editors: toggleArray(props.data.editors||[],"SHULKER_BOX") } ) } />
         
         </fieldset>
 
