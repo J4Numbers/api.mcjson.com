@@ -40,6 +40,7 @@ export function BlockFlagEditor(props) {
         props.onChange(Object.assign({}, props.data, data));
     }
     return <div className="block-flag">
+        <FlagCheckbox label="Physics" value={props.data ? props.data.physics : false} onChange={ c => update({ physics: c }) } />
         <FlagInt label="Inventory slots" value={props.data ? props.data.inventory_slots : 0} onChange={ slots => update({ inventory_slots: slots }) } />
         <fieldset>
         <legend>NBT data editors</legend>
