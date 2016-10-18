@@ -24,7 +24,7 @@ module.exports = {
             },
             { 
                 test: /\.gql$/,
-                loader:'graphql'
+                loader: 'babel?presets[]=es2015!graphql'
             }
         ]
     },

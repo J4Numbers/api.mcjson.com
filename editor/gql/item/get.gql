@@ -1,5 +1,5 @@
 query($mod :String!, $id :String!) {
-  items(mod: $mod, id:$id) {
+  data: items(mod: $mod, id:$id) {
     mod
     id
     name
@@ -17,7 +17,7 @@ query($mod :String!, $id :String!) {
       durability
       dyeable
       repairable
-      enchantments
+      enchantments { id }
       editors
     }
 

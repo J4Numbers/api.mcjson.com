@@ -1,5 +1,5 @@
 query($mod :String!, $id :String!) {
-  blocks(mod: $mod, id:$id) {
+  data: blocks(mod: $mod, id:$id) {
     mod
     id
     name
