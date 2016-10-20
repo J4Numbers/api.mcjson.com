@@ -1,5 +1,5 @@
 mutation($newData :InputBlock!) {
-  block: addBlock(newData:$newData) {
+  data: addBlock(newData:$newData) {
     mod
     id
   }

@@ -105,6 +105,10 @@ process.env.NODE_ENV != 'production' ? {
     updateBlock: mutationUpdate( data =>(`${data.mod}/${data.id}.json`) , blockDB),
     deleteBlock: mutationDelete( data =>(`${data.mod}/${data.id}.json`) , blockDB),
 
+    addEnchantment: mutationAdd( data =>(`${data.mod}/${data.id}.json`) , enchantmentDB),
+    updateEnchantment: mutationUpdate( data =>(`${data.mod}/${data.id}.json`) , enchantmentDB),
+    deleteEnchantment: mutationDelete( data =>(`${data.mod}/${data.id}.json`) , enchantmentDB),
+
 
 
 }:{});

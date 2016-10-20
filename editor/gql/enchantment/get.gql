@@ -1,0 +1,9 @@
+query($mod :String!, $id :String!) {
+  data: enchantments(mod: $mod, id:$id) { 
+        id
+        mod
+        name
+        introduced_at
+        changed_at
+    }
+}

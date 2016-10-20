@@ -1,0 +1,6 @@
+mutation($target :OldId!, $data :InputEnchantment!) {
+  data: updateEnchantment(oldId: $target, newData:$data) {
+    mod
+    id
+  }
+}

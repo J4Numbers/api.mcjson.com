@@ -1,0 +1,6 @@
+mutation($oldId :OldId!) {
+  block: deleteEnchantment(oldId: $oldId) {
+    mod
+    id
+  }
+}
