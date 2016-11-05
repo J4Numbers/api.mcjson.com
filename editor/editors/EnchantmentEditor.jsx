@@ -11,7 +11,7 @@ export default function EnchantmentEditor(props){
         </div>
         <div className="form-group">
             <label>Level</label>
-            <select className="form-control col-sm-2" selected={props.data.level} onChange={(ev)=>props.onChange(Object.assign({},props.data, { level: parseInt(ev.target.value) })) } >
+            <select className="form-control col-sm-2" value={props.data.level} onChange={(ev)=>props.onChange(Object.assign({},props.data, { level: parseInt(ev.target.value) })) } >
               {["I","II","III","IV","V"].map((e,i)=>{
                   return <option key={i} value={i+1}>{e}</option>
               })}

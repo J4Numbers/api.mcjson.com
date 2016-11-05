@@ -3,7 +3,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     resolve: {
-        root: ['./editor/'].map((p) => path.resolve(p)),
+        root: ['./editor/'].map((p) => path.join(__dirname,p)),
     },
     module: {
         loaders: [
