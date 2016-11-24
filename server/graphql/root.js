@@ -75,11 +75,28 @@ function mutationDelete(fn, db){
 function filterBy(values){
     return (entry) => Object.keys(values).map( e=> [e,values[e]]).filter( e=> e[1]!=undefined).map( e=> entry[e[0]] == e[1] ).reduce( (a,b)=> a&&b , true);
 }
+let filters = require("../filters.js");
+
 
 module.exports = Object.assign({
-    items({mod,id}) {
+    items({mod,id,introduced_at}) {
         return itemDB.entries.then(
-            items => items.map(e => e.data()).filter(e => id == null || e.id == id).map( ItemModel )
+            items => items.map(e => e.data()).filter(
+                filters.key(
+                    "mod",
+                    filters.orNull(mod,filters.strEqual)
+                )
+            ).filter(
+                filters.key(
+                    "introduced_at",
+                    filters.orNull(introduced_at,filters.semver)
+                )
+            ).filter(
+                filters.key(
+                    "id",
+                    filters.orNull(id,filters.strEqual)
+                )
+            ).map( ItemModel )
         );
     },
     blocks({mod,id}) {

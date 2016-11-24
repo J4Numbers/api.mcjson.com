@@ -1,6 +1,6 @@
 import React from 'react';
-import MetaEditor from './subeditor/MetaEditor.jsx';
-import {ItemFlagEditor} from './subeditor/FlagEditor.jsx';
+import MetaEditor from './common/MetaEditor.jsx';
+import {ItemFlagEditor} from './common/FlagEditor.jsx';
 import get from 'gql/item/get.gql';
 
 import getItem from '../gql/item/get.gql';
