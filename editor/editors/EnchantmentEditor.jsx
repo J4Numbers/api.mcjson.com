@@ -7,7 +7,7 @@ export default function EnchantmentEditor(props){
         <BaseEditor data={props.data} onChange={props.onChange}/>
         <div className="form-group">
             <label>numeric id</label>
-            <input className="form-control col-sm-2" type="number" min="0" step="1" value={ props.data.num_id || 0 } onChange={(ev)=>props.onChange(Object.assign({},props.data, { num_id: parseInt(ev.target.value) })) } />
+            <input className="form-control col-sm-2" type="number" min="0" step="1" value={ props.data.num_id } onChange={(ev)=>props.onChange(Object.assign({},props.data, { num_id: parseInt(ev.target.value) })) } />
         </div>
         <div className="form-group">
             <label>Level</label>

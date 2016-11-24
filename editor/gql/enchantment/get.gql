@@ -6,5 +6,6 @@ query($mod :String!, $id :String!) {
         introduced_at
         changed_at
         level
+        num_id
     }
 }

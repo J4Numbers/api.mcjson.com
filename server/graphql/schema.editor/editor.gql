@@ -92,7 +92,7 @@ input InputBlockFlagsLight {
 
 input InputEnchantment {
   # Numeric id
-  #num_id: Int!
+  num_id: Int!
 
   # Max level
   level: Int!
