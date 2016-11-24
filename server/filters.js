@@ -7,7 +7,7 @@ var boolean = require('boolean');
 module.exports = {
     array: (key, fn) => e => ((key in e) && e[key].find(fn) != undefined),
     key: (key, fn) => e => ((key in e) && fn(e[key])), //Run callback on object field [key]
-    orNull: (val, fn) => e => (val == null || fn(val)(e)),
+    orNull: (val, fn) => (val == null ? e=> true : fn(val)),
     strEqual: val => e => e.toLowerCase() == val.toLowerCase(),
 
     strContains: val => e => (e.toLowerCase().indexOf(val.toLowerCase()) != -1),//anywhere search string
