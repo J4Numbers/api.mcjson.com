@@ -1,7 +1,7 @@
 "use strict";
 import update from 'react-addons-update'; 
 import React from 'react';
-import {BaseEditor} from './subeditor/BaseEditor.jsx';
+import {BaseEditor} from './common/BaseEditor.jsx';
 export default function EnchantmentEditor(props){
         return <div>
         <BaseEditor data={props.data} onChange={props.onChange}/>

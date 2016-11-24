@@ -15,11 +15,12 @@ export default class App extends React.Component{
                 </Navbar.Header>
                 <Navbar.Collapse>
                 <Nav>
-                    <NavItem eventKey={1} href="#/items">Items</NavItem>
-                    <NavItem eventKey={2} href="#/blocks">Blocks</NavItem>
-                    <NavItem eventKey={3} href="#/entities">Entities</NavItem>
-                    <NavItem eventKey={4} href="#/enchantments">Enchantments</NavItem>
-                    {/*<NavItem eventKey={5} href="#/crafting">Crafting</NavItem> */}
+                    <NavItem eventKey={1} href="#/addons">Addons</NavItem>
+                    <NavItem eventKey={2} href="#/items">Items</NavItem>
+                    <NavItem eventKey={3} href="#/blocks">Blocks</NavItem>
+                    <NavItem eventKey={4} href="#/entities">Entities</NavItem>
+                    <NavItem eventKey={5} href="#/enchantments">Enchantments</NavItem>
+                    {/*<NavItem eventKey={6} href="#/crafting">Crafting</NavItem> */}
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
