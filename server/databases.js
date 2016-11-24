@@ -1,6 +1,5 @@
 // The root provides a resolver function for each API endpoint
 var path = require('path');
-var fs = require('fs');
 var Database = require("./jsonFileDB.js");
 
 module.exports = {
