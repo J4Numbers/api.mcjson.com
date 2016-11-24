@@ -31,6 +31,7 @@
     "express-graphql": "^0.5.4",
     "fetch": "^1.0.1",
     "graphql": "^0.7.0",
+    "graphql-tools": "^0.8.3",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "morgan": "^1.6.1",
