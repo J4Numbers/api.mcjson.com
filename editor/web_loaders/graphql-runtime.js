@@ -1,7 +1,7 @@
 module.exports = function (source, baseOptions) {
     return function (variables, options) {
         var opts = Object.assign({}, baseOptions||{}, options||{});
-        return fetch("${opts.url}", {
+        return fetch(opts.url, {
             method: "POST",
             headers: Object.assign({}, opts.headers, { 'Content-Type': 'application/json' }),
             body: JSON.stringify({
