@@ -79,12 +79,17 @@ let filters = require("../filters.js");
 
 
 module.exports = Object.assign({
-    items({mod,id}) {
+    items({mod,id,introduced_at}) {
         return itemDB.entries.then(
             items => items.map(e => e.data()).filter(
                 filters.key(
                     "mod",
                     filters.orNull(mod,filters.strEqual)
+                )
+            ).filter(
+                filters.key(
+                    "introduced_at",
+                    filters.orNull(introduced_at,filters.semver)
                 )
             ).filter(
                 filters.key(
