@@ -1,43 +1,30 @@
 var semver = require('semver');
 var boolean = require('boolean');
 
+/**
+ * Collection of filter functions and helpers to use in .filter() / .find()
+ */
 module.exports = {
-    eq: (key, val) => {
-        return (e) => ((key in e) && e[key].toLowerCase() == val.toLowerCase());
-    },//Straight up equality test
+    array: (key, fn) => e => ((key in e) && e[key].find(fn) != undefined),
+    key: (key, fn) => e => ((key in e) && fn(e[key])), //Run callback on object field [key]
+    orNull: (val, fn) => e => (val == null || fn(val)(e)),
+    strEqual: val => e => e.toLowerCase() == val.toLowerCase(),
 
-    str: (key, val) => {
-        return (e) => ((key in e) && e[key].toLowerCase().indexOf(val.toLowerCase()) != -1);
-    },//anywhere search string
-
-    aeq: (key, val) => {
-        return (e) => ((key in e) && e[key].map((i) => i.toLowerCase()).indexOf(val.toLowerCase()) != -1);
-    },//Key in array, must fully exist
-
-    arr: (key, val) => {
-        return (e) => { return (key in e) && e[key].filter((i) => i.toLowerCase().indexOf(val.toLowerCase()) != -1).length > 0; };
-
-    },//Key in array, partial match
-    pre: (key, val) => { return (e) => ((key in e) && e[key].toLowerCase().indexOf(val.toLowerCase()) == 0); },//Prefix string check
-    ver: (key, val) => { return (e) => ((key in e) && semver.satisfies(e[key], val)) },//Semver check
-    numeric: (key, val) => {
-        return (e) => {
+    strContains: val => e => (e.toLowerCase().indexOf(val.toLowerCase()) != -1),//anywhere search string
+   
+    prefix: val => e => (e.toLowerCase().indexOf(val.toLowerCase()) == 0),//Prefix string check
+    semver: val => e => semver.satisfies(e, val),//Semver check
+    numeric: val => e => {
             var r = /^(<|\>|\<\=|\>\=)?(\d+)/.exec(val);
             var op = r[1];
             var v = parseInt(r[2]);
-            return (key in e) &&
-                (
-                    (op == ">" && e[key] > v) ||
-                    (op == ">=" && e[key] >= v) ||
-                    (op == "<" && e[key] < v) ||
-                    (op == "<=" && e[key] <= v) ||
-                    (!op && e[key] == v)
+            return (
+                    (op == ">" && e > v) ||
+                    (op == ">=" && e >= v) ||
+                    (op == "<" && e < v) ||
+                    (op == "<=" && e <= v) ||
+                    (!op && e == v)
                 )
-        };
-    },
-    bool: (key, val) => {
-        var b = boolean(val);
-        return (e) => e[key] == b;
-
-    }
+        },
+    bool: val => {let b = boolean(val); return e => e == b;}
 }
