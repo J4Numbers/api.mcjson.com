@@ -7,6 +7,7 @@ import TableList from './editors/TableList.jsx';
  import EnchantmentEditorPage from './pages/EnchantmentEditorPage.jsx';
 import BlockEditorPage from './pages/BlockEditorPage.jsx';
 import ItemEditorPage from './pages/ItemEditorPage.jsx';
+import EntityEditorPage from './pages/EntityEditorPage.jsx';
 import {loadVersionData} from './editors/widget/Version.jsx';
 
 import App from './app.jsx';
@@ -20,6 +21,8 @@ loadVersionData().then(() => {
             <Route path="/blocks/_new" component={BlockEditorPage} />
             <Route path="/items/:mod/:id" component={ItemEditorPage} />
             <Route path="/items/_new" isNew={true} component={ItemEditorPage} />
+            <Route path="/entities/:mod/:id" component={EntityEditorPage} />
+            <Route path="/entities/_new" isNew={true} component={EntityEditorPage} />
             <Route path="/:tableName" component={TableList} />
         </Route>
         

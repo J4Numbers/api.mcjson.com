@@ -126,6 +126,10 @@ process.env.NODE_ENV != 'production' ? {
     updateEnchantment: mutationUpdate( data =>(`${data.mod}/${data.id}.json`) , enchantmentDB),
     deleteEnchantment: mutationDelete( data =>(`${data.mod}/${data.id}.json`) , enchantmentDB),
 
+    addEntity: mutationAdd( data =>(`${data.mod}/${data.id}.json`) , entityDB),
+    updateEntity: mutationUpdate( data =>(`${data.mod}/${data.id}.json`) , entityDB),
+    deleteEntity: mutationDelete( data =>(`${data.mod}/${data.id}.json`) , entityDB),
+
 
 
 }:{});

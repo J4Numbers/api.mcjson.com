@@ -1,0 +1,6 @@
+mutation($oldId :OldId!) {
+  block: deleteEntity(oldId: $oldId) {
+    mod
+    id
+  }
+}

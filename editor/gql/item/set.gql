@@ -1,5 +1,5 @@
-mutation($target :OldId!, $newData :InputItem!) {
-  data: updateItem(oldId: $target, newData:$newData) {
+mutation($target :OldId!, $data :InputItem!) {
+  data: updateItem(oldId: $target, newData:$data) {
     mod
     id
   }

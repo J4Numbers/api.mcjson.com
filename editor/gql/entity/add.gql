@@ -1,0 +1,6 @@
+mutation($data :InputEntity!) {
+  data: addEntity(newData:$data) {
+    mod
+    id
+  }
+}

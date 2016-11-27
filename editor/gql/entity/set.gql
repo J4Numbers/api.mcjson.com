@@ -1,0 +1,6 @@
+mutation($target :OldId!, $data :InputEntity!) {
+  data: updateEntity(oldId: $target, newData:$data) {
+    mod
+    id
+  }
+}

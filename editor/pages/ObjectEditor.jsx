@@ -17,7 +17,7 @@ export default class ObjectEditor extends React.Component {
         this.state = {
             data: {},
             isDirty: false,
-            isNew: !(this.props.target)
+            isNew: Object.keys(this.props.target).length == 0
         }
         if (!this.state.isNew) {
             this.props.fetchFn(this.props.target).then(d => {

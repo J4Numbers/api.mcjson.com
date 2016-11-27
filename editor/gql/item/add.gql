@@ -1,5 +1,5 @@
 mutation($data :InputItem!) {
-  data: item: addItem(newData:$data) {
+  data: addItem(newData:$data) {
     mod
     id
   }
