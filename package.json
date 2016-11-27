@@ -30,6 +30,7 @@
     "express": "^4.13.3",
     "express-graphql": "^0.5.4",
     "fetch": "^1.0.1",
+    "gql-loader": "github:tehbeard/gql-loader",
     "graphql": "^0.7.0",
     "graphql-tools": "^0.8.3",
     "minimist": "^1.2.0",
