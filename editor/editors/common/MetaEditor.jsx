@@ -13,9 +13,9 @@ export default class MetaEditor extends React.Component {
             );
         }
     }
-    updateMetaKey(gId, vId, key){
+    updateMetaKey(gId, vId, key, isCheckbox){
         return (ev)=>{ 
-            var newValue = ev.target.value;
+            var newValue = isCheckbox ? ev.target.checked : ev.target.value;
             this.props.onChange(
                 update(this.props.data,{
                     meta: { [gId] : {values: { [vId]: { [key] : {$set: newValue} } } } }
@@ -118,7 +118,10 @@ export default class MetaEditor extends React.Component {
                                 {meta.values.map((kv, vId)=>{
                             return <tr key={`${gId}-${vId}`}>
                             <td><input type="text" value={kv.value} onChange={this.updateMetaKey(gId,vId, 'value')} /></td>
-                            <td><input type="text" value={kv.mask} onChange={this.updateMetaKey(gId,vId, 'mask')} /></td>
+                            <td>
+                                <input type="text" value={kv.mask} onChange={this.updateMetaKey(gId,vId, 'mask')} />
+                                <input type="checkbox" checked={kv.technical} onChange={this.updateMetaKey(gId,vId, 'technical', true)} />
+                            </td>
                             <td><button className="btn btn-danger" onClick={this.deleteMetaKey(gId,vId)}>Delete</button></td>
                             </tr>
                         })}

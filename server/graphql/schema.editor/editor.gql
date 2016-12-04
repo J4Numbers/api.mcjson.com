@@ -61,6 +61,9 @@ input InputBlock {
 
   # Last Version this object was edited
   changed_at: String!
+  
+  #Is block a technical one
+  technical: Boolean
 
   meta: [InputMeta]
   flags: InputBlockFlags
@@ -75,6 +78,7 @@ input InputMeta {
 
 input InputMetaEntry {
   value: String
+  technical: Boolean
   mask: Int
 }
 

@@ -6,5 +6,6 @@ type Meta {
 
 type MetaEntry {
   value: String
+  technical: Boolean
   mask: Int
 }
