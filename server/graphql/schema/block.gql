@@ -14,6 +14,8 @@ type Block {
 
   # English name of object
   name: String
+  
+  technical: Boolean
 
   # Version this object first appeared in
   introduced_at: String
