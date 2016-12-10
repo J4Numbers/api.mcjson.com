@@ -15,7 +15,7 @@ var app = express();
 app.use(cors());
 
 if(process.env.NODE_ENV == 'production'){
-    app.use(require('./limitticket')({maxTickets:150}));
+    app.use(require('./limitticket')());
 }
 
 
@@ -42,7 +42,7 @@ if (process.env.NODE_ENV != 'production') {
     }))
 }
 
-app.use ('/graphql', require("./graph.js"));
+app.use ('/', require("./graph.js"));
 
 // app.use((req,res)=>{
 //     res.status(404).send({error:"no path"});

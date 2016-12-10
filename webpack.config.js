@@ -24,7 +24,12 @@ module.exports = {
             },
             { 
                 test: /\.gql$/,
-                loader: 'babel?presets[]=es2015!gql'
+                loader: 'gql',
+                query: {
+                    options:{
+                        url: '/'
+                    }
+                }
             }
         ]
     },
