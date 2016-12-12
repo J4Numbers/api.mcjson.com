@@ -3,5 +3,5 @@ var { buildSchema } = require('graphql');
 module.exports = graphqlHTTP({
     schema: require("./graphql/schema.js"),
     rootValue: require("./graphql/root.js"),
-    graphiql: (process.env.NODE_ENV != 'production'),
+    graphiql: true,
 });
