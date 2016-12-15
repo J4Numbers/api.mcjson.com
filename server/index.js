@@ -15,7 +15,10 @@ var app = express();
 app.use(cors());
 
 if(process.env.NODE_ENV == 'production'){
-    app.use(require('./limitticket')());
+    app.use(require('./limitticket')({
+        maxTickets: 200, // Max tickets an IP address can hold
+        maxStrikes: 200, // Max times an IP can hit the endpoint after
+    }));
 }
 
 
