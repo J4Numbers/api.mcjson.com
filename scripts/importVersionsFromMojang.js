@@ -37,16 +37,16 @@ fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json", function(
 	//Make a magic future version as a basis for any snapshots.
 	versionData.versions.push({
 
-      "id": semver.inc(padVersion(versionData.latest.release),"minor"),
+      "id": "1.11.1",//semver.inc(padVersion(versionData.latest.release),"minor"),
       "time": (function(){now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
       "releaseTime": (function(){now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
-      "type": "RELEASE",
+      "type": "release",
       "__future_version__": true //DO NOT REMOVE, USED TO HIDE RELEASE FROM BEING OUTPUT
     });
 
 	//Only find snapshots and releases
 	var filteredData = versionData.versions
-	.filter(function(e){ return ['RELEASE','SNAPSHOT'].indexOf(e.type) !== -1})
+	.filter(function(e){ return ['release','snapshot'].indexOf(e.type) !== -1})
 	.map(function(e){
 		//Patch bad version numbers to semver major.minor.patch format
                 console.log(e);
