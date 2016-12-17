@@ -7,5 +7,6 @@ module.exports = {
     blockDB: new Database(path.resolve("./data/blocks")),
     enchantmentsDB: new Database(path.resolve("./data/enchantments")),
     entitiesDB: new Database(path.resolve("./data/entities")),
-    versionsDB: new Database(path.resolve("./data/versions"))
+    versionsDB: new Database(path.resolve("./data/versions")),
+    effectsDB: new Database(path.resolve("./data/status_effect")),
 }

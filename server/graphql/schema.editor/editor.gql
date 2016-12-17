@@ -151,6 +151,29 @@ input InputEntity {
   changed_at: String!
 }
 
+
+
+input InputStatusEffect {
+  
+  # Mod this object comes from
+  mod: String!
+
+  # Id of this object, combined with mod in format mod:id
+  id: String!
+
+  #Old ID
+  num_id: Int!
+
+  # English name of object
+  name: String!
+
+  # Version this object first appeared in
+  introduced_at: String!
+
+  # Last Version this object was edited
+  changed_at: String!
+}
+
 type mutation {
   addItem(newData: InputItem!): Item
   updateItem(oldId: OldId!, newData: InputItem!): Item
@@ -167,5 +190,9 @@ type mutation {
   addEntity(newData: InputEntity!): Entity
   updateEntity(oldId: OldId!, newData: InputEntity!): Entity
   deleteEntity(oldId: OldId!): Entity
+
+  addStatusEffect(newData: InputStatusEffect!): StatusEffect
+  updateStatusEffect(oldId: OldId!, newData: InputStatusEffect!): StatusEffect
+  deleteStatusEffect(oldId: OldId!): StatusEffect
 
 }

@@ -7,6 +7,7 @@ let blockDB = databases.blockDB;
 let entityDB = databases.entitiesDB;
 let enchantmentDB = databases.enchantmentsDB;
 let versionsDB = databases.versionsDB;
+let statusEffectsDB = databases.effectsDB;
 let dm = (...mixins) => (obj) => { 
     var o = Object.assign({},obj,mixins.reduce(deepmerge,{}));
     o._ = obj;
@@ -110,7 +111,11 @@ module.exports = Object.assign({
     },
     versions({id, type}) {
         return versionsDB.entries.then(items => items.map(e => e.data()).filter(filterBy({type, id})));
-    }    
+    },
+    effects({mod,id}) {
+        return statusEffectsDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})));
+    },
+    
 },
 process.env.NODE_ENV != 'production' ? {
     
