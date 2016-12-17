@@ -1,0 +1,10 @@
+query($mod :String!, $id :String!) {
+  data: effects(mod: $mod, id:$id) { 
+        mod
+        id
+        num_id
+        name
+        introduced_at
+        changed_at
+    }
+}

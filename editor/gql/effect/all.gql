@@ -1,0 +1,10 @@
+query {
+  effects {
+    mod
+    id
+    num_id
+    name
+    introduced_at
+    changed_at
+  }
+}

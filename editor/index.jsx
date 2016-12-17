@@ -8,6 +8,7 @@ import TableList from './editors/TableList.jsx';
 import BlockEditorPage from './pages/BlockEditorPage.jsx';
 import ItemEditorPage from './pages/ItemEditorPage.jsx';
 import EntityEditorPage from './pages/EntityEditorPage.jsx';
+import StatusEffectEditorPage from './pages/StatusEffectEditorPage.jsx';
 import {loadVersionData} from './editors/widget/Version.jsx';
 
 import App from './app.jsx';
@@ -23,6 +24,10 @@ loadVersionData().then(() => {
             <Route path="/items/_new" isNew={true} component={ItemEditorPage} />
             <Route path="/entities/:mod/:id" component={EntityEditorPage} />
             <Route path="/entities/_new" isNew={true} component={EntityEditorPage} />
+
+            <Route path="/effects/:mod/:id" component={StatusEffectEditorPage} />
+            <Route path="/effects/_new" isNew={true} component={StatusEffectEditorPage} />
+
             <Route path="/:tableName" component={TableList} />
         </Route>
         

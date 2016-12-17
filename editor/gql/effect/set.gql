@@ -1,0 +1,6 @@
+mutation($target :OldId!, $data :InputStatusEffect!) {
+  data: updateStatusEffect(oldId: $target, newData:$data) {
+    mod
+    id
+  }
+}

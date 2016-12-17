@@ -1,11 +1,6 @@
 import React from 'react';
 import MetaEditor from './common/MetaEditor.jsx';
 import {ItemFlagEditor} from './common/FlagEditor.jsx';
-import get from 'gql/item/get.gql';
-
-import getItem from '../gql/item/get.gql';
-import setItem from '../gql/item/set.gql';
-import addItem from '../gql/item/add.gql';
 
 export default function ItemEditor(props) {
     return <div>

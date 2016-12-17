@@ -1,0 +1,6 @@
+mutation($oldId :OldId!) {
+  block: deleteStatusEffect(oldId: $oldId) {
+    mod
+    id
+  }
+}

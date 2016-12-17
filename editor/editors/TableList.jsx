@@ -7,19 +7,22 @@ import getBlocks from 'gql/block/all.gql';
 import deleteBlock from 'gql/block/delete.gql';
 import getEntities from 'gql/entity/all.gql';
 import getEnchantments from 'gql/enchantment/all.gql';
+import getEffects from 'gql/effect/all.gql';
 
 const handlers = {
     items: getItems,
     blocks: getBlocks,
     entities: getEntities,
-    enchantments: getEnchantments
+    enchantments: getEnchantments,
+    effects: getEffects
 }
 
 const deleteHandlers = {
     items: null,
     blocks: deleteBlock,
     entities: null,
-    enchantments: null
+    enchantments: null,
+    effects: null
 }
 
 export default class TableList extends React.Component {
