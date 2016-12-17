@@ -135,6 +135,9 @@ process.env.NODE_ENV != 'production' ? {
     updateEntity: mutationUpdate( data =>(`${data.mod}/${data.id}.json`) , entityDB),
     deleteEntity: mutationDelete( data =>(`${data.mod}/${data.id}.json`) , entityDB),
 
+    addStatusEffect: mutationAdd( data =>(`${data.mod}/${data.id}.json`) , statusEffectsDB),
+    updateStatusEffect: mutationUpdate( data =>(`${data.mod}/${data.id}.json`) , statusEffectsDB),
+    deleteStatusEffect: mutationDelete( data =>(`${data.mod}/${data.id}.json`) , statusEffectsDB),
 
 
 }:{});

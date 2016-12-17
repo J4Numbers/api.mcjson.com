@@ -1,5 +1,5 @@
-mutation($newData :InputStatusEffect!) {
-  data: addStatusEffect(newData:$newData) {
+mutation($data :InputStatusEffect!) {
+  data: addStatusEffect(newData:$data) {
     mod
     id
   }

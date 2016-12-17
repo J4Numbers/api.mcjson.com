@@ -15,7 +15,7 @@ export default class ObjectEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: {},
+            data: props.newModel || {},
             isDirty: false,
             isNew: Object.keys(this.props.target).length == 0
         }

@@ -9,6 +9,6 @@ import statusEffectFetch from '../gql/effect/get.gql';
 
 export default class StatusEffectEditorPage extends React.Component{
     render(){
-        return <ObjectEditor target={this.props.params} createFn={statusEffectCreate} updateFn={statusEffectUpdate} fetchFn={statusEffectFetch} editor={StatusEffectEditor}/>
+        return <ObjectEditor newModel={{mod:"minecraft"}} target={this.props.params} createFn={statusEffectCreate} updateFn={statusEffectUpdate} fetchFn={statusEffectFetch} editor={StatusEffectEditor}/>
     }
 }
