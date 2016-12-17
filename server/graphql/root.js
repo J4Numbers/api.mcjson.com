@@ -113,7 +113,7 @@ module.exports = Object.assign({
         return versionsDB.entries.then(items => items.map(e => e.data()).filter(filterBy({type, id})));
     },
     effects({mod,id}) {
-        return statusEffectsDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})));
+        return statusEffectsDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})).map( ItemModel ));
     },
     
 },
