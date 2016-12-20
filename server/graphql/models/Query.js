@@ -24,11 +24,11 @@ module.exports = {
     enchantments({enchantmentDB},{mod,id}) {
         return enchantmentDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})));
     },
-    versions({versionsDB},{id, type}) {
-        return versionsDB.entries.then(items => items.map(e => e.data()).filter(filterBy({type, id})));
+    versions({versionDB},{id, type}) {
+        return versionDB.entries.then(items => items.map(e => e.data()).filter(filterBy({type, id})));
     },
-    effects({statusEffectsDB},{mod,id}) {
-        return statusEffectsDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})));
+    effects({effectDB},{mod,id}) {
+        return effectsDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})));
     },
     
 }

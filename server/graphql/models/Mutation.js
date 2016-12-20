@@ -1,10 +1,9 @@
 let databases = require("../../databases.js");
 let itemDB = databases.itemDB;
 let blockDB = databases.blockDB;
-let entityDB = databases.entitiesDB;
-let enchantmentDB = databases.enchantmentsDB;
-let versionsDB = databases.versionsDB;
-let statusEffectsDB = databases.effectsDB;
+let entityDB = databases.entitieDB;
+let enchantmentDB = databases.enchantmentDB;
+let effectDB = databases.effectDB;
 
 function mutationUpdate(db){
     return (_,{oldId, newData}) => db.update(oldId, newData);
@@ -35,7 +34,7 @@ module.exports = {
     updateEntity: mutationUpdate(entityDB),
     deleteEntity: mutationDelete(entityDB),
 
-    addStatusEffect: mutationAdd(statusEffectsDB),
-    updateStatusEffect: mutationUpdate(statusEffectsDB),
-    deleteStatusEffect: mutationDelete(statusEffectsDB),
+    addStatusEffect: mutationAdd(effectDB),
+    updateStatusEffect: mutationUpdate(effectDB),
+    deleteStatusEffect: mutationDelete(effectDB),
 }
