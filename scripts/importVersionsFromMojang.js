@@ -37,7 +37,7 @@ fetch("https://launchermeta.mojang.com/mc/game/version_manifest.json", function(
 	//Make a magic future version as a basis for any snapshots.
 	versionData.versions.push({
 
-      "id": "1.11.1",//semver.inc(padVersion(versionData.latest.release),"minor"),
+      "id": "1.12.0",//semver.inc(padVersion(versionData.latest.release),"minor"),
       "time": (function(){now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
       "releaseTime": (function(){now = new Date();now.setDate(now.getDate() + 365);return now.toUTCString()})(),
       "type": "release",
