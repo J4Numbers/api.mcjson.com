@@ -2,7 +2,7 @@
 var path = require('path');
 var Database = require("./jsonFileDB.js");
 
-var fnFile = data => { console.log("FN", data); return `${data.mod}/${data.id}.json`; }
+var fnFile = data => `${data.mod}/${data.id}.json`;
 
 module.exports = {
     itemDB: new Database(path.resolve("./data/items"), fnFile),
