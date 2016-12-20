@@ -45,7 +45,7 @@ if (process.env.NODE_ENV != 'production') {
     }))
 }
 
-app.use ('/', require("./graph.js"));
+app.use ('/', require("./graphql/http.js"));
 
 // app.use((req,res)=>{
 //     res.status(404).send({error:"no path"});

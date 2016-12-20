@@ -2,11 +2,13 @@
 var path = require('path');
 var Database = require("./jsonFileDB.js");
 
+var fnFile = data => { console.log("FN", data); return `${data.mod}/${data.id}.json`; }
+
 module.exports = {
-    itemDB: new Database(path.resolve("./data/items")),
-    blockDB: new Database(path.resolve("./data/blocks")),
-    enchantmentsDB: new Database(path.resolve("./data/enchantments")),
-    entitiesDB: new Database(path.resolve("./data/entities")),
-    versionsDB: new Database(path.resolve("./data/versions")),
-    effectsDB: new Database(path.resolve("./data/status_effect")),
+    itemDB: new Database(path.resolve("./data/items"), fnFile),
+    blockDB: new Database(path.resolve("./data/blocks"), fnFile),
+    enchantmentsDB: new Database(path.resolve("./data/enchantments"), fnFile),
+    entitiesDB: new Database(path.resolve("./data/entities"), fnFile),
+    versionsDB: new Database(path.resolve("./data/versions"), fnFile),
+    effectsDB: new Database(path.resolve("./data/status_effect"), fnFile),
 }

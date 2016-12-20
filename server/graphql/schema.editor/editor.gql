@@ -174,7 +174,7 @@ input InputStatusEffect {
   changed_at: String!
 }
 
-type mutation {
+type Mutation {
   addItem(newData: InputItem!): Item
   updateItem(oldId: OldId!, newData: InputItem!): Item
   deleteItem(oldId: OldId!): Item

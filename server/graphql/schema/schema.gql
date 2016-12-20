@@ -1,5 +1,5 @@
 
-type query {
+type Query {
   items(mod: String, id: String): [Item!]
   blocks(mod: String, id: String): [Block!]
   entities(mod: String, id: String): [Entity!]
