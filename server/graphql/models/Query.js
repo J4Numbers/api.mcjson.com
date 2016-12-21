@@ -28,7 +28,7 @@ module.exports = {
         return versionDB.entries.then(items => items.map(e => e.data()).filter(filterBy({type, id})));
     },
     effects({effectDB},{mod,id}) {
-        return effectsDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})));
+        return effectDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})));
     },
     
 }
