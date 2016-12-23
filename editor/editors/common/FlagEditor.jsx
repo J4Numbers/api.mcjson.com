@@ -52,19 +52,21 @@ export function BlockFlagEditor(props) {
 }
 
 export function ItemFlagEditor(props) {
-    const update = (data)=>{
-        props.onChange(Object.assign({}, props.data, data));
-    }
+    const update = (data)=> props.onChange(Object.assign({}, props.data, data));
     return <div className="block-flag">
-        <FlagInt label="Durability" value={props.data ? props.data.durability : 0} onChange={ slots => update({ durability: slots }) } />
-        <fieldset>
-        <legend>NBT data editors</legend>
-        <FlagCheckbox label="Potion Effects" value={props.data && props.data.nbt_potion} onChange={(v) => update( { nbt_potion: v } ) } />
-        <FlagCheckbox label="Book Contents" value={props.data && props.data.nbt_book} onChange={(v) => update( { nbt_book: v } ) } />
-        <FlagCheckbox label="Book Author" value={props.data && props.data.nbt_author} onChange={(v) => update( { nbt_author: v } ) } />
-        <FlagCheckbox label="Banner" value={props.data && props.data.nbt_banner} onChange={(v) => update( { nbt_banner: v } ) } />
-        <FlagCheckbox label="Firework" value={props.data && props.data.nbt_firework} onChange={(v) => update( { nbt_firework: v } ) } />
-        </fieldset>
-
+        <FlagInt label="Durability" value={props.data ? props.data.durability : null} onChange={ slots => update({ durability: slots }) } />
+        <ItemNBT value={ (props.data && props.data.editors !== undefined ? props.data.editors: [])} onChange={ editors => update({ editors}) }  />
     </div>
+}
+
+function ItemNBT(props){
+    let bind = entry => ({ value: props.value.indexOf(entry)!== -1, onChange: (v)=> props.onChange(toggleArray(props.value||[],entry))})
+    return <fieldset>
+        <legend>NBT data editors</legend>
+        <FlagCheckbox label="Potion Effects" {...bind("POTION")} />
+        <FlagCheckbox label="Book Contents" {...bind("BOOK")} />
+        <FlagCheckbox label="Book Author" {...bind("AUTHOR")} />
+        <FlagCheckbox label="Banner" {...bind("BANNER")} />
+        <FlagCheckbox label="Firework" {...bind("FIREWORK")} />
+        </fieldset>
 }
