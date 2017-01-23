@@ -2,7 +2,7 @@ var path = require('path');
 var fs = require('fs');
 var dataDir = path.normalize(process.cwd() + '/data/');
 var fetch = require("fetch").fetchUrl;
-var run = require('gen-run');
+var run = require('co');
 console.log("Importing data from http://minecraft-ids.grahamedgecombe.com/");
 
 fetch("http://minecraft-ids.grahamedgecombe.com/items.json", function(error, meta, body) {
@@ -24,8 +24,8 @@ fetch("http://minecraft-ids.grahamedgecombe.com/items.json", function(error, met
                         id: entry.text_type,
                         name: entry.name,
                         "technical": false,
-                        "introduced_at": "1.10.0",
-                        "changed_at": "1.10.0",
+                        "introduced_at": "1.11.0",
+                        "changed_at": "1.11.0",
                         "meta": [{
                             key: "meta",
                             values: []
