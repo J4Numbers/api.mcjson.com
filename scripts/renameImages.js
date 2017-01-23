@@ -2,7 +2,7 @@ var path = require('path');
 var fs = require('fs');
 var dataDir = path.normalize(process.cwd() + '/data/');
 var fetch = require('node-fetch');
-var run = require('gen-run');
+var run = require('co');
 var mkdirp = require('mkdirp');
 
 console.log("Importing data from http://minecraft-ids.grahamedgecombe.com/");
