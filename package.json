@@ -7,7 +7,10 @@
     "start": "pm2 start process.json --env production",
     "editor": "pm2 start process.json --env development --no-daemon",
     "stop": "pm2 stop process.json",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "data:pull": "cd data && git pull && cd .. && pm2 restart process.json",
+    "data:versions:fetch": "node scripts/fetchVersions.js",
+    "data:blocksanditems:fetch": "node scripts/fetchItemsBlocksFromGraham.js"
   },
   "author": "Tehbeard",
   "license": "MIT",
