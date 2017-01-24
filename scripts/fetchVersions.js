@@ -6,150 +6,102 @@ var fetch = require("fetch").fetchUrl;
 
 const MANIFEST_URL = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
 
-function _objValues(obj){
-    return Object.keys(obj).map((k)=>obj[k]);
-}
-
-function padVersion(ver){
-    var parts = ver.split(".");
-    while(parts.length < 3){
-        parts.push("0");
-    }
-    return parts.join(".");
+function padVersion(ver) {
+	var parts = ver.split(".");
+	while (parts.length < 3) {
+		parts.push("0");
+	}
+	return parts.join(".");
 }
 
 
 //Fetch data
 console.log(`Importing data from ${MANIFEST_URL}`);
-fetch(MANIFEST_URL, function(error, meta, body){
+fetch(MANIFEST_URL, function (error, meta, body) {
 	//Fail on fetch error
-	if(error){
-        console.error("Failed to fetch json");
+	if (error) {
+		console.error("Failed to fetch json");
 		console.error(error);
 		process.exit(1);
 	}
-	let badId = /\d{1,}\.\d{1,}\.\d{1,}\-(\d{2}w\d{1,}.)/
-	let existingIds = fs.readdirSync(DATA_DIR).map( f => f.replace(".json",""));
-	existingIds.forEach( i => {
-		
-		console.log("processing ",i);
-		let versionData = JSON.parse(fs.readFileSync(DATA_DIR + "/" + i + ".json","ascii"));
 
-		let newFormat = {
-			id: badId.test(i) ? i.match(badId)[1] : i,
-			version: versionData.id,
-			type: versionData.type,
-			released: versionData.released,
-			mod: versionData.mod
-		}
+	//Load existing ids
+	let existingIds = fs.readdirSync(DATA_DIR).map(f => f.replace(".json", ""));
+	//Load release dates for calculation.
+	let existingTimes = existingIds
+		.filter(id => semver.valid(id) != null)
+		.reduce((m, id) => {
+			m[id] = new Date(JSON.parse(fs.readFileSync(DATA_DIR + "/" + id + ".json", "ascii")).released)
+			return m;
+		}, {})
 
+	let nextVersionGuess = semver.inc(semver.maxSatisfying(
+		existingIds.filter(id => semver.valid(id) != null),
+		"*"), "minor");
 
-		fs.writeFileSync(DATA_DIR + "/" + i + ".json", JSON.stringify(newFormat , null, 2));
-		if(badId.test(i)){
-			let newId = i.match(badId)[1];
-			fs.rename(DATA_DIR + "/" + i + ".json", DATA_DIR + "/" + newId + ".json")
-		}
-	})
-	process.exit(0)
-		//parse versions
+	//parse versions
 	var versionData = JSON.parse(body);
 
-	//Only find snapshots and releases
-	var filteredData = versionData.versions
-	.filter(function(e){ return ['release','snapshot'].indexOf(e.type) !== -1})
-	.map(function(e){
-		//Patch bad version numbers to semver major.minor.patch format
-                console.log(e);
-		if(e.id.split(".").length == 2){
-			console.log("patching",e.id);
-			e.id = padVersion(e.id);
-		}
-		//Convert release time for sorting.
-		e.time = new Date(e.releaseTime);
-        return e;
-	});
-
-	//Find the earliest version of each release (the 1.x.0's in most cases,)
-	//And store for use in snapshot semver fixing.
-    console.log(filteredData);
-	var releasesOnly = filteredData.filter(function(e){ return e.type == 'release';})
-	.reduce(function(acc,e){
-		var id = e.id.split(".");
-		var minorVersion = id[0] + '.' + id[1];
-		if(
-			!acc[minorVersion] ||
-			(
-				acc[minorVersion] &&
-				parseInt(acc[minorVersion].id.split(".")[2]) > parseInt(id[2])
-			)
-			){
-			acc[minorVersion] = e;
-		}
-		return acc
-	},{});
-
-	//Dump out all versions to the filesystem
-	var versionEntries = filteredData
-	.filter(function(e){ return !e.__future_version__;}) //EXCLUDE OUR VERSION WE MADE FOR SNAPSHOT
-	.map(function(e){
-		//Fix snapshot versions to major.minor.patch-snapshot format.
-		var versionId = e.id;
-		if(!semver.valid(versionId) && e.type == 'snapshot'){
-			var versionsAbove = _objValues(releasesOnly)
-                                    .map(function(m){
-                                        return {id:m.id,time:m.time};
-                                    })
-                                    .filter(function(f){
-                                        return f.time > e.time
-                                    })
-                                    .sort(function(a,b){
-                                        if(a.time < b.time){
-                                            return -1;
-                                        }else if(a.time < b.time){
-                                            return 1;
-                                        }else{
-                                            return 0;
-                                        }
-                                    })
-                                    [0]
-			versionId = versionsAbove.id + "-" +  versionId;
-			console.log("Fixing broken version.",e.id,'->',versionId);
-		}
-
-		//Construct a new version record
-		return {
-			id: versionId,
-			mod: 'minecraft',
-			type: e.type.toUpperCase(),
-			released: e.time
-		}
-	}).reduce(function(out, i){
-        out.push(i);
-        out.sort(function(a,b){
-            if(a.time == b.time){
-                return 0;
-            }
-            if(a.time > b.time){
-                return 1;
-            }else{
-                return -1;
-            }
-        });
-        return out;
-    },[]).forEach(function(e,idx,col){ //Sort by time released.
-		if(idx > 0){
-			if(semver.lt(col[idx-1].id,e.id)){
-				//Check for release time weirdness
-				console.error("temporal oddity detected",col[idx-1].id,"released after",e.id);
+	//Search all versions, find one with closest +Delta (nearest one ahead of.)
+	function findNextVersion(a) {
+		let at = new Date(a)
+		diff = at.getTime();
+		return existingIds
+		.filter(id => semver.valid(id) != null)
+		.reduce((cur, guess) => {
+			let newDiff = existingTimes[guess] - at;
+			if (newDiff < diff && newDiff > 0) {
+				diff = newDiff;
+				return guess;
+			} else {
+				return cur;
 			}
-		}
-		//If file doesn't exist, write to disk.
-		try{
-			fs.statSync(DATA_DIR + '/versions/' + e.id + '.json');
-		}catch(x){
-			console.log("Storing new version", e.id);
-			fs.writeFileSync(DATA_DIR + '/versions/' + e.id + '.json',JSON.stringify(e,null,4));
-		}
-	})
-	
+		}, nextVersionGuess);
+	}
+
+	//Filter and process records
+	versionData.versions
+		.filter(entry => ['release', 'snapshot'].indexOf(entry.type) !== -1)
+		.filter(entry => existingIds.indexOf(entry.id) == -1)
+		.map(entry => {
+
+			let newFormat = {
+				id: entry.id,
+				version: semver.valid(entry.id) == null && entry.type == "snapshot" ? findNextVersion(entry.releaseTime) + "-" + entry.id : padVersion(entry.id),
+				type: entry.type,
+				released: entry.releaseTime,
+				mod: "minecraft"
+			}
+
+			console.log(newFormat);
+
+			fs.writeFileSync(
+				DATA_DIR + "/" + newFormat.id + ".json",
+				JSON.stringify(
+					newFormat,
+					null,
+					2
+				)
+			);
+
+		})
+
+		// CODE TO PATCH UP SNAPSHOTS.
+		// existingIds
+		// .filter(id => semver.valid(id) == null)
+		// .forEach( id => {
+		// 	let data = JSON.parse(fs.readFileSync(DATA_DIR + "/" + id + ".json"));
+		// 	data.version  = findNextVersion(data.released) + "-" + data.id;
+		// 	fs.writeFileSync(
+		// 		DATA_DIR + "/" + id + ".json",
+		// 		JSON.stringify(
+		// 			data,
+		// 			null,
+		// 			2
+		// 		)
+		// 	);
+
+		// })
+
+
 });
