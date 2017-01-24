@@ -89,8 +89,9 @@ fetch(MANIFEST_URL, function (error, meta, body) {
 		// CODE TO PATCH UP SNAPSHOTS.
 		// existingIds
 		// .filter(id => semver.valid(id) == null)
-		// .forEach( id => {
-		// 	let data = JSON.parse(fs.readFileSync(DATA_DIR + "/" + id + ".json"));
+		// .forEach( id => JSON.parse(fs.readFileSync(DATA_DIR + "/" + id + ".json"))
+		// .filter( data => true /* Match if between latest two releases */ )
+		// .forEach( data => {
 		// 	data.version  = findNextVersion(data.released) + "-" + data.id;
 		// 	fs.writeFileSync(
 		// 		DATA_DIR + "/" + id + ".json",
@@ -100,7 +101,6 @@ fetch(MANIFEST_URL, function (error, meta, body) {
 		// 			2
 		// 		)
 		// 	);
-
 		// })
 
 
