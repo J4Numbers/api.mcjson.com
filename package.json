@@ -29,7 +29,7 @@
     "react-dom": "^0.14.3",
     "react-router": "^2.0.1",
     "react-select": "^1.0.0-beta11",
-    "gql-loader": "github:tehbeard/gql-loader",
+    "gql-loader": "github:tehbeard/gql-loader"
   },
   "dependencies": {
     "boolean": "^0.1.0",
