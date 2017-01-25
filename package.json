@@ -9,8 +9,8 @@
     "stop": "pm2 stop process.json",
     "watch": "webpack --watch",
     "data:pull": "cd data && git pull && cd .. && pm2 restart process.json",
-    "data:versions:fetch": "node scripts/fetchVersions.js",
-    "data:blocksanditems:fetch": "node scripts/fetchItemsBlocksFromGraham.js"
+    "data:fetch:versions": "node scripts/fetchVersions.js",
+    "data:fetch:graham": "node scripts/fetchFromGraham.js"
   },
   "author": "Tehbeard",
   "license": "MIT",
