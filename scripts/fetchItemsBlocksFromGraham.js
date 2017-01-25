@@ -1,15 +1,11 @@
 var path = require('path');
 var fs = require('fs');
 var dataDir = path.normalize(process.cwd() + '/data/');
-var fetch = require("fetch").fetchUrl;
+var fetch = require("node-fetch");
 var run = require('co');
 console.log("Importing data from http://minecraft-ids.grahamedgecombe.com/");
 
-fetch("http://minecraft-ids.grahamedgecombe.com/items.json", function(error, meta, body) {
-    if (error) {
-        console.error(error);
-        process.exit(1);
-    }
+fetch("http://minecraft-ids.grahamedgecombe.com/items.json").then(res => res.json()).then(itemData => {
     var itemData = JSON.parse(body);
     run(function* () {
         var files = yield fs.readdir.bind(fs, './data/blocks/minecraft');
@@ -35,15 +31,15 @@ fetch("http://minecraft-ids.grahamedgecombe.com/items.json", function(error, met
                 newBlocks[entry.text_type].meta[0].values.push({ value: entry.name, mask: entry.meta });
                 return newBlocks;
             }, {});
-        for(fName in newMappings){
-            if(newMappings[fName].meta[0].values.length == 1){
+        for (fName in newMappings) {
+            if (newMappings[fName].meta[0].values.length == 1) {
                 delete newMappings[fName].meta;
             }
             console.log("Writing out new block", fName);
-            yield fs.writeFile.bind(fs,path.resolve('./data/blocks/minecraft',fName + '.json'),JSON.stringify(newMappings[fName], null, 2));
+            yield fs.writeFile.bind(fs, path.resolve('./data/blocks/minecraft', fName + '.json'), JSON.stringify(newMappings[fName], null, 2));
         }
     });
-    
+
     run(function* () {
         var files = yield fs.readdir.bind(fs, './data/items/minecraft');
         files = files.map((file) => file.split(".")[0])
@@ -67,16 +63,20 @@ fetch("http://minecraft-ids.grahamedgecombe.com/items.json", function(error, met
                 newBlocks[entry.text_type].meta[0].values.push({ value: entry.name, mask: entry.meta });
                 return newBlocks;
             }, {});
-        for(fName in newMappings){
-            if(newMappings[fName].meta[0].values.length == 1){
+        for (fName in newMappings) {
+            if (newMappings[fName].meta[0].values.length == 1) {
                 delete newMappings[fName].meta;
             }
             console.log("Writing out new item", fName);
-            yield fs.writeFile.bind(fs,path.resolve('./data/items/minecraft',fName + '.json'),JSON.stringify(newMappings[fName], null, 2));
+            yield fs.writeFile.bind(fs, path.resolve('./data/items/minecraft', fName + '.json'), JSON.stringify(newMappings[fName], null, 2));
         }
     });
-    
-});
+
+})
+    .catch(error => {
+        console.error(error);
+        process.exit(1);
+    });
 /*
 fetch("http://minecraft-ids.grahamedgecombe.com/entities.tsv", function(error, meta, body) {
     if (error) {

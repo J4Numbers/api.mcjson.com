@@ -2,7 +2,7 @@ var semver = require('semver');
 var path = require('path');
 var fs = require('fs');
 const DATA_DIR = path.normalize(process.cwd() + '/data/versions');
-var fetch = require("fetch").fetchUrl;
+var fetch = require('node-fetch');
 
 const MANIFEST_URL = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
 
@@ -17,13 +17,7 @@ function padVersion(ver) {
 
 //Fetch data
 console.log(`Importing data from ${MANIFEST_URL}`);
-fetch(MANIFEST_URL, function (error, meta, body) {
-	//Fail on fetch error
-	if (error) {
-		console.error("Failed to fetch json");
-		console.error(error);
-		process.exit(1);
-	}
+fetch(MANIFEST_URL).then( res => res.json()).then( versionData => {
 
 	//Load existing ids
 	let existingIds = fs.readdirSync(DATA_DIR).map(f => f.replace(".json", ""));
@@ -39,8 +33,6 @@ fetch(MANIFEST_URL, function (error, meta, body) {
 		existingIds.filter(id => semver.valid(id) != null),
 		"*"), "minor");
 
-	//parse versions
-	var versionData = JSON.parse(body);
 
 	//Search all versions, find one with closest +Delta (nearest one ahead of.)
 	function findNextVersion(a) {
@@ -104,4 +96,9 @@ fetch(MANIFEST_URL, function (error, meta, body) {
 		// })
 
 
+})
+.catch( error =>{
+		console.error("Failed to fetch json");
+		console.error(error);
+		process.exit(1);
 });
