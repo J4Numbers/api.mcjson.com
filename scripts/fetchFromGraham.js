@@ -6,7 +6,6 @@ var run = require('co');
 console.log("Importing data from http://minecraft-ids.grahamedgecombe.com/");
 
 fetch("http://minecraft-ids.grahamedgecombe.com/items.json").then(res => res.json()).then(itemData => {
-    var itemData = JSON.parse(body);
     run(function* () {
         var files = yield fs.readdir.bind(fs, './data/blocks/minecraft');
         files = files.map((file) => file.split(".")[0])
@@ -77,31 +76,29 @@ fetch("http://minecraft-ids.grahamedgecombe.com/items.json").then(res => res.jso
         console.error(error);
         process.exit(1);
     });
-/*
-fetch("http://minecraft-ids.grahamedgecombe.com/entities.tsv", function(error, meta, body) {
-    if (error) {
-        console.error(error);
-        process.exit(1);
-    }
-    _(body.toString().split("\n"))
-        .each(function(e) {
-            line = e.split("\t");
-            entry = {
-                id: line[2],
-                name: line[1],
-                mod: "minecraft",
-                introduced_at: "1.9.0",
-                changed_at: "1.9.0"
-            };
-            if (!entry.id) { return; }
-            var entryPath = path.normalize(dataDir + '/entities/minecraft/' + entry.id + '.json');
-            try {
-                var stats = fs.statSync(entryPath);
-            } catch (e) {
-                console.log("NEW ENTITY", entry.name);
-                fs.writeFileSync(entryPath, JSON.stringify(entry, null, 2));
-            }
-        })
-        .value()
+
+fetch("http://minecraft-ids.grahamedgecombe.com/entities.json").then(res => res.json()).then(entities => {
+
+    run(function* () {
+        var files = yield fs.readdirSync('./data/entities/minecraft');
+        files = files.map((file) => file.split(".")[0])
+        entities.filter(entity => files.indexOf(entity.text_type) === -1) //Filter existing
+            .forEach(entity => {
+                let oldData = {};
+                try{
+                    oldData = JSON.parse(fs.readFileSync(`./data/entities/minecraft/${entity.text_type}.json`))
+                }catch(e){
+
+                }
+                let data = {
+                    id: entity.text_type,
+                    name: entity.name,
+                    mod: "minecraft",
+                    introduced_at: oldData.introduced_at || "1.11.0",
+                    changed_at: oldData.changed_at || "1.11.0"
+                }
+                var entryPath = path.normalize(dataDir + '/entities/minecraft/' + data.id + '.json');
+                fs.writeFileSync(entryPath, JSON.stringify(data, null, 2));
+            })
+    })
 })
-*/
