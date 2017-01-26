@@ -6,29 +6,27 @@ function filterBy(values){
 
 module.exports = {
     items({itemDB},{mod,id,introduced_at}) {
-        return itemDB.entries.then(
-            items => items.map(e => e.data()).filter(filterBy({mod, id})).filter(
+        return itemDB.data().map(e => e.data()).filter(filterBy({mod, id})).filter(
                 filters.key(
                     "introduced_at",
                     filters.orNull(introduced_at,filters.semver)
                 )
             )
-        );
     },
     blocks({blockDB},{mod,id}) {
-        return blockDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})));
+        return blockDB.data().map(e => e.data()).filter(filterBy({mod, id}));
     },
     entities({entityDB},{mod,id}) {
-        return entityDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})));
+        return entityDB.data().map(e => e.data()).filter(filterBy({mod, id}));
     },
     enchantments({enchantmentDB},{mod,id}) {
-        return enchantmentDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})));
+        return enchantmentDB.data().map(e => e.data()).filter(filterBy({mod, id}));
     },
     versions({versionDB},{id, type}) {
-        return versionDB.entries.then(items => items.map(e => e.data()).filter(filterBy({type, id})));
+        return versionDB.data().map(e => e.data()).filter(filterBy({type, id}));
     },
     effects({effectDB},{mod,id}) {
-        return effectDB.entries.then(items => items.map(e => e.data()).filter(filterBy({mod, id})));
+        return effectDB.data().map(e => e.data()).filter(filterBy({mod, id}));
     },
     
 }

@@ -6,15 +6,15 @@ let enchantmentDB = databases.enchantmentDB;
 let effectDB = databases.effectDB;
 
 function mutationUpdate(db){
-    return (_,{oldId, newData}) => db.update(oldId, newData);
+    return (_,{oldId, newData}) => db.save(newData, oldId);
 }
 
 function mutationAdd(db){
-    return (_,{newData}) => db.add(newData);
+    return (_,{newData}) => db.save(newData);
 }
 
 function mutationDelete(db){
-    return (_,{oldId}) => db.delete(oldId)
+    return (_,{oldId}) => db.unlink(oldId)
 }
 
 module.exports = {
