@@ -14,6 +14,7 @@ query($mod :String!, $id :String!) {
       }
     }
     flags{
+      isBlock
       durability
       dyeable
       repairable

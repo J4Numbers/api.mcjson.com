@@ -1,9 +1,0 @@
-query {
-    blocks { 
-        id
-        mod
-        name
-        introduced_at
-        changed_at
-    }
-}
