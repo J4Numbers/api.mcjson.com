@@ -1,6 +1,5 @@
 let databases = require("../../databases.js");
 let itemDB = databases.itemDB;
-let blockDB = databases.blockDB;
 let entityDB = databases.entitieDB;
 let enchantmentDB = databases.enchantmentDB;
 let effectDB = databases.effectDB;
@@ -21,10 +20,6 @@ module.exports = {
     addItem: mutationAdd(itemDB),
     updateItem: mutationUpdate(itemDB),
     deleteItem: mutationDelete(itemDB),
-
-    addBlock: mutationAdd(blockDB),
-    updateBlock: mutationUpdate(blockDB),
-    deleteBlock: mutationDelete(blockDB),
 
     addEnchantment: mutationAdd(enchantmentDB),
     updateEnchantment: mutationUpdate(enchantmentDB),

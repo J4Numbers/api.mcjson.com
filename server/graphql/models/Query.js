@@ -13,9 +13,6 @@ module.exports = {
                 )
             )
     },
-    blocks({blockDB},{mod,id}) {
-        return blockDB.data().filter(filterBy({mod, id}));
-    },
     entities({entityDB},{mod,id}) {
         return entityDB.data().filter(filterBy({mod, id}));
     },

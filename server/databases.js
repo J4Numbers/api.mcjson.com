@@ -6,7 +6,6 @@ var fnFile = data => `${data.mod}/${data.id}.json`;
 
 module.exports = {
     itemDB: new Database(path.resolve("./data/items"), fnFile),
-    blockDB: new Database(path.resolve("./data/blocks"), fnFile),
     enchantmentDB: new Database(path.resolve("./data/enchantments"), fnFile),
     entityDB: new Database(path.resolve("./data/entities"), fnFile),
     versionDB: new Database(path.resolve("./data/versions"),  data => `${data.id}.json`),

@@ -25,6 +25,27 @@ type Item {
 }
 
 type ItemFlags {
+
+  # Is this item a block
+  isBlock: Boolean!
+
+  # Does this block obey physics (sand/gravel/anvil)
+  physics: Boolean
+
+  # Resistance to explosions
+  hardness: Int
+
+  # Does this block prevent piston movement
+  unpushable: Boolean
+
+  # Is this block transparent (no suffocate damage)
+  transparent: Boolean
+  # Light data
+  light: BlockFlagsLight
+
+  #Number of slots
+  inventory_slots: Int
+  
   # Amount of damage
   durability: Int
 
@@ -39,4 +60,12 @@ type ItemFlags {
 
   # Editors to use for this objects NBT data.
   editors: [NBTEditors!]
+}
+
+type BlockFlagsLight {
+  # Amount of light emitted by block
+  emit: Int
+
+  # Amount of light that is dropped as it passes through this block
+  decay: Int
 }

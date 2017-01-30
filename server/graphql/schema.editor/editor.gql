@@ -179,10 +179,6 @@ type Mutation {
   updateItem(oldId: OldId!, newData: InputItem!): Item
   deleteItem(oldId: OldId!): Item
 
-  addBlock(newData: InputBlock!): Block
-  updateBlock(oldId: OldId!, newData: InputBlock!): Block
-  deleteBlock(oldId: OldId!): Block
-
   addEnchantment(newData: InputEnchantment!): Enchantment
   updateEnchantment(oldId: OldId!, newData: InputEnchantment!): Enchantment
   deleteEnchantment(oldId: OldId!): Enchantment
