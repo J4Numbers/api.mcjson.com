@@ -7,14 +7,11 @@
     "app:prod:start": "pm2 start process.json --env production",
     "app:prod:start:local": "pm2 start process.json --env production --no-daemon",
     "app:prod:stop": "pm2 stop process.json",
-    
     "app:dev:start": "pm2 start process.json --env development --no-daemon",
-
     "data:git:init": "git clone https://github.com/tehbeard/api.mcjson.com-data.git data",
     "data:git:pull": "cd data && git pull && cd .. && pm2 restart process.json",
     "data:git:commit": "cd data && git add . && git status --porcelain >> ../ver-commit.txt && git commit -t ../ver-commit.txt && rm ../ver-commit.txt && cd ../",
     "data:git:push": "cd data && git push && cd ../",
-    
     "data:fetch:versions": "node scripts/fetchVersions.js",
     "data:fetch:graham": "node scripts/fetchFromGraham.js"
   },
@@ -30,7 +27,7 @@
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.15.0",
     "react": "^15.4.2",
-    "react-addons-update": "^15.4.2",
+    "immutability-helper": "^2.1.1",
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
     "react-router": "^2.0.1",
@@ -45,6 +42,7 @@
     "express-graphql": "^0.6.2",
     "graphql": "^0.9.0",
     "graphql-tools": "^0.9.2",
+    
     "inquirer": "^3.0.1",
     "mkdirp": "^0.5.1",
     "morgan": "^1.7.0",

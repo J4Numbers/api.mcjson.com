@@ -1,5 +1,5 @@
 "use strict";
-import update from 'react-addons-update'; 
+import update from 'immutability-helper'; 
 import React from 'react';
 import {BaseEditor} from './common/BaseEditor.jsx';
 export default function EnchantmentEditor(props){

@@ -1,7 +1,7 @@
 import React from 'react';
 import {CommonData} from './CommonData.jsx';
 import {VersionData} from './VersionData.jsx';
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 export class BaseEditor extends React.Component {
     constructor()
     {

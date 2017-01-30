@@ -1,5 +1,5 @@
 "use strict";
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 import React from 'react';
 import {compare} from 'semver';
 import getItems from 'gql/item/all.gql';

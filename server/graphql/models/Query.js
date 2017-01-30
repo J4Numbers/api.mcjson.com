@@ -5,13 +5,13 @@ function filterBy(values){
 
 
 module.exports = {
-    items({itemDB},{mod,id,introduced_at}) {
+    items({itemDB},{mod,id, isBlock,introduced_at}) {
         return itemDB.data().filter(filterBy({mod, id})).filter(
                 filters.key(
                     "introduced_at",
                     filters.orNull(introduced_at,filters.semver)
                 )
-            )
+            ).filter( i => isBlock == undefined ? true : (!!i.flags.isBlock) == isBlock )
     },
     entities({entityDB},{mod,id}) {
         return entityDB.data().filter(filterBy({mod, id}));
