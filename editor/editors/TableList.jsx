@@ -3,15 +3,12 @@ import update from 'immutability-helper';
 import React from 'react';
 import {compare} from 'semver';
 import getItems from 'gql/item/all.gql';
-import getBlocks from 'gql/block/all.gql';
-import deleteBlock from 'gql/block/delete.gql';
 import getEntities from 'gql/entity/all.gql';
 import getEnchantments from 'gql/enchantment/all.gql';
 import getEffects from 'gql/effect/all.gql';
 
 const handlers = {
     items: getItems,
-    blocks: getBlocks,
     entities: getEntities,
     enchantments: getEnchantments,
     effects: getEffects
@@ -19,7 +16,6 @@ const handlers = {
 
 const deleteHandlers = {
     items: null,
-    blocks: deleteBlock,
     entities: null,
     enchantments: null,
     effects: null
@@ -104,7 +100,7 @@ export default class TableList extends React.Component {
                                 <td>{e.introduced_at}</td>
                                 <td>{e.changed_at}</td>
                                 <td><a href={"#/" + this.state.tableName + "/" + e.mod + "/" + e.id} className="btn btn-primary edit">Edit</a></td>
-                                <td><a hred="#" onClick={()=> {deleteHandlers[this.state.tableName]({oldId: {mod: e.mod, id: e.id} }).then(()=> {this.fetchList(this.state.tableName) } ) } } className="btn btn-danger delete">Delete</a></td>
+                                <td><a href="#" onClick={()=> {deleteHandlers[this.state.tableName]({oldId: {mod: e.mod, id: e.id} }).then(()=> {this.fetchList(this.state.tableName) } ) } } className="btn btn-danger delete">Delete</a></td>
                             </tr>)
                     }
                 </tbody>

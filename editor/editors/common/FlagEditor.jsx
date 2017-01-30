@@ -54,7 +54,7 @@ export function BlockFlagEditor(props) {
 export function ItemFlagEditor(props) {
     const update = (data)=> props.onChange(Object.assign({}, props.data, data));
     return <div className="block-flag">
-        <FlagInt label="Durability" value={props.data ? props.data.durability : null} onChange={ slots => update({ durability: slots }) } />
+        <FlagInt label="Durability" value={props.data ? props.data.durability : 0} onChange={ slots => update({ durability: slots }) } />
         <ItemNBT value={ (props.data && props.data.editors !== undefined ? props.data.editors: [])} onChange={ editors => update({ editors}) }  />
     </div>
 }
