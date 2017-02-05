@@ -26,6 +26,9 @@ input InputItem {
 }
 
 input InputItemFlags {
+
+  isBlock: Boolean!
+  
   # Amount of damage
   durability: Int
 
