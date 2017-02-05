@@ -54,13 +54,14 @@ export function BlockFlagEditor(props) {
 export function ItemFlagEditor(props) {
     const update = (data)=> props.onChange(Object.assign({}, props.data, data));
     return <div className="block-flag">
+        <FlagCheckbox label="Is block" value={props.data ? props.data.isBlock : false} onChange={ (v) => update({isBlock: !props.data.isBlock}) }/>
         <FlagInt label="Durability" value={props.data ? props.data.durability : 0} onChange={ slots => update({ durability: slots }) } />
         <ItemNBT value={ (props.data && props.data.editors !== undefined ? props.data.editors: [])} onChange={ editors => update({ editors}) }  />
     </div>
 }
 
 function ItemNBT(props){
-    let bind = entry => ({ value: props.value.indexOf(entry)!== -1, onChange: (v)=> props.onChange(toggleArray(props.value||[],entry))})
+    let bind = entry => ({ value: (props.value || []).indexOf(entry)!== -1, onChange: (v)=> props.onChange(toggleArray(props.value||[],entry))})
     return <fieldset>
         <legend>NBT data editors</legend>
         <FlagCheckbox label="Potion Effects" {...bind("POTION")} />
