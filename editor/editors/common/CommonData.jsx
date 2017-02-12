@@ -6,7 +6,7 @@ mod is locked for now
 */
 
 export function CommonData(props){
-    let bind = key => ({ value: props.data[key], onChange: ev => props.onChange(update(props.data, { [key]: {$set: ev.target.value} })) });
+    let bind = key => ({ value: props.data[key] || "", onChange: ev => props.onChange(update(props.data, { [key]: {$set: ev.target.value} })) });
         return <div className="common-data">
         <div className="form-group">
             <label htmlFor="common-mod">mod</label>

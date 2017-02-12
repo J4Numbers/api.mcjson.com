@@ -19,7 +19,7 @@ export function FlagInt(props) {
                     props.onChange(ev.target.checked ? 0 : undefined );
                 } } checked={!(props.value == undefined)} />
             </span>
-            <input className="form-control" readOnly={(props.value == undefined)} type="number" min="0" step="1" value={props.value} onChange={(ev) => props.onChange(parseInt(ev.target.value))}
+            <input className="form-control" readOnly={(props.value == undefined)} type="number" min="0" step="1" value={props.value || 0} onChange={(ev) => props.onChange(parseInt(ev.target.value))}
                 />
         </div>
     </div>

@@ -1,5 +1,6 @@
 import React from 'react';
-import MetaEditor from './common/MetaEditor.jsx';
+// import MetaEditor from './common/MetaEditor.jsx';
+import MetaEditor from './common/meta/index.jsx';
 import {ItemFlagEditor} from './common/FlagEditor.jsx';
 
 export default function ItemEditor(props) {
