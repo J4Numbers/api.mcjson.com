@@ -1,7 +1,48 @@
 import React from 'react';
 /**
-Common mod/id form
-mod is locked for now
+# Is this item a block
+  isBlock: Boolean!
+
+  # Does this block obey physics (sand/gravel/anvil)
+  physics: Boolean
+
+  # Resistance to explosions
+  hardness: Int
+
+  # Does this block prevent piston movement
+  unpushable: Boolean
+
+  # Is this block transparent (no suffocate damage)
+  transparent: Boolean
+  # Light data
+  light: BlockFlagsLight
+
+  #Number of slots
+  inventory_slots: Int
+  
+  # Amount of damage
+  durability: Int
+
+  # Item can be coloured
+  dyeable: Boolean
+
+  # Can be smashed in an anvil to fix it.
+  repairable: Boolean
+
+  # valid enchantments for this item
+  enchantments: [Enchantment!]
+
+  # Editors to use for this objects NBT data.
+  editors: [NBTEditors!]
+}
+
+type BlockFlagsLight {
+  # Amount of light emitted by block
+  emit: Int
+
+  # Amount of light that is dropped as it passes through this block
+  decay: Int
+}
 */
 
 export function FlagCheckbox(props) {
@@ -54,7 +95,6 @@ export function BlockFlagEditor(props) {
 export function ItemFlagEditor(props) {
     const update = (data)=> props.onChange(Object.assign({}, props.data, data));
     return <div className="block-flag">
-        <FlagCheckbox label="Is block" value={props.data ? props.data.isBlock : false} onChange={ (v) => update({isBlock: !props.data.isBlock}) }/>
         <FlagInt label="Durability" value={props.data ? props.data.durability : 0} onChange={ slots => update({ durability: slots }) } />
         <ItemNBT value={ (props.data && props.data.editors !== undefined ? props.data.editors: [])} onChange={ editors => update({ editors}) }  />
     </div>
