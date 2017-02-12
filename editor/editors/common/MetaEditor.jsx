@@ -1,140 +1,149 @@
 "use strict";
-import update from 'immutability-helper'; 
+import update from 'immutability-helper';
 import React from 'react';
-import {BaseEditor} from './BaseEditor.jsx';
+import { BaseEditor } from './BaseEditor.jsx';
 export default class MetaEditor extends React.Component {
-    
-    addMetaKey(gId){
-        return ()=>{ 
+
+    addMetaKey(gId) {
+        return () => {
             this.props.onChange(
-                update(this.props.data,{
-                    meta: { [gId] : {values: { $push: [{value:"",mask:0}] } } }
+                update(this.props.data, {
+                    meta: { [gId]: { values: { $push: [{ value: "", mask: 0 }] } } }
                 })
             );
         }
     }
-    updateMetaKey(gId, vId, key, isCheckbox){
-        return (ev)=>{ 
+    updateMetaKey(gId, vId, key, isCheckbox) {
+        return (ev) => {
             var newValue = isCheckbox ? ev.target.checked : ev.target.value;
             this.props.onChange(
-                update(this.props.data,{
-                    meta: { [gId] : {values: { [vId]: { [key] : {$set: newValue} } } } }
+                update(this.props.data, {
+                    meta: { [gId]: { values: { [vId]: { [key]: { $set: newValue } } } } }
                 })
             );
         }
     }
-    deleteMetaKey(gId, vId){
-        return (ev)=>{ 
+    deleteMetaKey(gId, vId) {
+        return (ev) => {
             var newValue = ev.target.value;
             this.props.onChange(
-                update(this.props.data,{
-                    meta: { [gId] : {values: { $splice:[[vId, 1]] } } }
+                update(this.props.data, {
+                    meta: { [gId]: { values: { $splice: [[vId, 1]] } } }
                 })
             );
         }
     }
-    
-    toggleTechnicalBlock(){
+
+    toggleTechnicalBlock() {
         this.props.onChange(
-                update(this.props.data,{
-                    technical: {$set: !this.props.data.technical}
-                })
-            );
+            update(this.props.data, {
+                technical: { $set: !this.props.data.technical }
+            })
+        );
     }
-    
-    setMetaName(gId){
-         return (ev)=>{ 
+
+    setMetaName(gId) {
+        return (ev) => {
             var newValue = ev.target.value;
             this.props.onChange(
-                update(this.props.data,{
-                    meta: { [gId] : {key: {$set:newValue} } }
+                update(this.props.data, {
+                    meta: { [gId]: { key: { $set: newValue } } }
                 })
             );
         }
     }
-    
-    setMetaTechnical(gId){
-        return (ev)=>{ 
+
+    setMetaTechnical(gId) {
+        return (ev) => {
             var newValue = ev.target.checked;
             this.props.onChange(
-                update(this.props.data,{
-                    meta: { [gId] : {technical: { $set: newValue } } }
+                update(this.props.data, {
+                    meta: { [gId]: { technical: { $set: newValue } } }
                 })
             );
         }
     }
-    
-    addNewMetaCategory(){
+
+    addNewMetaCategory() {
         this.props.onChange(
-            update(this.props.data,{
-                meta: { [Array.isArray(this.props.data.meta) ? "$push" : "$set"]  : [{key:"",values:[]}] } 
+            update(this.props.data, {
+                meta: { [Array.isArray(this.props.data.meta) ? "$push" : "$set"]: [{ key: "", values: [] }] }
             })
         );
     }
-    
-    deleteMetaCategory(gId){
-        return ()=>{
+
+    deleteMetaCategory(gId) {
+        return () => {
             this.props.onChange(
-            update(this.props.data,{
-                meta: { $splice : [[gId,1]] } 
-            })
-        );
+                update(this.props.data, {
+                    meta: { $splice: [[gId, 1]] }
+                })
+            );
         }
     }
-    
-    render(){
-       
-        
+
+    render() {
+
+
         return <div>
-            <BaseEditor data={this.props.data} onChange={this.props.onChange}/>
+            <BaseEditor data={this.props.data} onChange={this.props.onChange} />
             <div className="checkbox">
                 <label>
-                <input type="checkbox" checked={this.props.data.technical} onChange={this.toggleTechnicalBlock.bind(this)} /> Technical item/block
+                    <input type="checkbox" checked={this.props.data.technical} onChange={this.toggleTechnicalBlock.bind(this)} /> Technical item/block
                 </label>
             </div>
             <div className="meta-group">
-            <h3>Metadata</h3>
-            {this.props.data.meta ? this.props.data.meta.map((meta, gId)=>{
-                return <div className="panel panel-default" key={gId}>
+                <h3>Metadata</h3>
+                {this.props.data.meta ? this.props.data.meta.map((meta, gId) => {
+                    return <div className="panel panel-default" key={gId}>
                         <div className="panel-heading">
-                            <input value={meta.key} onChange={this.setMetaName(gId)}/>
+                            <input value={meta.key} onChange={this.setMetaName(gId)} />
                             <button className="btn btn-danger pull-right" onClick={this.deleteMetaCategory(gId)}>Remove</button>
                         </div>
                         <div className="panel-body">
-                        <div className="checkbox">
-                            <label>
-                            <input type="checkbox" checked={meta.technical} onChange={this.setMetaTechnical(gId)} /> Technical meta (orientation etc)
+                            <div className="checkbox">
+                                <label>
+                                    <input type="checkbox" checked={meta.technical} onChange={this.setMetaTechnical(gId)} /> Technical meta (orientation etc)
                             </label>
-                        </div>
-                        <table className="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>value</th>
-                            <th>Remove</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                {meta.values.map((kv, vId)=>{
-                            return <tr key={`${gId}-${vId}`}>
-                            <td><input type="text" value={kv.value} onChange={this.updateMetaKey(gId,vId, 'value')} /></td>
-                            <td>
-                                <input type="text" value={kv.mask} onChange={this.updateMetaKey(gId,vId, 'mask')} />
-                                <input type="checkbox" checked={kv.technical} onChange={this.updateMetaKey(gId,vId, 'technical', true)} />
-                            </td>
-                            <td><button className="btn btn-danger" onClick={this.deleteMetaKey(gId,vId)}>Delete</button></td>
-                            </tr>
-                        })}
-                        </tbody>
-                        </table>
-                        <button className="btn btn-primary" onClick={this.addMetaKey(gId)}>Add new key</button>
-                        </div>
-                        </div>
+                            </div>
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>value</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {meta.values.map((kv, vId) => {
+                                        return <tr key={`${gId}-${vId}`}>
+                                            <td style={{width:"50%"}}>
+                                                <input type="text" className="form-control" value={kv.value} onChange={this.updateMetaKey(gId, vId, 'value')} />
+                                            </td>
+                                            <td style={{width:"25%"}}>
+                                                <div className="input-group">
 
-            }): []}
-            <button className="btn btn-primary" onClick={this.addNewMetaCategory.bind(this)}>Add meta</button>
+                                                    <input className="form-control" type="text" value={kv.mask} onChange={this.updateMetaKey(gId, vId, 'mask')} />
+                                                    <span className="input-group-addon">
+                                                        <input type="checkbox" checked={kv.technical} onChange={this.updateMetaKey(gId, vId, 'technical', true)} />
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td style={{width:"25%"}}
+                                            ><button className="btn btn-danger" onClick={this.deleteMetaKey(gId, vId)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    })}
+                                </tbody>
+                            </table>
+                            <button className="btn btn-primary" onClick={this.addMetaKey(gId)}>Add new key</button>
+                        </div>
+                    </div>
+
+                }) : []}
+                <button className="btn btn-primary" onClick={this.addNewMetaCategory.bind(this)}>Add meta</button>
             </div>
-        </div> 
+        </div>
     }
-        
+
 }

@@ -1,36 +1,20 @@
 import React from 'react';
+import update from "immutability-helper";
 /**
 Common mod/id form
 mod is locked for now
 */
 
-export class CommonData extends React.Component {
-    constructor()
-    {
-        super();
-        this._refs = {};
-    }
-    render(){
+export function CommonData(props){
+    let bind = key => ({ value: props.data[key], onChange: ev => props.onChange(update(props.data, { [key]: {$set: ev.target.value} })) });
         return <div className="common-data">
         <div className="form-group">
             <label htmlFor="common-mod">mod</label>
-            <input type="text" className="form-control" id="common-mod" ref={(c)=>this._refs.mod = c} value={this.props.data.mod||""}  onChange={this.onChange.bind(this)} />
+            <input type="text" className="form-control" id="common-mod" {...bind("mod")} />
         </div>
         <div className="form-group">
             <label htmlFor="common-id">id</label>
-            <input type="text" className="form-control" id="common-id" ref={(c)=>this._refs.id = c} value={this.props.data.id||""} onChange={this.onChange.bind(this)} />
+            <input type="text" className="form-control" id="common-id" {...bind("id")} />
         </div>
         </div> 
     }
-    
-    onChange(){
-        this.props.onChange(
-            Object.assign({},
-            this.props.data,
-            {
-                id: this._refs.id.value,
-                mod: this._refs.mod.value
-            })
-        )
-    }    
-}
