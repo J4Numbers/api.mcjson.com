@@ -2,7 +2,7 @@ import React from 'react';
 import { CommonData } from './CommonData.jsx';
 import { VersionData } from './VersionData.jsx';
 import update from 'immutability-helper';
-export function BaseEditor(props) {
+export default function BaseEditor(props) {
     return <div className="base-edit">
         <CommonData data={props.data} onChange={props.onChange} />
         <div className="form-group">

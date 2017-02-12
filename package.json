@@ -2,7 +2,7 @@
   "name": "mcjson.com",
   "version": "0.0.1",
   "description": "REST/JSON server providing minecraft data in a consumable format.",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "app:prod:start": "pm2 start process.json --env production",
     "app:prod:start:local": "pm2 start process.json --env production --no-daemon",

@@ -23,6 +23,9 @@ input InputItem {
 
   # Last Version this object was edited
   changed_at: String!
+
+  #Is this item a technical item (not normally accessed)
+  technical: Boolean!
 }
 
 input InputItemFlags {

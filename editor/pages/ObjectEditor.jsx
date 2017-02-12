@@ -46,8 +46,8 @@ export default class ObjectEditor extends React.Component {
     }
     render() {
         return <div>
+            <button className="btn btn-primary" style={{float:"right"}} disabled={!this.state.isDirty} onClick={() => this.onSave()}>Save</button>
             { React.createElement(this.props.editor, { data: this.state.data, onChange:(data) => { this.setState({ data: data, isDirty: true }) } }) }
-            <button className="btn btn-primary" disabled={!this.state.isDirty} onClick={() => this.onSave()}>Save</button>
         </div>
     }
 }
