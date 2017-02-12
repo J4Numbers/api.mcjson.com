@@ -12,6 +12,7 @@ module.exports = {
                     filters.orNull(introduced_at,filters.semver)
                 )
             ).filter( i => isBlock == undefined ? true : (!!i.flags.isBlock) == isBlock )
+            .map( i => Object.assign({technical: false }, i))
     },
     entities({entityDB},{mod,id}) {
         return entityDB.data().filter(filterBy({mod, id}));
