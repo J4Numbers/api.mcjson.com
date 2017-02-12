@@ -39,7 +39,7 @@ input InputItemFlags {
   repairable: Boolean
 
   # valid enchantments for this item
-  #enchantments: [InputEnchantment!]
+  enchantments: [InputEnchantment!]
 
   # Editors to use for this objects NBT data.
   editors: [NBTEditors!]
