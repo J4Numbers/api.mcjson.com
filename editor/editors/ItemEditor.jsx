@@ -14,7 +14,7 @@ export default function ItemEditor(props) {
                     <label>
                         <input
                             type="checkbox"
-                            checked={props.data.technical}
+                            checked={props.data.technical || false}
                             onChange={ev => props.onChange(update(props.data, { technical: { $set: ev.target.checked } }))}
                         /> Technical item/block
             </label>
