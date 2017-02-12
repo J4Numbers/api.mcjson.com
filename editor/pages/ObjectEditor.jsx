@@ -32,14 +32,14 @@ export default class ObjectEditor extends React.Component {
                 { data: this.state.data }
             ).then(d => {
                 this.setState({ isDirty: false })
-                return d.data;
+                return this.state.data;
             }).then(this.props.onCreate)
         }else {
             this.props.updateFn(
                 { target: this.props.target, data: this.state.data }
             ).then(d => {
                 this.setState({ isDirty: false })
-                return d.data;
+                return this.state.data;
             }).then(this.props.onUpdate)
         }
 

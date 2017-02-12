@@ -27,6 +27,7 @@ export default class ItemEditorPage extends React.Component {
             updateFn={itemUpdate}
             fetchFn={itemFetch}
             editor={ItemEditor}
+            onCreate={ m => location.href=`#/items/${m.mod}/${m.id}` }
         />
     }
 }

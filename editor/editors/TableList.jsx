@@ -3,6 +3,7 @@ import update from 'immutability-helper';
 import React from 'react';
 import {compare} from 'semver';
 import getItems from 'gql/item/all.gql';
+import deleteItem from 'gql/item/delete.gql';
 import getEntities from 'gql/entity/all.gql';
 import getEnchantments from 'gql/enchantment/all.gql';
 import getEffects from 'gql/effect/all.gql';
@@ -15,7 +16,7 @@ const handlers = {
 }
 
 const deleteHandlers = {
-    items: null,
+    items: deleteItem,
     entities: null,
     enchantments: null,
     effects: null

@@ -30,7 +30,11 @@ export default function ItemEditor(props) {
             <h3>Flags</h3>
             <ItemFlagEditor data={props.data.flags} onChange={(data) => props.onChange(Object.assign({}, props.data, { flags: data }))} />
         </Tab>
-        <pre>{JSON.stringify(props.data, null, 2)}</pre>
+        <Tab eventKey={4} title="Raw data">
+            <h3>Raw JSON</h3>
+            <pre>{JSON.stringify(props.data, null, 2)}</pre>
+        </Tab>
+        
     </Tabs>
 }
 
