@@ -19,10 +19,10 @@ class Database {
         this.load();
     }
 
-    clear(){
+    clear() {
         this[SYM_DATA] = [];
     }
-    data(){
+    data() {
         return this[SYM_DATA];
     }
 
@@ -32,36 +32,21 @@ class Database {
      */
     load(dir) {
         let d = dir || this.baseDir;
-        fs.readdir(d, (err, files) => {
-            if (err) {
-                console.error("Failed to read directory", dir, err);
-                process.exit(-1);
+        let files = fs.readdirSync(d);
+        files.forEach(file => {
+            let fName = path.resolve(d, file);
+            let f = fs.statSync(fName)
+            if (f.isDirectory()) {
+                this.load(fName);
+            } else if (f.isFile()) {
+                let body = fs.readFileSync(fName, "ascii")
+                try {
+                    this[SYM_DATA].push(JSON.parse(body));
+                } catch (e) {
+                    console.error("Could not parse file as JSON", fName, err);
+                    process.exit(-1);
+                }
             }
-            files.forEach(file => {
-                let fName = path.resolve(d, file);
-                fs.stat(fName, (err, f) => {
-                    if (err) {
-                        console.error("Failed to get stats", fName, err);
-                        process.exit(-1);
-                    }
-                    if (f.isDirectory()) {
-                        this.load(fName);
-                    } else if (f.isFile()) {
-                        fs.readFile(fName, "ascii", (err, body) => {
-                            if (err) {
-                                console.error("Failed to read file", fName, err);
-                                process.exit(-1);
-                            }
-                            try {
-                                this[SYM_DATA].push(JSON.parse(body));
-                            } catch (e) {
-                                console.error("Could not parse file as JSON", fName, err);
-                                process.exit(-1);
-                            }
-                        })
-                    }
-                })
-            })
         })
     }
 
@@ -86,10 +71,10 @@ class Database {
             this[SYM_DATA].push(data);
         }
         let p = path.resolve(this.baseDir, this[SYM_PATH_FUNC](data));
-        if(p.indexOf(this.baseDir) !== 0){
+        if (p.indexOf(this.baseDir) !== 0) {
             throw new Error(`Invalid filepath, exits baseDir [${p}]`);
         }
-        mkdirp(path.dirname(p), err =>{
+        mkdirp(path.dirname(p), err => {
             fs.writeFile(p, JSON.stringify(data, null, 2));
         });
 
@@ -118,5 +103,5 @@ class Database {
  * Pass in array of props to generate a path using/each/prop.json
  * @param {string[]} props property names to use for path.
  */
-Database.QuickKey = props => d => `${props.map( k => d[k] ).join("/")}.json`;
+Database.QuickKey = props => d => `${props.map(k => d[k]).join("/")}.json`;
 module.exports = Database;
