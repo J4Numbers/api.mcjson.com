@@ -30,7 +30,7 @@ type Item {
 type ItemFlags {
 
   # Is this item a block
-  isBlock: Boolean!
+  isBlock: Boolean
 
   # Does this block obey physics (sand/gravel/anvil)
   physics: Boolean
