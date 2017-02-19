@@ -1,9 +1,16 @@
+const id = (_,{prefixMod}) => {
+        return (prefixMod ? _.mod + ":":"") + _.id;
+    }
+
 let root = {
     Query: require("./Query.js"),
-    Item: require("./idPrefixMod.js"),
-    Entity: require("./idPrefixMod.js"),
-    Enchantment: require("./idPrefixMod.js"),
-    StatusEffect: require("./idPrefixMod.js"),
+    Item: {
+        id,
+        meta: (_) => _.meta || [],
+    },
+    Entity: { id },
+    Enchantment: { id },
+    StatusEffect: { id },
 }
 
 if(process.env.NODE_ENV != 'production'){

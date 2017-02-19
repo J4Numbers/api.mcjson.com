@@ -8,7 +8,7 @@ import TableList from './editors/TableList.jsx';
 import ItemEditorPage from './pages/ItemEditorPage.jsx';
 import EntityEditorPage from './pages/EntityEditorPage.jsx';
 import StatusEffectEditorPage from './pages/StatusEffectEditorPage.jsx';
-import {loadVersionData} from './editors/widget/Version.jsx';
+import {loadVersionData} from './editors/common/Version.jsx';
 
 import App from './app.jsx';
 
