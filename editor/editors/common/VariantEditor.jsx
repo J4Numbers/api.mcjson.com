@@ -2,7 +2,7 @@ import React from 'react';
 import update from "immutability-helper";
 
 function uncombineVariantValue(values, variantValue) {
-    return values.find(v => (v & variantValue) == variantValue) || 0;
+    return values.reduce( (a,b)=> ((b & variantValue) == b && b > a) ? b : a , 0);
 }
 
 export default function VariantEditor(props) {
