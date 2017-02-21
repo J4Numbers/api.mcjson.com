@@ -5,7 +5,7 @@ import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-ro
 import TableList from './editors/TableList.jsx';
 // import VersionEditor from './views/VersionEditor.jsx';
  import EnchantmentEditorPage from './pages/EnchantmentEditorPage.jsx';
-import ItemEditorPage from './pages/ItemEditorPage.jsx';
+import {ItemCreatePage, ItemEditPage} from './pages/ItemEditorPage.jsx';
 import EntityEditorPage from './pages/EntityEditorPage.jsx';
 import StatusEffectEditorPage from './pages/StatusEffectEditorPage.jsx';
 import {loadVersionData} from './editors/common/Version.jsx';
@@ -17,8 +17,8 @@ loadVersionData().then(() => {
         <Route path="/" component={App} >
             {/*<Route path="/versions/:version" component={VersionEditor} />*/}
             <Route path="/enchantments/:mod/:id" component={EnchantmentEditorPage} />
-            <Route path="/items/:mod/:id" component={ItemEditorPage} />
-            <Route path="/items/_new" isNew={true} component={ItemEditorPage} />
+            <Route path="/items/:mod/:id" component={ItemEditPage} />
+            <Route path="/items/_new" component={ItemCreatePage} />
             <Route path="/entities/:mod/:id" component={EntityEditorPage} />
             <Route path="/entities/_new" isNew={true} component={EntityEditorPage} />
 
