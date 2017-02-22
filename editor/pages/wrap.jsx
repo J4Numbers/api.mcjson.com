@@ -8,8 +8,12 @@ export class LoadWrapper extends React.Component {
             loaded: false,
             dirty: false
         }
-        this.doLoad(props);
+        
     }
+
+     componentDidMount(){
+         this.doLoad(this.props);
+     }
 
     componentWillReceiveProps(nextProps){
         this.doLoad(nextProps);
@@ -39,7 +43,7 @@ export class LoadWrapper extends React.Component {
     }
 
     render() {
-        let {Composed} = props;
+        let {Composed} = this.props;
         if (!this.state.loaded) {
             return <div><h4>Loading...</h4></div>
         } else {

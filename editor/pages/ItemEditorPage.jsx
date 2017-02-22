@@ -33,7 +33,7 @@ export function ItemCreatePage(props) {
 export function ItemEditPage(props) {
     return <LoadWrapper
         {...props}
-        loaderFn={(props) => itemFetch({mod: props.params.mod, id: props.params.id}).then( d => d.data )  }
+        loaderFn={(props) => itemFetch({mod: props.params.mod, id: props.params.id}).then( d => d.data[0] )  }
         saverFn={data => itemUpdate({ data: data })}
         Composed={ItemEditor}
     />

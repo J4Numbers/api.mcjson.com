@@ -6,33 +6,34 @@ import MetaEditor from './common/meta/index.jsx';
 import { BlockFlagEditor, ItemFlagEditor, FlagCheckbox } from './common/FlagEditor.jsx';
 import { Tabs, Tab } from "react-bootstrap";
 export default function ItemEditor(props) {
+    let {value, onChange} = props;
     return <Tabs id="tabs" defaultActiveKey={1} >
         <Tab eventKey={1} title="General">
             <h3>General</h3>
-            <BaseEditor data={props.data} onChange={props.onChange} />
-            <FlagCheckbox label="Technical item/block" value={props.data.technical || false} onChange={(v) => props.onChange(update(props.data, { technical: { $set: !props.data.technical } }))} />
-            <FlagCheckbox label="Is Block" value={props.data.flags.isBlock || false} onChange={(v) => props.onChange(update(props.data, { flags: { isBlock: { $set: !props.data.flags.isBlock } } }))} />
+            <BaseEditor data={value} onChange={onChange} />
+            <FlagCheckbox label="Technical item/block" value={value.technical || false} onChange={(v) => onChange(update(value, { technical: { $set: !value.technical } }))} />
+            <FlagCheckbox label="Is Block" value={value.flags.isBlock || false} onChange={(v) => onChange(update(value, { flags: { isBlock: { $set: !value.flags.isBlock } } }))} />
         </Tab>
         <Tab eventKey={2} title="Metadata">
             <h3>Metadata</h3>
-            <MetaEditor data={props.data} onChange={props.onChange} />
+            <MetaEditor data={value} onChange={onChange} />
         </Tab>
         <Tab eventKey={3} title="Variants">
             <h3>Variants</h3>
-            <VariantEditor data={Object.assign({ variants: [] }, props.data)} onChange={props.onChange} />
+            <VariantEditor data={Object.assign({ variants: [] }, value)} onChange={onChange} />
         </Tab>
         <Tab eventKey={4} title="Details">
             <h3>Flags</h3>
             {
-                props.data.flags.isBlock ?
-                    <BlockFlagEditor data={props.data.flags} onChange={(data) => props.onChange(Object.assign({}, props.data, { flags: data }))} />
+                value.flags.isBlock ?
+                    <BlockFlagEditor data={value.flags} onChange={(data) => onChange(Object.assign({}, value, { flags: data }))} />
                     :
-                    <ItemFlagEditor data={props.data.flags} onChange={(data) => props.onChange(Object.assign({}, props.data, { flags: data }))} />
+                    <ItemFlagEditor data={value.flags} onChange={(data) => onChange(Object.assign({}, value, { flags: data }))} />
             }
         </Tab>
         <Tab eventKey={5} title="Raw data">
             <h3>Raw JSON</h3>
-            <pre>{JSON.stringify(props.data, null, 2)}</pre>
+            <pre>{JSON.stringify(value, null, 2)}</pre>
         </Tab>
 
     </Tabs>
