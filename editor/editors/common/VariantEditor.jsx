@@ -1,8 +1,12 @@
 import React from 'react';
 import update from "immutability-helper";
 
+/**
+ * Finds the matching value in variantValue bitmask
+*/
 function uncombineVariantValue(values, variantValue) {
-    return values.reduce( (a,b)=> ((b & variantValue) == b && b > a) ? b : a , 0);
+    let mask =  values.reduce( (a,b)=> (a | b) , 0);
+    return values.find( v => (v & mask) == variantValue );
 }
 
 export default function VariantEditor(props) {
@@ -33,23 +37,19 @@ export default function VariantEditor(props) {
                         </td>
                         {props.data.meta.map(metaType => (
                             <td key={metaType.key}>
-                                {JSON.stringify({
-                                    values: metaType.values.map(mv => mv.mask),
-                                    value: v.value,
-                                    res: uncombineVariantValue(metaType.values.map(mv => mv.mask), v.value)
-                                })}
                                 <select
                                     className="form-control"
                                     onChange={
                                         ev => {
+                                            let oldValue = uncombineVariantValue(metaType.values.map(mv => mv.mask), v.value);
                                             upd({
                                                 [idx]: {
-                                                    value: { $set: 0 /* COMPUTE REMOVAL OF OLD VALUE, AND ADD NEW VALUE HERE */ }
+                                                    value: { $set: (v.value - oldValue) + parseInt(ev.target.value) }
                                                 }
                                             })
                                         }
                                     }>
-                                    {metaType.values.map(e => (<option key={e.mask} value={e.mask} >{e.value} - {v.value & e.mask == e.mask ? "YES":"NO"}</option>))}
+                                    {metaType.values.map(e => (<option key={e.mask} value={e.mask} >{e.value}</option>))}
                                 </select>
                             </td>
                         ))}
