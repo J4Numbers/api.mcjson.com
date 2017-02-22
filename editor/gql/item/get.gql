@@ -25,6 +25,12 @@ query($mod :String!, $id :String!) {
       repairable
       enchantments { id }
       editors
+      physics
+      hardness
+      unpushable
+      transparent
+      #light: InputBlockFlagsLight
+      inventory_slots
     }
 
     

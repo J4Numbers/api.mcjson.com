@@ -71,7 +71,6 @@ input InputItemFlags {
   #Number of inventory slots this block can hold
   inventory_slots: Int
 
-  editors: [NBTEditors!]
 }
 
 
