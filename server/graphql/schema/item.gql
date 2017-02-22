@@ -2,7 +2,9 @@
 
 type Item {
   # Metadata settings
-  meta: [Meta]
+  meta: [Meta!]
+  variants: [Variant!]
+
   flags: ItemFlags
 
   # Mod this object comes from
@@ -27,10 +29,15 @@ type Item {
   technical: Boolean!
 }
 
+type Variant {
+  label: String!
+  value: Int!
+}
+
 type ItemFlags {
 
   # Is this item a block
-  isBlock: Boolean
+  isBlock: Boolean!
 
   # Does this block obey physics (sand/gravel/anvil)
   physics: Boolean

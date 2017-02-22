@@ -7,6 +7,11 @@ let root = {
     Item: {
         id,
         meta: (_) => _.meta || [],
+        technical: (_) => !!_.technical,
+        variants: (_) => _.variants || [],
+    },
+    ItemFlags: {
+        isBlock: (_) => !!_.isBlock
     },
     Entity: { id },
     Enchantment: { id },

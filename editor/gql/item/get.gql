@@ -5,6 +5,7 @@ query($mod :String!, $id :String!) {
     name
     changed_at
     introduced_at
+    technical
     meta{
       key
       technical
@@ -12,6 +13,10 @@ query($mod :String!, $id :String!) {
         value
         mask
       }
+    }
+    variants{
+      label
+      value
     }
     flags{
       isBlock

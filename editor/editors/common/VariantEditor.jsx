@@ -5,8 +5,8 @@ import update from "immutability-helper";
  * Finds the matching value in variantValue bitmask
 */
 function uncombineVariantValue(values, variantValue) {
-    let mask =  values.reduce( (a,b)=> (a | b) , 0);
-    return values.find( v => (v & mask) == variantValue );
+    let mask = values.reduce((a, b) => (a | b), 0);
+    return values.find(v => (v & mask) == variantValue);
 }
 
 export default function VariantEditor(props) {
@@ -23,7 +23,20 @@ export default function VariantEditor(props) {
             <thead>
                 <tr>
                     <th>Label</th>
-                    {props.data.meta.map(metaType => (<th key={metaType.key}>{metaType.key}</th>))}
+                    {props.data.meta.map(metaType => (<th key={metaType.key}>
+                        {metaType.key}
+                        &nbsp;<a
+                            href="#"
+                            onClick={(ev) => {
+                                ev.preventDefault();
+                                upd({
+                                    $push: metaType.values.map(e => ({ label: `${e.value} ${props.data.name}`, value: e.mask }))
+                                });
+
+                            }}
+                        >Generate</a>
+                    </th>))}
+
                     <th>Remove</th>
                 </tr>
             </thead>
@@ -39,6 +52,7 @@ export default function VariantEditor(props) {
                             <td key={metaType.key}>
                                 <select
                                     className="form-control"
+                                    value={uncombineVariantValue(metaType.values.map(mv => mv.mask), v.value)}
                                     onChange={
                                         ev => {
                                             let oldValue = uncombineVariantValue(metaType.values.map(mv => mv.mask), v.value);
@@ -53,7 +67,15 @@ export default function VariantEditor(props) {
                                 </select>
                             </td>
                         ))}
-                        <td><button type="button" className="btn btn-danger">&times;</button></td>
+                        <td><button 
+                        type="button" 
+                        className="btn btn-danger"
+                        onClick={()=>{
+                            upd({
+                                $splice: [[idx, 1]]
+                            })
+                        }}
+                        >&times;</button></td>
                     </tr>
                 ))}
             </tbody>

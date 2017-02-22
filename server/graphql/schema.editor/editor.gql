@@ -5,8 +5,10 @@ input OldId{
 }
 
 input InputItem {
+
+  variants: [InputVariant!]
   # Metadata settings
-  meta: [InputMeta]
+  meta: [InputMeta!]
   flags: InputItemFlags
 
   # Mod this object comes from
@@ -28,6 +30,11 @@ input InputItem {
   technical: Boolean!
 }
 
+input InputVariant {
+  label: String!
+  value: Int!
+}
+
 input InputItemFlags {
 
   isBlock: Boolean!
@@ -46,49 +53,7 @@ input InputItemFlags {
 
   # Editors to use for this objects NBT data.
   editors: [NBTEditors!]
-}
 
-input InputBlock {
-  # Metadata settings
-  #meta: [Meta]
-  #flags: ItemFlags
-
-  # Mod this object comes from
-  mod: String!
-
-  # Id of this object, combined with mod in format mod:id
-  id: String!
-
-  # English name of object
-  name: String!
-
-  # Version this object first appeared in
-  introduced_at: String!
-
-  # Last Version this object was edited
-  changed_at: String!
-  
-  #Is block a technical one
-  technical: Boolean
-
-  meta: [InputMeta]
-  flags: InputBlockFlags
-
-}
-
-input InputMeta {
-  key: String
-  values: [InputMetaEntry]
-  technical: Boolean
-}
-
-input InputMetaEntry {
-  value: String
-  technical: Boolean
-  mask: Int
-}
-
-input InputBlockFlags {
   # Does this block obey physics (sand/gravel/anvil)
   physics: Boolean
 
@@ -107,6 +72,19 @@ input InputBlockFlags {
   inventory_slots: Int
 
   editors: [NBTEditors!]
+}
+
+
+input InputMeta {
+  key: String
+  values: [InputMetaEntry]
+  technical: Boolean
+}
+
+input InputMetaEntry {
+  value: String
+  technical: Boolean
+  mask: Int
 }
 
 input InputBlockFlagsLight {
