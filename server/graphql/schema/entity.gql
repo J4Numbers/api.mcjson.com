@@ -1,19 +1,19 @@
 type Entity {
-  # Mod this object comes from
+  # Mod this entity comes from
   mod: String
 
-  # Id of this object, combined with mod in format mod:id
+  # Id of this entity, combined with mod in format mod:id
   id(
     # Prefix with the mod field value in format mod:id
     prefixMod: Boolean = false
   ): String
 
-  # English name of object
+  # English name of entity
   name: String
 
-  # Version this object first appeared in
+  # Version this entity first appeared in
   introduced_at: String
 
-  # Last Version this object was edited
+  # Last Version this entity was edited
   changed_at: String
 }

@@ -1,8 +1,8 @@
-
-
+#An item or block
 type Item {
-  # Metadata settings
+  # Raw blockstate/metadata
   meta: [Meta!]
+  #item variants (wool, logs etc)
   variants: [Variant!]
 
   flags: ItemFlags

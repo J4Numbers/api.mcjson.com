@@ -1,25 +1,26 @@
+# An item enchantment that can be applied to stuff
 type Enchantment {
-  # Numeric id
+  # Numeric id of enchantment
   num_id: Int
 
-  # Max level
+  # Max level of enchantment
   level: Int
 
-  # Mod this object comes from
+  # Mod this enchantment comes from
   mod: String
 
-  # Id of this object, combined with mod in format mod:id
+  # Id of this enchantment
   id(
     # Prefix with the mod field value in format mod:id
     prefixMod: Boolean = false
   ): String
 
-  # English name of object
+  # English name of enchantment
   name: String
 
-  # Version this object first appeared in
+  # Version this enchantment first appeared in
   introduced_at: String
 
-  # Last Version this object was edited
+  # Last Version this enchantment was edited
   changed_at: String
 }
