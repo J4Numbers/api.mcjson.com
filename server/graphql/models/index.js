@@ -8,7 +8,7 @@ let root = {
         id,
         meta: (_) => _.meta || [],
         technical: (_) => !!_.technical,
-        variants: (_) => _.variants || [],
+        variants: (_) => _.variants || [{label:_.name, value: 0}],
     },
     ItemFlags: {
         isBlock: (_) => !!_.isBlock
