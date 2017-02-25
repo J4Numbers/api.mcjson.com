@@ -2,11 +2,11 @@
 import update from 'immutability-helper';
 import React from 'react';
 import {compare} from 'semver';
-import getItems from 'gql/item/all.gql';
+import getItems from 'gql/item/list.gql';
 import deleteItem from 'gql/item/delete.gql';
-import getEntities from 'gql/entity/all.gql';
-import getEnchantments from 'gql/enchantment/all.gql';
-import getEffects from 'gql/effect/all.gql';
+import getEntities from 'gql/entity/list.gql';
+import getEnchantments from 'gql/enchantment/list.gql';
+import getEffects from 'gql/effect/list.gql';
 
 const handlers = {
     items: getItems,

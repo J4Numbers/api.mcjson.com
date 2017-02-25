@@ -5,7 +5,7 @@ let enchantmentDB = databases.enchantmentDB;
 let effectDB = databases.effectDB;
 
 function mutationAdd(db){
-    return (_,{newData}) => db.save(newData);
+    return (_,{data}) => db.save(data);
 }
 
 function mutationDelete(db){
@@ -16,8 +16,8 @@ module.exports = {
     storeItem: mutationAdd(itemDB),
     deleteItem: mutationDelete(itemDB),
 
-    // storeEnchantment: mutationAdd(enchantmentDB),
-    // deleteEnchantment: mutationDelete(enchantmentDB),
+    storeEnchantment: mutationAdd(enchantmentDB),
+    deleteEnchantment: mutationDelete(enchantmentDB),
 
     // storeEntity: mutationAdd(entityDB),
     // deleteEntity: mutationDelete(entityDB),

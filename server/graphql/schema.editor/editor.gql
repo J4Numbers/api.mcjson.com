@@ -3,7 +3,7 @@ type Mutation {
   storeItem(data: InputItem!): Item
   deleteItem(mod: String!, id: String!): Item
 
-  storeEnchantment(newData: InputEnchantment!): Enchantment
+  storeEnchantment(data: InputEnchantment!): Enchantment
   deleteEnchantment(mod: String!, id: String!): Enchantment
 
   # storeEntity(newData: InputEntity!): Entity
