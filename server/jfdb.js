@@ -63,7 +63,7 @@ class Database {
      * @param {object} data data to save
      * @param {object} oldData record to delete
      */
-    save(data, oldData = null) {
+    save(data) {
         let curIdx = this._indexByPath(data);
         if (curIdx != -1) {
             this[SYM_DATA][curIdx] = data;
@@ -77,13 +77,6 @@ class Database {
         mkdirp(path.dirname(p), err => {
             fs.writeFile(p, JSON.stringify(data, null, 2));
         });
-
-        if (
-            oldData != null &&
-            this[SYM_PATH_FUNC](data) != this[SYM_PATH_FUNC](oldData)
-        ) {
-            this.unlink(oldData);
-        }
     }
 
     /**

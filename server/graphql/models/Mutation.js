@@ -4,10 +4,6 @@ let entityDB = databases.entitieDB;
 let enchantmentDB = databases.enchantmentDB;
 let effectDB = databases.effectDB;
 
-function mutationUpdate(db){
-    return (_,{oldId, newData}) => db.save(newData, oldId);
-}
-
 function mutationAdd(db){
     return (_,{newData}) => db.save(newData);
 }
