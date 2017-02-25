@@ -61,7 +61,7 @@ export class LoadWrapper extends React.Component {
     }
 }
 
-export default function connectLoader(Composed, loaderFn, saverFn) {
+export function connectLoader(Composed, loaderFn, saverFn) {
     return props => <LoadWrapper {...props} {...{ loaderFn, saverFn, Composed }} />
 }
 

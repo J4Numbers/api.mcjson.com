@@ -1,7 +1,6 @@
 "use strict";
 import update from 'immutability-helper';
 import React from 'react';
-import { BaseEditor } from '../BaseEditor.jsx';
 import MetaCategory from "./MetaCategory.jsx";
 
 export default function MetaEditor(props) {

@@ -1,9 +1,9 @@
 import React from 'react';
 import update from "immutability-helper";
-import BaseEditor from './common/BaseEditor.jsx';
-import VariantEditor from './common/VariantEditor.jsx';
-import MetaEditor from './common/meta/index.jsx';
-import { BlockFlagEditor, ItemFlagEditor, FlagCheckbox } from './common/FlagEditor.jsx';
+import BaseEditor from '../common/BaseEditor.jsx';
+import VariantEditor from './VariantEditor.jsx';
+import MetaEditor from './meta/index.jsx';
+import { BlockFlagEditor, ItemFlagEditor, FlagCheckbox } from './FlagEditor.jsx';
 import { Tabs, Tab } from "react-bootstrap";
 export default function ItemEditor(props) {
     let {value, onChange} = props;
