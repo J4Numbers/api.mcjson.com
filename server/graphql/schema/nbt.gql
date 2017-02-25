@@ -9,10 +9,10 @@ enum NBTEditors {
     BANNER,
     #This object accepts firwork star data
     FIREWORK,
-    #This object accepts shulker box colour
-    SHULKER_BOX,
     #Beacon data
     BEACON,
     #Sign data
-    SIGN
+    SIGN,
+    #Spawn data
+    SPAWNER
 }

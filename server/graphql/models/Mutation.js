@@ -17,19 +17,15 @@ function mutationDelete(db){
 }
 
 module.exports = {
-    addItem: mutationAdd(itemDB),
-    updateItem: mutationUpdate(itemDB),
+    storeItem: mutationAdd(itemDB),
     deleteItem: mutationDelete(itemDB),
 
-    addEnchantment: mutationAdd(enchantmentDB),
-    updateEnchantment: mutationUpdate(enchantmentDB),
-    deleteEnchantment: mutationDelete(enchantmentDB),
+    // storeEnchantment: mutationAdd(enchantmentDB),
+    // deleteEnchantment: mutationDelete(enchantmentDB),
 
-    addEntity: mutationAdd(entityDB),
-    updateEntity: mutationUpdate(entityDB),
-    deleteEntity: mutationDelete(entityDB),
+    // storeEntity: mutationAdd(entityDB),
+    // deleteEntity: mutationDelete(entityDB),
 
-    addStatusEffect: mutationAdd(effectDB),
-    updateStatusEffect: mutationUpdate(effectDB),
-    deleteStatusEffect: mutationDelete(effectDB),
+    // storeStatusEffect: mutationAdd(effectDB),
+    // deleteStatusEffect: mutationDelete(effectDB),
 }

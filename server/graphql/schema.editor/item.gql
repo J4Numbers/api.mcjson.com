@@ -1,40 +1,49 @@
-#An item or block
-type Item {
-  # Raw blockstate/metadata
-  meta: [Meta!]
-  #item variants (wool, logs etc)
-  variants: [Variant!]
-
-  flags: ItemFlags
-
+input InputItem {
   # Mod this object comes from
-  mod: String
+  mod: String!
 
   # Id of this object, combined with mod in format mod:id
-  id(
-    # Prefix with the mod field value in format mod:id
-    prefixMod: Boolean = false
-  ): String
+  id: String!
 
   # English name of object
-  name: String
+  name: String!
 
   # Version this object first appeared in
-  introduced_at: String
+  introduced_at: String!
 
   # Last Version this object was edited
-  changed_at: String
+  changed_at: String!
 
   #Is this item a technical item (not normally accessed)
   technical: Boolean!
+
+  variants: [InputVariant!]
+  # Metadata settings
+  meta: [InputMeta!]
+  flags: InputItemFlags
+
 }
 
-type Variant {
+input InputVariant {
   label: String!
   value: Int!
 }
 
-type ItemFlags {
+
+input InputMeta {
+  key: String
+  values: [InputMetaEntry]
+  technical: Boolean
+}
+
+input InputMetaEntry {
+  value: String
+  technical: Boolean
+  mask: Int
+}
+
+
+input InputItemFlags {
 
   # Is this item a block
   isBlock: Boolean!
@@ -49,9 +58,9 @@ type ItemFlags {
   repairable: Boolean
 
   # valid enchantments for this item
-  enchantments: [Enchantment!]
+  #enchantments: [Enchantment!] TODO: make work
 
-  inventory: InventoryFormat
+  inventory: InputInventoryFormat
 
   # Does this block obey physics (sand/gravel/anvil)
   physics: Boolean
@@ -68,23 +77,20 @@ type ItemFlags {
   # Is this block transparent (no suffocate damage)
   transparent: Boolean
   # Light data
-  light: BlockFlagsLight
+  light: InputBlockFlagsLight
 
   # Editors to use for this objects NBT data.
   editors: [NBTEditors!]
+
 }
 
-type InventoryFormat {
+input InputInventoryFormat {
     slots: Int!
     type: InventoryType!
 }
 
-enum InventoryType {
-  CHEST,
-  DISPENSER
-}
 
-type BlockFlagsLight {
+input InputBlockFlagsLight {
   # Amount of light emitted by block
   emit: Int
 
