@@ -1,6 +1,0 @@
-mutation($target :OldId!, $data :InputItem!) {
-  data: updateItem(oldId: $target, newData:$data) {
-    mod
-    id
-  }
-}

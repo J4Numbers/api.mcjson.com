@@ -58,7 +58,7 @@ input InputItemFlags {
   repairable: Boolean
 
   # valid enchantments for this item
-  #enchantments: [Enchantment!] TODO: make work
+  enchantments: [String!]# TODO: make work
 
   inventory: InputInventoryFormat
 

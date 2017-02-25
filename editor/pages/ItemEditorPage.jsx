@@ -4,8 +4,7 @@ import { LoadWrapper, loadData } from './wrap.jsx';
 import ObjectEditor from './ObjectEditor.jsx';
 import ItemEditor from '../editors/ItemEditor.jsx';
 
-import itemCreate from '../gql/item/add.gql';
-import itemUpdate from '../gql/item/set.gql';
+import itemStore from '../gql/item/store.gql';
 import itemFetch from '../gql/item/get.gql';
 
 const NEW_MODEL = {
@@ -25,7 +24,7 @@ export function ItemCreatePage(props) {
     return <LoadWrapper
         {...props}
         loaderFn={ loadData(NEW_MODEL) }
-        saverFn={data => itemCreate({ data: data }).then( () => location.href = `#/items/${data.mod}/${data.id}` ) }
+        saverFn={data => itemStore({ data: data }).then( () => location.href = `#/items/${data.mod}/${data.id}` ) }
         Composed={ItemEditor}
     />
 }
@@ -34,7 +33,7 @@ export function ItemEditPage(props) {
     return <LoadWrapper
         {...props}
         loaderFn={(props) => itemFetch({mod: props.params.mod, id: props.params.id}).then( d => d.data[0] )  }
-        saverFn={data => itemUpdate({ data: data, target: {mod: data.mod, id: data.id} })}
+        saverFn={data => itemStore({ data: data })}
         Composed={ItemEditor}
     />
 }

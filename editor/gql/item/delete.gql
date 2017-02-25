@@ -1,5 +1,5 @@
-mutation($oldId :OldId!) {
-  item: deleteItem(oldId: $oldId) {
+mutation($mod: String!, $id: String!) {
+  item: deleteItem(mod: $mod, id: $id) {
     mod
     id
   }
