@@ -13,7 +13,7 @@ export default function VariantEditor(props) {
     let upd = (spec) => {
         props.onChange(
             update(
-                props.data,
+                props.value,
                 { variants: spec }
             )
         );
@@ -23,14 +23,14 @@ export default function VariantEditor(props) {
             <thead>
                 <tr>
                     <th>Label</th>
-                    {props.data.meta.map(metaType => (<th key={metaType.key}>
+                    {props.value.meta.map(metaType => (<th key={metaType.key}>
                         {metaType.key}
                         &nbsp;<a
                             href="#"
                             onClick={(ev) => {
                                 ev.preventDefault();
                                 upd({
-                                    $push: metaType.values.map(e => ({ label: `${e.value} ${props.data.name}`, value: e.mask }))
+                                    $push: metaType.values.map(e => ({ label: `${e.value} ${props.value.name}`, value: e.mask }))
                                 });
 
                             }}
@@ -41,14 +41,14 @@ export default function VariantEditor(props) {
                 </tr>
             </thead>
             <tbody>
-                {props.data.variants.map((v, idx) => (
+                {props.value.variants.map((v, idx) => (
                     <tr key={idx}>
                         <td>
                             <input className="form-control" type="text" value={v.label} onChange={ev => {
                                 upd({ [idx]: { label: { $set: ev.target.value } } })
                             }} />
                         </td>
-                        {props.data.meta.map(metaType => (
+                        {props.value.meta.map(metaType => (
                             <td key={metaType.key}>
                                 <select
                                     className="form-control"
@@ -81,6 +81,6 @@ export default function VariantEditor(props) {
             </tbody>
         </table>
         <button className="btn btn-primary" onClick={() => upd({ $push: [{ label: "", value: 0 }] })}>Add</button>
-        <pre>{JSON.stringify(props.data.variants, null, 2)}</pre>
+        <pre>{JSON.stringify(props.value.variants, null, 2)}</pre>
     </div>
 }

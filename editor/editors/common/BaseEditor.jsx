@@ -4,17 +4,17 @@ import { VersionData } from './VersionData.jsx';
 import update from 'immutability-helper';
 export default function BaseEditor(props) {
     return <div className="base-edit">
-        <CommonData data={props.data} onChange={props.onChange} />
+        <CommonData value={props.value} onChange={props.onChange} />
         <div className="form-group">
             <label>Name</label>
-            <input className="form-control" value={props.data.name || ""} onChange={(e) => {
+            <input className="form-control" value={props.value.name || ""} onChange={(e) => {
                 props.onChange(
-                    update(props.data, {
+                    update(props.value, {
                         name: { $set: e.target.value }
                     })
                 )
             }} />
         </div>
-        <VersionData data={props.data} onChange={props.onChange} />
+        <VersionData value={props.value} onChange={props.onChange} />
     </div>
 }

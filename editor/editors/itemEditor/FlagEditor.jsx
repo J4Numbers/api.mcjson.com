@@ -79,15 +79,15 @@ function toggleArray(arr, val) {
 
 export function BlockFlagEditor(props) {
     const upd = (data) => {
-        props.onChange(update(props.data, data));
+        props.onChange(update(props.value, data));
     }
     return <div className="block-flag">
-        <FlagCheckbox label="Physics" value={props.data ? props.data.physics : false} onChange={c => upd({ physics: {$set: c } })} />
+        <FlagCheckbox label="Physics" value={props.value ? props.value.physics : false} onChange={c => upd({ physics: {$set: c } })} />
         <fieldset>
             <legend>
                 <input
                     type="checkbox"
-                    checked={props.data.inventory != undefined}
+                    checked={props.value.inventory != undefined}
                     onChange={(ev) => {
                         upd({ inventory: {$set: ev.target.checked ? { slots: 0, type: "CHEST" } : undefined } })
                     }}
@@ -98,11 +98,11 @@ export function BlockFlagEditor(props) {
                 <label>Slots: </label>
                 <input
                 className="form-control"
-                readOnly={(props.data.inventory == undefined)}
+                readOnly={(props.value.inventory == undefined)}
                 type="number"
                 min="0"
                 step="1"
-                value={props.data.inventory ? props.data.inventory.slots : 0}
+                value={props.value.inventory ? props.value.inventory.slots : 0}
                 onChange={(ev) => upd({inventory: {slots: {$set: parseInt(ev.target.value) } } })}
                     />
             </div>
@@ -110,8 +110,8 @@ export function BlockFlagEditor(props) {
                 <label>Type: </label>
                 <select
                 className="form-control"
-                readOnly={(props.data.inventory == undefined)}
-                value={props.data.inventory ? props.data.inventory.type : ""}
+                readOnly={(props.value.inventory == undefined)}
+                value={props.value.inventory ? props.value.inventory.type : ""}
                 onChange={(ev) => upd({inventory: {type: {$set: ev.target.value } } })}
                 >
                 <option value="CHEST">Chest</option>
@@ -126,10 +126,10 @@ export function BlockFlagEditor(props) {
 }
 
 export function ItemFlagEditor(props) {
-    const upd = (data) => props.onChange(Object.assign({}, props.data, data));
+    const upd = (data) => props.onChange(Object.assign({}, props.value, data));
     return <div className="block-flag">
-        <FlagInt label="Durability" value={props.data ? props.data.durability : 0} onChange={slots => upd({ durability: {$set: slots} })} />
-        <ItemNBT value={(props.data && props.data.editors !== undefined ? props.data.editors : [])} onChange={editors => upd({ editors: {$set: editors } })} />
+        <FlagInt label="Durability" value={props.value ? props.value.durability : 0} onChange={slots => upd({ durability: {$set: slots} })} />
+        <ItemNBT value={(props.value && props.value.editors !== undefined ? props.value.editors : [])} onChange={editors => upd({ editors: {$set: editors } })} />
     </div>
 }
 
