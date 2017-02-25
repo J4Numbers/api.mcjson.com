@@ -48,7 +48,7 @@ type BlockFlagsLight {
 
 export function FlagCheckbox(props) {
     return <div className="form-group"><div className="checkbox">
-        <label><input type="checkbox" checked={props.value} onChange={(ev) => { props.onChange(ev.target.checked ? true : undefined) }} /> {props.label}</label>
+        <label><input type="checkbox" checked={props.value || false} onChange={(ev) => { props.onChange(ev.target.checked ? true : undefined) }} /> {props.label}</label>
     </div></div>
 }
 

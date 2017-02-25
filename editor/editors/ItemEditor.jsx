@@ -11,8 +11,8 @@ export default function ItemEditor(props) {
         <Tab eventKey={1} title="General">
             <h3>General</h3>
             <BaseEditor data={value} onChange={onChange} />
-            <FlagCheckbox label="Technical item/block" value={value.technical || false} onChange={(v) => onChange(update(value, { technical: { $set: !value.technical } }))} />
-            <FlagCheckbox label="Is Block" value={value.flags.isBlock || false} onChange={(v) => onChange(update(value, { flags: { isBlock: { $set: !value.flags.isBlock } } }))} />
+            <FlagCheckbox label="Technical item/block" value={value.technical} onChange={(v) => onChange(update(value, { technical: { $set: !value.technical } }))} />
+            <FlagCheckbox label="Is Block" value={value.flags.isBlock} onChange={(v) => onChange(update(value, { flags: { isBlock: { $set: !value.flags.isBlock } } }))} />
         </Tab>
         <Tab eventKey={2} title="Metadata">
             <h3>Metadata</h3>
@@ -24,6 +24,8 @@ export default function ItemEditor(props) {
         </Tab>
         <Tab eventKey={4} title="Details">
             <h3>Flags</h3>
+            <FlagCheckbox label="Is Block" value={value.flags.isBlock} onChange={(v) => onChange(update(value, { flags: { isBlock: { $set: !value.flags.isBlock } } }))} />
+            <hr />
             {
                 value.flags.isBlock ?
                     <BlockFlagEditor data={value.flags} onChange={(data) => onChange(Object.assign({}, value, { flags: data }))} />
