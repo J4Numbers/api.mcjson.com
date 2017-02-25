@@ -30,7 +30,10 @@ query($mod :String!, $id :String!) {
       unpushable
       transparent
       #light: InputBlockFlagsLight
-      inventory_slots
+      inventory{
+        slots
+        type
+      }
     }
 
     
