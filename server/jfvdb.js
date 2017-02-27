@@ -2,7 +2,10 @@ const path = require("path");
 const fs = require("fs");
 const mkdirp = require('mkdirp');
 
+const semver = require("semver");
+
 const SYM_PATH_FUNC = Symbol();
+const SYM_VER_FUNC = Symbol();
 const SYM_DATA = Symbol();
 /**
  * Database of JSON files
@@ -12,18 +15,28 @@ class Database {
      * @param {string} baseDir base directory for all files.
      * @param {Function} function that transforms an object into a relative path to store at.
      */
-    constructor(baseDir, pathFunction) {
+    constructor(baseDir, pathFunction, verFunction) {
         this.baseDir = path.resolve(baseDir);
         this[SYM_PATH_FUNC] = pathFunction;
-        this[SYM_DATA] = [];
+        this[SYM_VER_FUNC] = verFunction;
+        this[SYM_DATA] = {};
         this.load();
     }
 
     clear() {
-        this[SYM_DATA] = [];
+        this[SYM_DATA] = {};
     }
     data() {
         return this[SYM_DATA];
+    }
+
+    query(v){
+        let data = this[SYM_DATA];
+        return Object.keys(data).map(k => data[k]).map( entries => {
+            let versions = entries.map( this[SYM_VER_FUNC] );
+            let ver = semver.maxSatisfying(versions, v);
+            return entries.find( e => this[SYM_VER_FUNC](e) == ver);
+        }).filter( e => e != null );
     }
 
     /**
@@ -41,7 +54,8 @@ class Database {
             } else if (f.isFile()) {
                 let body = fs.readFileSync(fName, "ascii")
                 try {
-                    this[SYM_DATA].push(JSON.parse(body));
+                    let data = JSON.parse(body)
+                    this[SYM_DATA][this[SYM_PATH_FUNC](data[0])] = data;
                 } catch (e) {
                     console.error("Could not parse file as JSON", fName, err);
                     process.exit(-1);
@@ -50,13 +64,7 @@ class Database {
         })
     }
 
-    /**
-     * Finds a matching record index by matching the path
-     */
-    _indexByPath(data) {
-        let match = this[SYM_PATH_FUNC](data);
-        return this[SYM_DATA].map(d => this[SYM_PATH_FUNC](d)).findIndex(m => m == match);
-    }
+    
 
     /**
      * Saves to database, and deletes old record if found.
@@ -64,30 +72,50 @@ class Database {
      * @param {object} oldData record to delete
      */
     save(data) {
-        let curIdx = this._indexByPath(data);
-        if (curIdx != -1) {
-            this[SYM_DATA][curIdx] = data;
+        let file = this[SYM_PATH_FUNC](data);
+        if(!this[SYM_DATA][file]){
+            this[SYM_DATA][file] = [];
+        }
+        let idx = (this[SYM_DATA][file] || []).indexOf( e => e.version == data.version)
+        if (idx != -1) {
+            this[SYM_DATA][file].splice(idx, 1, data);
         } else {
             this[SYM_DATA].push(data);
         }
-        let p = path.resolve(this.baseDir, this[SYM_PATH_FUNC](data));
+
+        let p = path.resolve(this.baseDir, file);
         if (p.indexOf(this.baseDir) !== 0) {
             throw new Error(`Invalid filepath, exits baseDir [${p}]`);
         }
         mkdirp(path.dirname(p), err => {
-            fs.writeFile(p, JSON.stringify(data, null, 2));
+            fs.writeFile(p, JSON.stringify(this[SYM_DATA][file], null, 2));
         });
     }
 
     /**
      * Delete record
      */
-    unlink(data) {
-        let curIdx = this._indexByPath(data);
-        if (curIdx != -1) {
-            this[SYM_DATA].splice(curIdx, 1);
+    remove(data) {
+        let file = this[SYM_PATH_FUNC](data);
+        let idx = (this[SYM_DATA][file] || []).indexOf( e => this[SYM_VER_FUNC](e) == data.version)
+
+        if (idx != -1) {
+            this[SYM_DATA][file].splice(idx, 1);
         }
-        let p = path.resolve(this.baseDir, this[SYM_PATH_FUNC](data));
+
+        let p = path.resolve(this.baseDir, file);
+        if (p.indexOf(this.baseDir) !== 0) {
+            throw new Error(`Invalid filepath, exits baseDir [${p}]`);
+        }
+        mkdirp(path.dirname(p), err => {
+            fs.writeFile(p, JSON.stringify(this[SYM_DATA][file], null, 2));
+        });
+    }
+
+    unlink(data){
+        let file = this[SYM_PATH_FUNC](data);
+        delete this[SYM_DATA][file];
+        let p = path.resolve(this.baseDir, file);
         if (p.indexOf(this.baseDir) !== 0) {
             throw new Error(`Invalid filepath, exits baseDir [${p}]`);
         }
