@@ -1,5 +1,9 @@
+var filters = require("../../filters.js");
+const base = require("../base.js");
 
-
+module.exports = {
+    schema:{
+        typeDefinitions:`
 type StatusEffect {
   
   # Mod this object comes from
@@ -22,4 +26,18 @@ type StatusEffect {
 
   # Last Version this object was edited
   changed_at: String
+}
+`,
+query: `
+  effects(mod: String, id: String): [StatusEffect!]
+`
+    },
+    resolvers: {
+      StatusEffect: base({}),
+      Query:{
+        effects({ effectDB }, { mod, id }) {
+                return effectDB.data().filter(filters.filterBy({ mod, id }));
+            }
+      }
+    }
 }

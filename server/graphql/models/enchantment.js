@@ -1,3 +1,9 @@
+var filters = require("../../filters.js");
+const base = require("../base.js");
+
+module.exports = {
+    schema:{
+        typeDefinitions:`
 # An item enchantment that can be applied to stuff
 type Enchantment {
   # Numeric id of enchantment
@@ -23,4 +29,19 @@ type Enchantment {
 
   # Last Version this enchantment was edited
   changed_at: String
+}
+`,
+query: `
+  enchantments(mod: String, id: String): [Enchantment!]
+
+`
+    },
+    resolvers: {
+      Enchantment: base({}),
+      Query:{
+        enchantments({ enchantmentDB }, { mod, id }) {
+            return enchantmentDB.data().filter(filters.filterBy({ mod, id }));
+        },
+      }
+    }
 }
