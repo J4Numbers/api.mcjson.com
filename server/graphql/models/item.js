@@ -248,7 +248,6 @@ input InputBlockFlagsLight {
     ItemFlags: {
       isBlock: (_) => !!_.isBlock
     },
-
     Query: {
             items({ itemDB }, { mod, id, isBlock, introduced_at }) {
                 return itemDB.data().filter(filters.filterBy({ mod, id })).filter(
@@ -259,6 +258,10 @@ input InputBlockFlagsLight {
                 ).filter(i => isBlock == undefined ? true : (!!i.flags.isBlock) == isBlock)
                     .map(i => Object.assign({ technical: false }, i))
             }
+    },
+    Mutation:{
+      storeItem: ({itemDB}, { data }) => itemDB.save(data),
+      deleteItem: ({itemDB}, { oldId }) => itemDB.unlink(oldId)
     }
   }
 }

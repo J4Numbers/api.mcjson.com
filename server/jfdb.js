@@ -17,10 +17,6 @@ class Database {
         this[SYM_PATH_FUNC] = pathFunction;
         this[SYM_DATA] = [];
         this.load();
-        this.gql = {
-            save: (_, { data }) => this.save(data),
-            delete: (_, { oldId }) => this.unlink(oldId)
-        }
     }
 
     clear() {
