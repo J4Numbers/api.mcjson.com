@@ -76,11 +76,11 @@ class Database {
         if(!this[SYM_DATA][file]){
             this[SYM_DATA][file] = [];
         }
-        let idx = (this[SYM_DATA][file] || []).indexOf( e => e.version == data.version)
+        let idx = (this[SYM_DATA][file] || []).findIndex( e => e.version == data.version )
         if (idx != -1) {
             this[SYM_DATA][file].splice(idx, 1, data);
         } else {
-            this[SYM_DATA].push(data);
+            this[SYM_DATA][file].push(data);
         }
 
         let p = path.resolve(this.baseDir, file);
@@ -97,7 +97,7 @@ class Database {
      */
     remove(data) {
         let file = this[SYM_PATH_FUNC](data);
-        let idx = (this[SYM_DATA][file] || []).indexOf( e => this[SYM_VER_FUNC](e) == data.version)
+        let idx = (this[SYM_DATA][file] || []).findIndex( e => this[SYM_VER_FUNC](e) == data.version)
 
         if (idx != -1) {
             this[SYM_DATA][file].splice(idx, 1);
