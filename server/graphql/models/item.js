@@ -24,11 +24,8 @@ type Item {
   # English name of object
   name: String
 
-  # Version this object first appeared in
-  introduced_at: String
-
-  # Last Version this object was edited
-  changed_at: String
+  # Game version this data is from.
+  version: String
 
   #Is this item a technical item (not normally accessed)
   technical: Boolean!
@@ -138,11 +135,8 @@ input InputItem {
   # English name of object
   name: String!
 
-  # Version this object first appeared in
-  introduced_at: String!
-
-  # Last Version this object was edited
-  changed_at: String!
+  # Game version this data is from.
+  version: String!
 
   #Is this item a technical item (not normally accessed)
   technical: Boolean!
@@ -231,7 +225,7 @@ input InputBlockFlagsLight {
 
 ,
     query: `
-    items(mod: String, id: String, isBlock: Boolean): [Item!]
+    items(mod: String, id: String, isBlock: Boolean, version:String ): [Item!]
     `,
     mutation: `
   storeItem(data: InputItem!): Item
@@ -249,13 +243,9 @@ input InputBlockFlagsLight {
       isBlock: (_) => !!_.isBlock
     },
     Query: {
-            items({ itemDB }, { mod, id, isBlock, introduced_at }) {
-                return itemDB.data().filter(filters.filterBy({ mod, id })).filter(
-                    filters.key(
-                        "introduced_at",
-                        filters.orNull(introduced_at, filters.semver)
-                    )
-                ).filter(i => isBlock == undefined ? true : (!!i.flags.isBlock) == isBlock)
+            items({ itemDB, meta }, { mod, id, isBlock, version }) {
+                return itemDB.query(version || `<=${meta.version.latest}`).filter(filters.filterBy({ mod, id }))
+                .filter(i => isBlock == undefined ? true : (!!i.flags.isBlock) == isBlock)
                     .map(i => Object.assign({ technical: false }, i))
             }
     },
