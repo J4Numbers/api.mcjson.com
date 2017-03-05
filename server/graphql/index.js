@@ -32,6 +32,8 @@ schema {
   query: Query
   mutation: Mutation
 }
+
+scalar Void
 `;
 
 // --- MERGE RESOLVERS
@@ -46,6 +48,11 @@ function resolverMerge(o, merged){
             }
         })
     })
+    if(process.env.NODE_ENV == "production"){
+        Object.keys(o.Mutation).forEach( key => {
+            o.Mutation[key] = () => { throw new Error("Cannot edit in production"); }
+        })
+    }
     return o;
 }
 module.exports = {

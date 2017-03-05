@@ -228,8 +228,8 @@ input InputBlockFlagsLight {
     items(mod: String, id: String, isBlock: Boolean, version:String ): [Item!]
     `,
     mutation: `
-  storeItem(data: InputItem!): Item
-  deleteItem(mod: String!, id: String!): Item
+  storeItem(data: InputItem!): Void
+  deleteItem(mod: String!, id: String!): Void
 `,
   },
   resolvers: {
