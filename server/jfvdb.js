@@ -38,7 +38,7 @@ class Database {
         let data = this[SYM_DATA];
         return Object.keys(data).map(k => data[k]).map( entries => {
             let versions = entries.map( this[SYM_VER_FUNC] );
-            let ver = semver.maxSatisfying(versions, v);
+            let ver = Database.findHighestVersion(versions, v);
             return entries.find( e => this[SYM_VER_FUNC](e) == ver);
         }).filter( e => e != null && !e.__removed );
     }
@@ -133,4 +133,17 @@ class Database {
  * @param {string[]} props property names to use for path.
  */
 Database.QuickKey = props => d => `${props.map(k => d[k]).join("/")}.json`;
+
+/**
+ * Returns highest version upto version
+ */
+Database.findHighestVersion = (versions, version) => versions.reduce( (cur, ver) => {
+    if( version == null || semver.lte(ver, version)){
+        if( cur == null || semver.gt(ver, cur)){
+            return ver;
+        }else{
+            return cur;
+        }
+    }
+}, null)
 module.exports = Database;

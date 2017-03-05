@@ -225,7 +225,7 @@ input InputBlockFlagsLight {
 
 ,
     query: `
-    items(mod: ID, id: ID, isBlock: Boolean, version:String ): [Item!]
+    items(mod: ID, id: ID, isBlock: Boolean, version:ID ): [Item!]
     `,
     mutation: `
   storeItem(data: InputItem!): Void
@@ -244,7 +244,7 @@ input InputBlockFlagsLight {
     },
     Query: {
             items({ itemDB, meta }, { mod, id, isBlock, version }) {
-                return itemDB.query(version || `<=${meta.version.latest}`).filter(filters.filterBy({ mod, id }))
+                return itemDB.query( meta.version.mapping[version || meta.version.latest.id]  ).filter(filters.filterBy({ mod, id }))
                 .filter(i => isBlock == undefined ? true : (!!i.flags.isBlock) == isBlock)
                     .map(i => Object.assign({ technical: false }, i))
             }

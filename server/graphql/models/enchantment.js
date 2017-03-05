@@ -37,7 +37,7 @@ query: `
       Enchantment: base({}),
       Query:{
         enchantments({ enchantmentDB, meta }, { mod, id, version }) {
-            return enchantmentDB.query(version || `<=${meta.version.latest}`).filter(filters.filterBy({ mod, id }));
+            return enchantmentDB.query( meta.version.mapping[version || meta.version.latest.id] ).filter(filters.filterBy({ mod, id }));
         },
       }
     }
