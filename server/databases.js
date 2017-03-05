@@ -19,7 +19,7 @@ const meta = {
     }
 module.exports = {
     itemDB: new VersionedDatabase(path.resolve("./data/items"), fnFile, v => meta.version.mapping[v.version] ),
-    enchantmentDB: new Database(path.resolve("./data/enchantments"), fnFile),
+    enchantmentDB: new VersionedDatabase(path.resolve("./data/enchantments"), fnFile, v => meta.version.mapping[v.version] ),
     entityDB: new Database(path.resolve("./data/entities"), fnFile),
     effectDB: new Database(path.resolve("./data/status_effect"), fnFile),
     versionDB: versionDB,

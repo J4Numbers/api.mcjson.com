@@ -25,22 +25,19 @@ type Enchantment {
   name: String
 
   # Version this enchantment first appeared in
-  introduced_at: String
-
-  # Last Version this enchantment was edited
-  changed_at: String
+  version: ID
 }
 `,
 query: `
-  enchantments(mod: ID, id: ID): [Enchantment!]
+  enchantments(mod: ID, id: ID, version: ID): [Enchantment!]
 
 `
     },
     resolvers: {
       Enchantment: base({}),
       Query:{
-        enchantments({ enchantmentDB }, { mod, id }) {
-            return enchantmentDB.data().filter(filters.filterBy({ mod, id }));
+        enchantments({ enchantmentDB, meta }, { mod, id, version }) {
+            return enchantmentDB.query(version || `<=${meta.version.latest}`).filter(filters.filterBy({ mod, id }));
         },
       }
     }
