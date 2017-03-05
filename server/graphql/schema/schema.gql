@@ -1,9 +1,0 @@
-
-type Query {
-  items(mod: String, id: String, isBlock: Boolean): [Item!]
-  entities(mod: String, id: String): [Entity!]
-  enchantments(mod: String, id: String): [Enchantment!]
-  versions(id: String, type: VersionType): [Version!]
-  effects(mod: String, id: String): [StatusEffect!]
-}
-

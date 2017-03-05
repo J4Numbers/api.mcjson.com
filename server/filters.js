@@ -26,5 +26,7 @@ module.exports = {
                     (!op && e == v)
                 )
         },
-    bool: val => {let b = boolean(val); return e => e == b;}
+    bool: val => {let b = boolean(val); return e => e == b;},
+
+    filterBy: values => (entry) => Object.keys(values).map(e => [e, values[e]]).filter(e => e[1] != undefined).map(e => entry[e[0]] == e[1]).reduce((a, b) => a && b, true)
 }
