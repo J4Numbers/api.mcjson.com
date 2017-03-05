@@ -30,6 +30,10 @@ class Database {
         return this[SYM_DATA];
     }
 
+    /**
+     * Filter data() against a semver string
+     * @param {String} v semver version to compare
+     */
     query(v){
         let data = this[SYM_DATA];
         return Object.keys(data).map(k => data[k]).map( entries => {
