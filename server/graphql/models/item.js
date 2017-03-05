@@ -225,11 +225,11 @@ input InputBlockFlagsLight {
 
 ,
     query: `
-    items(mod: String, id: String, isBlock: Boolean, version:String ): [Item!]
+    items(mod: ID, id: ID, isBlock: Boolean, version:String ): [Item!]
     `,
     mutation: `
   storeItem(data: InputItem!): Void
-  deleteItem(mod: String!, id: String!): Void
+  deleteItem(mod: ID!, id: ID!, version: ID): Void
 `,
   },
   resolvers: {
@@ -251,7 +251,13 @@ input InputBlockFlagsLight {
     },
     Mutation:{
       storeItem: ({itemDB}, { data }) => itemDB.save(data),
-      deleteItem: ({itemDB}, { oldId }) => itemDB.unlink(oldId)
+      deleteItem: ({itemDB}, { mod, id, version }) => {
+        if(version){
+          return itemDB.remove({mod, id, version})
+        }else{
+          return itemDB.unlink({mod, id, version})
+        }
+      }
     }
   }
 }

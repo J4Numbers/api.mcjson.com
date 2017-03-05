@@ -13,13 +13,13 @@ type Enchantment {
   level: Int
 
   # Mod this enchantment comes from
-  mod: String
+  mod: ID
 
   # Id of this enchantment
   id(
     # Prefix with the mod field value in format mod:id
     prefixMod: Boolean = false
-  ): String
+  ): ID
 
   # English name of enchantment
   name: String
@@ -32,7 +32,7 @@ type Enchantment {
 }
 `,
 query: `
-  enchantments(mod: String, id: String): [Enchantment!]
+  enchantments(mod: ID, id: ID): [Enchantment!]
 
 `
     },

@@ -101,7 +101,7 @@ class Database {
      */
     remove(data) {
         let file = this[SYM_PATH_FUNC](data);
-        let idx = (this[SYM_DATA][file] || []).findIndex( e => this[SYM_VER_FUNC](e) == data.version)
+        let idx = (this[SYM_DATA][file] || []).findIndex( e => e.version == data.version)
 
         if (idx != -1) {
             this[SYM_DATA][file].splice(idx, 1);
