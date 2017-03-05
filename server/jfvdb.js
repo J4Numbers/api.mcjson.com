@@ -36,7 +36,7 @@ class Database {
             let versions = entries.map( this[SYM_VER_FUNC] );
             let ver = semver.maxSatisfying(versions, v);
             return entries.find( e => this[SYM_VER_FUNC](e) == ver);
-        }).filter( e => e != null );
+        }).filter( e => e != null && !e.__removed );
     }
 
     /**
