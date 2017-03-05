@@ -13,22 +13,22 @@ type Item {
   flags: ItemFlags
 
   # Mod this object comes from
-  mod: String
+  mod: ID
 
   # Id of this object, combined with mod in format mod:id
   id(
     # Prefix with the mod field value in format mod:id
     prefixMod: Boolean = false
-  ): String
+  ): ID
 
   # English name of object
   name: String
 
   # Game version this data is from.
-  version: String
+  version: ID
 
   #Is this item a technical item (not normally accessed)
-  technical: Boolean!
+  technical: Boolean
 }
 
 type Variant {
@@ -127,16 +127,16 @@ enum NBTEditors {
 ` + `
 input InputItem {
   # Mod this object comes from
-  mod: String!
+  mod: ID!
 
   # Id of this object, combined with mod in format mod:id
-  id: String!
+  id: ID!
 
   # English name of object
   name: String!
 
   # Game version this data is from.
-  version: String!
+  version: ID!
 
   #Is this item a technical item (not normally accessed)
   technical: Boolean!
