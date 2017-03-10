@@ -25,7 +25,7 @@ type Item {
   name: String
 
   # Game version this data is from.
-  version: ID
+  version: Version
 
   #Is this item a technical item (not normally accessed)
   technical: Boolean
@@ -236,14 +236,19 @@ input InputBlockFlagsLight {
     Item: base({
       meta: (_) => _.meta || [],
       technical: (_) => !!_.technical,
-      variants: (_) => _.variants || [{ label: _.name, value: 0 }],
+      version: (_, args, ctx) => ctx.versionDB.data().find( v => v.id == _.version),
+      variants: (_, args) => {
+        return _.variants || [{ label: _.name, value: 0 }]
+      }
+        ,
     }),
 
     ItemFlags: {
       isBlock: (_) => !!_.isBlock
     },
     Query: {
-            items({ itemDB, meta }, { mod, id, isBlock, version }) {
+            items({ itemDB, meta, versionDB }, { mod, id, isBlock, version }, ctx) {
+              ctx.versionDB = versionDB;
                 return itemDB.query( meta.version.mapping[version || meta.version.latest.id]  ).filter(filters.filterBy({ mod, id }))
                 .filter(i => isBlock == undefined ? true : (!!i.flags.isBlock) == isBlock)
                     .map(i => Object.assign({ technical: false }, i))
