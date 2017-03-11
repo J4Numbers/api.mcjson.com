@@ -1,6 +1,0 @@
-mutation($newData :InputEnchantment!) {
-  data: addEnchantment(newData:$newData) {
-    mod
-    id
-  }
-}

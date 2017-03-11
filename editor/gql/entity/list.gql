@@ -1,9 +1,0 @@
-query {
-    entities { 
-        id
-        mod
-        name
-        introduced_at
-        changed_at
-    }
-}

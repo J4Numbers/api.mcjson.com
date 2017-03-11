@@ -1,9 +1,0 @@
-query {
-    items { 
-        id
-        mod
-        name
-        introduced_at
-        changed_at
-    }
-}
