@@ -8,7 +8,7 @@ type Item {
   # Raw blockstate/metadata
   meta: [Meta!]
   #item variants (wool, logs etc)
-  variants: [Variant!]
+  variants(raw: Boolean = false): [Variant!]
 
   flags: ItemFlags
 
@@ -238,7 +238,11 @@ input InputBlockFlagsLight {
       technical: (_) => !!_.technical,
       version: (_, args, ctx) => ctx.versionDB.data().find( v => v.id == _.version),
       variants: (_, args) => {
-        return _.variants || [{ label: _.name, value: 0 }]
+        if(args.raw){
+          return _.variants || [];
+        }else{
+          return _.variants || [{ label: _.name, value: 0 }]
+        }
       }
         ,
     }),
