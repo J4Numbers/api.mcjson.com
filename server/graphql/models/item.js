@@ -265,7 +265,7 @@ input InputBlockFlagsLight {
             item({ itemDB, meta, versionDB }, { mod, id, version }, ctx) {
               ctx.versionDB = versionDB;
               ctx.itemDB = itemDB;
-                return itemDB.query( meta.version.mapping[version || meta.version.latest.id]  ).filter(filters.filterBy({ mod, id }))
+                return itemDB.query( meta.version.mapping[version || meta.version.latest.id]  ).filter(filters.filterBy({ mod, id }))[0]
             }
     },
     Mutation:{
