@@ -44,6 +44,18 @@ class VersionedDatabase {
     }
 
     /**
+     * Returns a list of versions valid for that entry.
+     * @param {Object} entry 
+     */
+    getVersions(entry){
+        let data = this[SYM_DATA][this[SYM_PATH_FUNC](entry)];
+        if( !data ){
+            throw new Error("Entry not found");
+        }
+        return data.map( e => e.version );
+    }
+
+    /**
      * Loads data from a directory
      * recursivly pulls in data
      */

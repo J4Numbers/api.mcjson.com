@@ -29,16 +29,20 @@ type Enchantment {
 }
 `,
 query: `
-  enchantments(mod: ID, id: ID, version: ID): [Enchantment!]
+  enchantments(mod: ID, version: ID): [Enchantment!]!
+  enchantment(mod: ID!, id: ID!, version: ID): Enchantment!
 
 `
     },
     resolvers: {
       Enchantment: base({}),
       Query:{
-        enchantments({ enchantmentDB, meta }, { mod, id, version }) {
-            return enchantmentDB.query( meta.version.mapping[version || meta.version.latest.id] ).filter(filters.filterBy({ mod, id }));
+        enchantments({ enchantmentDB, meta }, { mod, version }) {
+            return enchantmentDB.query( meta.version.mapping[version || meta.version.latest.id] ).filter(filters.filterBy({ mod }));
         },
+        enchantment({ enchantmentDB, meta }, { mod, id, version }) {
+            return enchantmentDB.query( meta.version.mapping[version || meta.version.latest.id] ).filter(filters.filterBy({ mod, id }))[0];
+        }
       }
     }
 }
