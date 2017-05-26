@@ -6,26 +6,29 @@ module.exports = {
     typeDefinitions: `#An item or block
 type Item {
   # Raw blockstate/metadata
-  meta: [Meta!]
+  meta: [Meta!]!
   #item variants (wool, logs etc)
-  variants: [Variant!]
+  variants(raw: Boolean = false): [Variant!]!
 
   flags: ItemFlags
 
   # Mod this object comes from
-  mod: String
+  mod: ID!
 
   # Id of this object, combined with mod in format mod:id
   id(
     # Prefix with the mod field value in format mod:id
     prefixMod: Boolean = false
-  ): String
+  ): ID!
 
   # English name of object
-  name: String
+  name: String!
 
   # Game version this data is from.
-  version: String
+  version: Version!
+
+  # List all game versions with distinct data
+  alternativeVersions: [Version!]!
 
   #Is this item a technical item (not normally accessed)
   technical: Boolean!
@@ -127,16 +130,16 @@ enum NBTEditors {
 ` + `
 input InputItem {
   # Mod this object comes from
-  mod: String!
+  mod: ID!
 
   # Id of this object, combined with mod in format mod:id
-  id: String!
+  id: ID!
 
   # English name of object
   name: String!
 
   # Game version this data is from.
-  version: String!
+  version: ID!
 
   #Is this item a technical item (not normally accessed)
   technical: Boolean!
@@ -225,33 +228,55 @@ input InputBlockFlagsLight {
 
 ,
     query: `
-    items(mod: String, id: String, isBlock: Boolean, version:String ): [Item!]
+    items(mod: ID, isBlock: Boolean, version:ID ): [Item!]!
+    item(mod: ID!, id: ID!, version:ID): Item!
     `,
     mutation: `
   storeItem(data: InputItem!): Void
-  deleteItem(mod: String!, id: String!): Void
+  deleteItem(mod: ID!, id: ID!, version: ID): Void
 `,
   },
   resolvers: {
     Item: base({
       meta: (_) => _.meta || [],
       technical: (_) => !!_.technical,
-      variants: (_) => _.variants || [{ label: _.name, value: 0 }],
+      version: (_, args, ctx) => ctx.versionDB.data().find( v => v.id == _.version),
+      alternativeVersions: (_, args, ctx) => ctx.itemDB.getVersions( _ ).map( vid => ctx.versionDB.data().find( v => v.id == vid)),
+      variants: (_, args) => {
+        if(args.raw){
+          return _.variants || [];
+        }else{
+          return _.variants || [{ label: _.name, value: 0 }]
+        }
+      }
+        ,
     }),
 
     ItemFlags: {
       isBlock: (_) => !!_.isBlock
     },
     Query: {
-            items({ itemDB, meta }, { mod, id, isBlock, version }) {
-                return itemDB.query(version || `<=${meta.version.latest}`).filter(filters.filterBy({ mod, id }))
+            items({ itemDB, meta, versionDB }, { mod, isBlock, version }, ctx) {
+              ctx.versionDB = versionDB;
+              ctx.itemDB = itemDB;
+                return itemDB.query( meta.version.mapping[version || meta.version.latest.id]  ).filter(filters.filterBy({ mod }))
                 .filter(i => isBlock == undefined ? true : (!!i.flags.isBlock) == isBlock)
-                    .map(i => Object.assign({ technical: false }, i))
+            },
+            item({ itemDB, meta, versionDB }, { mod, id, version }, ctx) {
+              ctx.versionDB = versionDB;
+              ctx.itemDB = itemDB;
+                return itemDB.query( meta.version.mapping[version || meta.version.latest.id]  ).filter(filters.filterBy({ mod, id }))[0]
             }
     },
     Mutation:{
       storeItem: ({itemDB}, { data }) => itemDB.save(data),
-      deleteItem: ({itemDB}, { oldId }) => itemDB.unlink(oldId)
+      deleteItem: ({itemDB}, { mod, id, version }) => {
+        if(version){
+          return itemDB.remove({mod, id, version})
+        }else{
+          return itemDB.unlink({mod, id, version})
+        }
+      }
     }
   }
 }

@@ -13,35 +13,36 @@ type Enchantment {
   level: Int
 
   # Mod this enchantment comes from
-  mod: String
+  mod: ID
 
   # Id of this enchantment
   id(
     # Prefix with the mod field value in format mod:id
     prefixMod: Boolean = false
-  ): String
+  ): ID
 
   # English name of enchantment
   name: String
 
   # Version this enchantment first appeared in
-  introduced_at: String
-
-  # Last Version this enchantment was edited
-  changed_at: String
+  version: ID
 }
 `,
 query: `
-  enchantments(mod: String, id: String): [Enchantment!]
+  enchantments(mod: ID, version: ID): [Enchantment!]!
+  enchantment(mod: ID!, id: ID!, version: ID): Enchantment!
 
 `
     },
     resolvers: {
       Enchantment: base({}),
       Query:{
-        enchantments({ enchantmentDB }, { mod, id }) {
-            return enchantmentDB.data().filter(filters.filterBy({ mod, id }));
+        enchantments({ enchantmentDB, meta }, { mod, version }) {
+            return enchantmentDB.query( meta.version.mapping[version || meta.version.latest.id] ).filter(filters.filterBy({ mod }));
         },
+        enchantment({ enchantmentDB, meta }, { mod, id, version }) {
+            return enchantmentDB.query( meta.version.mapping[version || meta.version.latest.id] ).filter(filters.filterBy({ mod, id }))[0];
+        }
       }
     }
 }

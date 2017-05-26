@@ -8,9 +8,9 @@ const SYM_PATH_FUNC = Symbol();
 const SYM_VER_FUNC = Symbol();
 const SYM_DATA = Symbol();
 /**
- * Database of JSON files
+ * VersionedDatabase of JSON files
  */
-class Database {
+class VersionedDatabase {
     /**
      * @param {string} baseDir base directory for all files.
      * @param {Function} function that transforms an object into a relative path to store at.
@@ -38,9 +38,21 @@ class Database {
         let data = this[SYM_DATA];
         return Object.keys(data).map(k => data[k]).map( entries => {
             let versions = entries.map( this[SYM_VER_FUNC] );
-            let ver = semver.maxSatisfying(versions, v);
+            let ver = VersionedDatabase.findHighestVersion(versions, v);
             return entries.find( e => this[SYM_VER_FUNC](e) == ver);
         }).filter( e => e != null && !e.__removed );
+    }
+
+    /**
+     * Returns a list of versions valid for that entry.
+     * @param {Object} entry 
+     */
+    getVersions(entry){
+        let data = this[SYM_DATA][this[SYM_PATH_FUNC](entry)];
+        if( !data ){
+            throw new Error("Entry not found");
+        }
+        return data.map( e => e.version );
     }
 
     /**
@@ -101,7 +113,7 @@ class Database {
      */
     remove(data) {
         let file = this[SYM_PATH_FUNC](data);
-        let idx = (this[SYM_DATA][file] || []).findIndex( e => this[SYM_VER_FUNC](e) == data.version)
+        let idx = (this[SYM_DATA][file] || []).findIndex( e => e.version == data.version)
 
         if (idx != -1) {
             this[SYM_DATA][file].splice(idx, 1);
@@ -132,5 +144,18 @@ class Database {
  * Pass in array of props to generate a path using/each/prop.json
  * @param {string[]} props property names to use for path.
  */
-Database.QuickKey = props => d => `${props.map(k => d[k]).join("/")}.json`;
-module.exports = Database;
+VersionedDatabase.QuickKey = props => d => `${props.map(k => d[k]).join("/")}.json`;
+
+/**
+ * Returns highest version upto version
+ */
+VersionedDatabase.findHighestVersion = (versions, version) => versions.reduce( (cur, ver) => {
+    if( version == null || semver.lte(ver, version)){
+        if( cur == null || semver.gt(ver, cur)){
+            return ver;
+        }else{
+            return cur;
+        }
+    }
+}, null)
+module.exports = VersionedDatabase;

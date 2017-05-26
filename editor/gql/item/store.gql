@@ -1,6 +1,0 @@
-mutation($data :InputItem!) {
-  data: storeItem(data:$data) {
-    mod
-    id
-  }
-}
